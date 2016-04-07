@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<div class="panel panel-default">
+    <table>
+        <tr>
+            <td><span class="glyphicon glyphicon-earphone"></span></td>
+            <td>{{phone_number}}</td>
+        </tr>
+
+        <tr>
+            <td><span class="glyphicon glyphicon-road"></span></td>
+            <td>{{street}}, {{number}}, {{town}} ({{postal_code}}).</td>
+        </tr>
+
+        {{#if website}}
+        <tr>
+            <td><span class="glyphicon glyphicon-cloud"></span></td>
+            <td><a href={{website}}>{{website}}</a></td>
+        </tr>
+        {{/if}}
+
+    </table>
+</div>

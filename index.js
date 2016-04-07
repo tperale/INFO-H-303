@@ -4,7 +4,9 @@ var app = express();
 
 app.disable('x-powered-by');
 
-var handlebars = require('express-handlebars').create({defaultLayout : 'main'});
+var handlebars = require('express-handlebars').create({
+    defaultLayout : 'main'
+});
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -84,38 +86,40 @@ app.get('/about',  function (req, res) {
     res.render('about/me');
 });
 
-app.get('/file-upload', function (req, res) {
-    var now = new Date();
-    res.render('file-upload', {
-        year : now.getFullYear(),
-        month : now.getMonth()
+app.get('/label/:name',  function (req, res) {
+});
+
+app.get('/testhotel',  function (req, res) {
+    res.render('establishments/hotel', {
+        hotel : {
+            "name" : "Hotel du bonheur",
+            "latitude" : 50.84665,
+            "longitude" : 4.34782,
+            "phone_number" : "+324768366",
+            "street" : "Boulevard de l'empereur",
+            "number" : 134,
+            "town" : "Bruxelle",
+            "postal_code" : 1000,
+            "website" : "http://www.salutcestcool.com"
+        },
+        comments : [
+            {
+                title : "Sympa mais le personnel grogne.",
+                date : "10/03/16",
+                text : "C'était pas mal mais le personnel est désagréable un d'eux m'a grogné dessus."
+            },
+            {
+                title : "Ça se passe ou quoi ?",
+                date : "13/03/16",
+                text : "C'était pas mal mais le personnel est trop agréable."
+            }
+
+        ],
+        labels : [
+            {label_name : "cheap"},
+            {label_name : "good value"},
+        ]
     });
-});
-
-app.get('/file-upload/:year/:month', function(req, res) {
-    var form = new formidable.IncomingForm();
-    form.parse(req, function(err, fields, file) {
-        if (err)    
-            return res.redirect(303, '/error');
-        console.log('Received File');
-
-        console.log(file);
-        res.redirect(303, '/thankyou');
-    });
-});
-
-app.get('/cookie', function(req, res) {
-    res.cookie('username', 'thomas', {expire : new Date() + 9999}).send('uesrname has the value of thomas.');
-});
-
-app.get('/listcookies', function(req, res) {
-      console.log("Cookies : ", req.cookies);
-      res.send("Liik in the console for cookies");
-});
-
-app.get('/deletecookie', function(req, res) {
-    res.clearCookie('username');
-    res.send('username Cookie Deleted');
 });
 
 /* Page not found error.

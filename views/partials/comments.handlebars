@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<div class="well">
+    <h4>Leave a Comment:</h4>
+    <form role="form">
+        <div class="form-group">
+            <!-- <span class="input-group-addon" id="basic-title-addon">Title</span> -->
+            <textarea class="form-control" name="title" rows="1" placeholder="Title"></textarea>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="comment" rows="3" placeholder="Comment"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<hr>
+
+<!-- Comment -->
+{{#each comments}}
+<div class="media">
+    <a class="pull-left" href="#">
+        <img class="media-object" src="{{image}}" alt="">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">{{title}}
+            <small>{{date}}</small>
+        </h4>
+        {{text}}
+    </div>
+</div>
+{{/each}}
+

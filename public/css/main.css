@@ -75,3 +75,7 @@
 .learn-more a {
   color: #00b0ff;
 }
+
+#mapid {
+    height: 360px;
+}
