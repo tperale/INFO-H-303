@@ -1,3 +1,6 @@
+var database_utils = require('./db/database_utils.js');
+var utils = require('./js/utils.js');
+
 var express = require('express');
 
 var app = express();
@@ -25,7 +28,12 @@ app.use(express.static(__dirname + '/public'));
 /* Importing differents pages */
 
 app.get('/',  function (req, res) {
-    res.render('home');
+    var establishments_locations = database_utils.get_establishment_locations();
+    res.render('home', {
+        main : utils.average_location_calculus(establishments_locations),
+        number : establishments_locations.length,
+        location : establishments_locations
+    });
 });
 
 app.use(function(req, res, next) {
