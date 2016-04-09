@@ -2,19 +2,30 @@ CREATE TABLE IF NOT EXISTS establishment (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
     latitude REAL NOT NULL
-        CHECK(-90<=latitude AND latitude<=90),
+        CHECK(-90<=latitude AND latitude<=90) DEFAULT 0,
     longitude REAL NOT NULL
-        CHECK(-180<=longitude AND longitude<=180),
+        CHECK(-180<=longitude AND longitude<=180) DEFAULT 0,
 
     name TEXT NOT NULL,
 
-    adress_street TEXT NOT NULL,
-    adress_town TEXT NOT NULL,
-    adress_number INTEGER NOT NULL,
+    address_street TEXT NOT NULL,
+    address_town TEXT NOT NULL,
+    address_number INTEGER NOT NULL,
+    address_zip INTEGER NOT NULL,
 
     phone_number VARCHAR(20) NOT NULL,
 
     website TEXT,
+
+    picture BLOB,
+
+    /* creation_date DATETIME NOT NULL DEFAULT NOW(), */
+    created_by INTEGER,
+
+    CONSTRAINT USER_EXIST
+        FOREIGN KEY (created_by) REFERENCES account (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
     UNIQUE(latitude, longitude)
 );
@@ -40,7 +51,7 @@ CREATE TABLE IF NOT EXISTS restaurant (
 );
 
 CREATE TABLE IF NOT EXISTS bar (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY NOT NULL,
 
     smoker_allowed BOOLEAN NOT NULL,
 
@@ -53,7 +64,7 @@ CREATE TABLE IF NOT EXISTS bar (
 );
 
 CREATE TABLE IF NOT EXISTS hotel (
-    id INTEGER NOT NULL,
+    id INTEGER PRIMARY KEY NOT NULL,
 
     stars INTEGER NOT NULL
         CHECK(0<=stars AND stars<=5),
@@ -75,10 +86,13 @@ CREATE TABLE IF NOT EXISTS account (
     email TEXT NOT NULL,
     password TEXT NOT NULL,
 
+    admin BOOL DEFAULT 0,
+
+    UNIQUE(username),
     UNIQUE(email)
 );
 
-CREATE TABLE IF NOT EXISTS comment (
+CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY NOT NULL,
 
     user_id INTEGER NOT NULL,
@@ -86,16 +100,21 @@ CREATE TABLE IF NOT EXISTS comment (
     timestamp DATE,
 
     establishment_id INTEGER NOT NULL,
+
+    rating INTEGER NOT NULL
+        CHECK(0<rating AND rating<=5),
     
     comment_text TEXT,
+
+    picture_attached BLOB,
     
-    CONSTRAINT ARTICLE_EXIST
-        FOREIGN KEY (user_id) REFERENCES account (id)
+    CONSTRAINT ESTABLISHEMENT_EXIST
+        FOREIGN KEY (establishment_id) REFERENCES establishment (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
     CONSTRAINT USER_EXIST
-        FOREIGN KEY (establishment_id) REFERENCES establishment (id)
+        FOREIGN KEY (user_id) REFERENCES account (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
@@ -103,14 +122,23 @@ CREATE TABLE IF NOT EXISTS comment (
 );
 
 CREATE TABLE IF NOT EXISTS label (
+    id INTEGER PRIMARY KEY NOT NULL,
+
     name TEXT NOT NULL,
+
+    user_id INTEGER NOT NULL,
 
     establishment_id INTEGER NOT NULL,
 
-    CONSTRAINT ARTICLE_EXIST
+    CONSTRAINT ESTABLISHEMENT_EXIST
         FOREIGN KEY (establishment_id) REFERENCES establishment (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    PRIMARY KEY (name, establishment_id)
+    CONSTRAINT USER_EXIST
+        FOREIGN KEY (user_id) REFERENCES account (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    UNIQUE (name, establishment_id, user_id)
 );
