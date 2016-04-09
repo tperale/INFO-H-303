@@ -28,11 +28,21 @@ app.use(express.static(__dirname + '/public'));
 /* Importing differents pages */
 
 app.get('/',  function (req, res) {
-    var establishments_locations = database_utils.get_establishment_locations();
-    res.render('home', {
-        main : utils.average_location_calculus(establishments_locations),
-        number : establishments_locations.length,
-        location : establishments_locations
+    /* [
+     *  {
+     *      latitude : ...,
+     *      longitude : ...,
+     *      name : ...,
+     *      id : ...
+     *  }
+     * ]
+     */
+    var establishments_locations = database_utils.get_establishment_locations(function (establishments_locations) {
+        res.render('home', {
+            main : utils.average_location_calculus(establishments_locations),
+            number : establishments_locations.length,
+            location : establishments_locations
+        });
     });
 });
 
@@ -41,7 +51,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/establishments/restaurants',  function (req, res) {
+app.get('/establishments/restaurants/',  function (req, res) {
     res.render('establishments/restaurants');
 });
 
@@ -51,6 +61,12 @@ app.get('/establishments/bars',  function (req, res) {
 
 app.get('/establishments/hotels',  function (req, res) {
     res.render('establishments/hotels');
+});
+
+app.get('/establishment/:id',  function (req, res) {
+    database_utils.get_establishment_type(req.params.id, function (type) {
+        res.redirect('/' + type + '/' + req.params.id);
+    });
 });
 
 app.get('/contact',  function (req, res) {
@@ -94,12 +110,50 @@ app.get('/about',  function (req, res) {
     res.render('about/me');
 });
 
+/* @desc Permet d'afficher une photo qu'un utilisateur a afficher en commentaire.
+ */
+app.get('/user/:name/comment/:timestamp/:picture',  function (req, res) {
+});
+
+/* @desc Permet d'afficher le profil d'un utilisateur du site.
+ */
+app.get('/user/:name',  function (req, res) {
+});
+
+/* @desc Permet d'áfficher tout les restaurant qui ont pour label ":name".
+ */
 app.get('/label/:name',  function (req, res) {
+});
+
+app.get('/bar/:id',  function (req, res) {
+    res.render('establishments/bar', {
+        establishment : database_utils.get_bar(req.params.id),
+        comments : [],
+        labels : []
+    });
+});
+
+app.get('/hotel/:id',  function (req, res) {
+    res.render('establishments/hotel', {
+        establishment : database_utils.get_bar(req.params.id),
+        comments : [],
+        labels : []
+    });
+});
+
+app.get('/restaurant/:id',  function (req, res) {
+    res.render('establishments/restaurant', {
+        establishment : database_utils.get_bar(req.params.id),
+        comments : [],
+        labels : []
+    });
 });
 
 app.get('/testhotel',  function (req, res) {
     res.render('establishments/hotel', {
         hotel : {
+            "creator" : "thomas",
+            "creation-date" : "10/11/08",
             "name" : "Hotel du bonheur",
             "latitude" : 50.84665,
             "longitude" : 4.34782,
@@ -130,17 +184,8 @@ app.get('/testhotel',  function (req, res) {
     });
 });
 
-/* Page not found error.
- */
-app.use(function(req, res) {
-    res.type('text/html');
-    res.status(404);
-    res.render('404');
-});
-
 var session = require('express-session');
 var parseurl = require('parseurl');
-
 app.use(session ({
     resave : false,
     saveUninitialized : true,
@@ -161,21 +206,15 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/viewcount', function (req, res, next) {
-    res.send('You viewed this page ' + req.session.views['/viewcount'] + ' times.');
+/* @desc Page not found error.
+ */
+app.use(function(req, res) {
+    res.type('text/html');
+    res.status(404);
+    res.render('404');
 });
 
-var fs = require("fs");
-app.get('/readfile', function (req, res, next) {
-    fs.readFile('./public/randomfile.txt', function (err, data) {
-        if (err) {
-            return console.error(err);
-        }
-        res.send("FILE : " + data.toString());
-    });
-});
-
-/* Server Error handler.
+/* @desc Server Error handler.
  */
 app.use(function(err, req, res, next) {
     console.error(err.stack);
