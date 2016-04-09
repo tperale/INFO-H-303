@@ -1,4 +1,4 @@
-// var db = require('sqlite3').verbose();
+var db = require('./database_utils.js');
 var fs = require("fs");
 var inspect = require('util').inspect;
 
@@ -37,24 +37,24 @@ var parse_bars = function () {
         var address_zip = address[2].content;
         var address_city = address[3].content;
 
-        var longitude =  address[4].content; // Must be Integer
-        var latitude = address[5].content; // Must be Integer
+        var latitude =  address[4].content; // Must be Integer
+        var longitude = address[5].content; // Must be Integer
 
         var phone_number = info.children[2].content ; // Array of info
 
         var website = null;
 
-        var smokers_allowed = false;
-        var snack = false;
+        var smokers_allowed = 0;
+        var snacks = 0;
         if (info.children.length > 3) {
             if (info.children[3].name == "Smoking") {
-                smokers_allowed = true;
+                smokers_allowed = 1;
             } else if (info.children[3].name == "Snack") {
-            snack = true;
+            snacks = 1;
             } 
 
             if ((info.children.length > 4) && info.children[4].name == "Snack") {
-                snack = true;
+                snacks = 1;
             }
         }
 
@@ -68,10 +68,14 @@ var parse_bars = function () {
             console.log("Smokers allowed.");
         else
             console.log("No Smokers.");
-        if (snack)
+        if (snacks)
             console.log("Sell also snacks.");
         else
             console.log("Don't sell any snacks.");
         console.log("-----------------------------------------------");
+
+        db.new_bar(latitude, longitude, name, address_street, address_city, address_num, address_zip, phone_number, website, smokers_allowed, snacks, est_create_name);
     }
 };
+
+parse_bars();
