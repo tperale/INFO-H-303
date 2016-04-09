@@ -1,0 +1,122 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2.5cm,top=2cm,right=2.5cm,nohead,nofoot]{geometry}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\linespread{1.1}
+
+
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\textbf{\textsc{UNIVERSIT\'E LIBRE DE BRUXELLES}}\\
+%\textbf{\textsc{Faculté des Sciences}}\\
+%\textbf{\textsc{Département d'Informatique}}
+\vfill{}\vfill{}
+\begin{center}{\Huge Rapport : HORECA}\end{center}{\Huge \par}
+\begin{center}{\large Thomas Perale}\end{center}{\Huge \par}
+\vfill{}\vfill{} \vfill{}
+\begin{flushleft}{\large \textbf{INFO-H-303 Base de données}}\hfill{Esteban Zimányi, Michaël Waumans}\end{flushleft}{\large\par}
+\vfill{}\vfill{}\enlargethispage{3cm}
+\textbf{Année académique 2015-2016}
+\end{center}
+\end{titlepage}
+
+%\begin{abstract}
+%Ce rapport présente ...
+%\end{abstract}
+
+
+\tableofcontents
+
+\pagebreak
+
+
+\section{Diagramme entité association}
+\subsection{Diagramme}
+\begin{figure}[hbt]
+  \includegraphics[scale=0.4]{bdd.png}
+  \caption{Diagramme entité association
+}
+\end{figure}
+\subsection{Contraintes}
+Les contraintes sont les suivantes :
+\begin{itemize}
+  \item Le couple (Longitude, Latitude) est unique.
+  \item La longitude et la latitude doivent être comris entre -180 et 180.
+  \item Le nom d'utilisateur est unique.
+  \item L'email d'utilisateur est unique.
+  \item Pour les commentaire, le couple (id_utilisateur, date) est unique.
+  \item Le nombre d'étoile (commentaire et hotel), doit être compris entre 1 et
+      5.
+  \item Pour une Station, le nombre de vélo dont la dernière Location finit  dans cette station ne doit pas dépasser sa capacité,
+  \item La Date de création d'un établissement doit précéder celle de ses
+      commentaires.
+  \item La Date d'enregistrement d'un admin doit précéder celle de création
+      d'un établissement par celui-ci.
+  \item Un même utilisateur ne peut pas écrire deux commentaire en même temps.
+\end{itemize}
+
+
+
+\section{Modèle relationnel}
+\subsection{Modèle}
+
+
+\begin{description}
+\item[] \textbf{Utilisateur}(\underline{Id}, Email, MotDePasse, DateEnregistrement, Admin(0, 1))
+    \begin{description}
+        \item[] Utilisateur.Admin indique si l'utilisateur est un admin ou non.
+    \end{description}
+
+\item[] \textbf{Etablissement}(\underline{Id}, Nom, Adresse.Rue,
+    Adresse.Numéro, Adresse.CodePostal, Adresse.Localité, Coordonnée.Latitude,
+    Coordonnée.Longitude, Téléphone, Site, DateCreation, Creator)
+    \begin{description}
+        \item[] Etablissement.Creator réfèrence Utilisateur.Id.
+    \end{description}
+
+
+
+\item[] \textbf{Restaurant}(\underline{Id}, Prix, Places, AEmporter, Livraison, horaire)
+    \begin{description}
+        \item[] Restaurant.Id réfèrence Etablissement.Id.
+    \end{description}
+
+\item[] \textbf{Bar}(\underline{Id}, Fumeur, Snacks)
+    \begin{description}
+        \item[] Bar.Id réfèrence Etablissement.Id.
+    \end{description}
+
+\item[] \textbf{Hotel}(\underline{Id}, NombreEtoile, NombreChambre, Prix)
+    \begin{description}
+        \item[] Hotel.Id réfèrence Etablissement.Id.
+    \end{description}
+
+\item[] \textbf{Commentaire}(\underline{Id}, Titre, Commentaire, NombreEtoile, Date,
+    Image, IdArticle, IdUtilisateur)
+    \begin{description}
+        \item[] Commentaire.IdArticle réfèrence Etablissement.Id.
+        \item[] Commentaire.IdUtilisateur réfèrence Utilisateur.Id.
+    \end{description}
+
+\item[] \textbf{Label}(\underline{Id}, Label, IdArticle, IdUtilisateur)
+    \begin{description}
+        \item[] Commentaire.IdArticle réfèrence Etablissement.Id.
+        \item[] Commentaire.IdUtilisateur réfèrence Utilisateur.Id.
+    \end{description}
+\end{description}
+
+
+\section{Hypothèses}
+
+Les utilisateur "admin" sont encodé directement dans la base de donnée.
+
+\section{Justification}
+
+\end{document}
