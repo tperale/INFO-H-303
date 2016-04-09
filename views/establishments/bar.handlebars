@@ -6,12 +6,12 @@
 
         <!-- Blog Post -->
 
-        {{#with hotel}}
+        {{#with establishment}}
         <!-- Title -->
-        <h1>{{name}}</h1>
+        <h1><span class="glyphicon glyphicon-glass" aria-hidden="true"></span>{{name}}</h1>
 
         <div class="creator-section">
-            by <a href="/user/{{creator}}">{{creator}}</a> ({{creation-date}})
+            by <a href="/user/{{creator}}">{{created_by}}</a> ({{creation-date}})
         </div>
 
         <hr>
@@ -19,7 +19,6 @@
 
         {{#if image}}
             <img class="img-responsive" data-action="zoom" src="{{image}}" alt="">
-
             <hr>
         {{/if}}
 
@@ -46,7 +45,7 @@
 
         <!-- Blog Categories Well -->
         <div class="well">
-            <h4>{{hotel.name}} labels</h4>
+            <h4>{{establishment.name}} labels</h4>
 
             <hr>
 
