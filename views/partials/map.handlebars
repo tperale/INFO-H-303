@@ -13,6 +13,6 @@
     }).addTo(mymap);
 
     var marker = L.marker([{{latitude}}, {{longitude}}]).addTo(mymap);
-    marker.bindPopup("<b>{{name}}</b><br>{{street}}, {{number}}<br>{{town}} ({{postal_code}}).").openPopup();
+    marker.bindPopup("<b>{{name}}</b><br>{{address_street}}, {{address_number}}<br>{{address_town}} ({{address_zip}}).").openPopup();
     </script>
 </div>
