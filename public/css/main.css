@@ -7,8 +7,8 @@
 }
 
 .navbar img {
-    max-height: 30px;
-    max-width: : 30px;
+  max-height: 30px;
+  max-width: : 30px;
 }
 
 .navbar li {
@@ -16,8 +16,6 @@
 }
 
 .jumbotron {
-  /* background-image:url('http://www.gaetarelli.com/images/header-horeca.jpg'); */
-  background-image:url('http://www.unieketrouwlocaties.nl/wp-content/uploads/2014/09/Fox_horeca_header.jpg');
   height: 500px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -38,6 +36,55 @@
 .jumbotron p {
   font-size: 20px;
   color: #fff;
+}
+
+
+.slide1, .slide2, .slide3 {
+    min-height: 560px;
+    background-size: cover;
+    background-position: center center;
+}
+.slide1 {
+  background-image:url('http://www.bettylovesblogging.com/wp-content/uploads/2015/04/IMG_4348_2.jpg');
+}
+.slide2 {
+  background-image:url('http://2.bp.blogspot.com/-jKi5hhkj5bU/UXWQnDd1FRI/AAAAAAAACPE/0Tcy-ZY3P0g/s1600/park-bar2.jpg');
+}
+.slide3 {
+  background-image:url('http://cowtown.typepad.com/.a/6a010535c08657970b01a3fce9c0b7970b-pi');
+}
+/* Carousel Fade Effect */
+.carousel.carousel-fade .item {
+    -webkit-transition: opacity 1s linear;
+    -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    opacity: .5;
+}
+.carousel.carousel-fade .active.item {
+    opacity: 1;
+}
+.carousel.carousel-fade .active.left,
+.carousel.carousel-fade .active.right {
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.carousel-overlay {
+    color: #fff;
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+    left: 0;
+}
+
+.main-home {
+  font-size: 26px;
+  text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 #mapid {

@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 
-<div class="jumbotron">
-    <h1> Horeca </h1>
-    <p>Annuaire en ligne pour les établissements horeca de Bruxelles.</p>
-</div>
+<div id="bg-fade-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="slide1"></div>
+        </div>
+        <div class="item">
+            <div class="slide2"></div>
+        </div>
+        <div class="item">
+            <div class="slide3"></div>
+        </div>
+        </div><!-- .carousel-inner -->
+        <div class="container carousel-overlay text-center">
+            <h1>HORECA le site de référence pour l'horeca dans Bruxelles.</h1>
+            <p class="lead">HORECA est le premier annuaire d'établissement horeca en Belgique.</p>
+            <!-- <a class="btn btn-lg btn-success fp-buttons" href="#"> -->
+                <!-- <span class="fa fa-dollar"></span> Get Pricing -->
+            <!-- </a> -->
+            <a class="btn btn-lg btn-success fp-buttons" href="#">
+                <span class="fa fa-check"></span> S'inscrire
+            </a>
+    </div>
+</div><!-- .carousel -->
 
-<div class="main">
-    <div id="mapid">
+<hr>
+
+<!-- <div class="jumbotron"> -->
+<!--     <h1> Horeca </h1> -->
+<!--     <p>Annuaire en ligne pour les établissements horeca de Bruxelles.</p> -->
+<!-- </div> -->
+
+
+<div class="main-home row">
+    <div class="col-lg-6">
+        HORECA c'est déjà 200 établissements qui sont disponible.
+        <br>
+        <br>
+        <a class="btn btn-lg btn-success fp-buttons" href="#">
+            <span class="fa fa-check"></span> Me montrer
+        </a>
+    </div>
+
+
+    <div class="col-lg-6" id="mapid">
         <script>
         var mymap = L.map('mapid').setView([{{main.latitude}}, {{main.longitude}}], 13);
 
@@ -25,3 +63,5 @@
         </script>
     </div>
 </div>
+
+<hr>
