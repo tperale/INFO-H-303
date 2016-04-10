@@ -52,13 +52,17 @@ Les contraintes sont les suivantes :
   \item Le nom d'utilisateur est unique.
   \item L'email d'utilisateur est unique.
   \item Pour les commentaire, le couple (id_utilisateur, date) est unique.
-  \item Le nombre d'étoile (commentaire et hotel), doit être compris entre 1 et
-      5.
-  \item Pour une Station, le nombre de vélo dont la dernière Location finit  dans cette station ne doit pas dépasser sa capacité,
-  \item La Date de création d'un établissement doit précéder celle de ses
-      commentaires.
-  \item La Date d'enregistrement d'un admin doit précéder celle de création
-      d'un établissement par celui-ci.
+  \item Pour les labels, le triplet : (Label, IdArticle, IdUtilisateur) est
+      unique, ça veut dire qu'une personne ne peut pas ajouter deux fois le
+      même label.
+  \item Le nombre d'étoile (commentaire et hotel), doit être compris entre 1 et 5.
+  \item Les ID des hotels/bars/restaurants référencent ceux de la table
+      établissement, chaque établissement est soit un hotel, soit un bar, soit
+      un restaurant, il ne peut pas être deux type d'établissement en même
+      temps.
+  \item La Date de création d'un établissement doit précéder celle de ses commentaires.
+  \item La Date d'enregistrement d'un admin doit précéder celle de création d'un établissement par celui-ci.
+  \item La Date d'enregistrement d'un utilisateur doit être antérieur celle où il a écrit un commentaire.
   \item Un même utilisateur ne peut pas écrire deux commentaire en même temps.
 \end{itemize}
 
@@ -66,7 +70,6 @@ Les contraintes sont les suivantes :
 
 \section{Modèle relationnel}
 \subsection{Modèle}
-
 
 \begin{description}
 \item[] \textbf{Utilisateur}(\underline{Id}, Email, MotDePasse, DateEnregistrement, Admin(0, 1))
@@ -80,8 +83,6 @@ Les contraintes sont les suivantes :
     \begin{description}
         \item[] Etablissement.Creator réfèrence Utilisateur.Id.
     \end{description}
-
-
 
 \item[] \textbf{Restaurant}(\underline{Id}, Prix, Places, AEmporter, Livraison, horaire)
     \begin{description}
@@ -98,7 +99,7 @@ Les contraintes sont les suivantes :
         \item[] Hotel.Id réfèrence Etablissement.Id.
     \end{description}
 
-\item[] \textbf{Commentaire}(\underline{Id}, Titre, Commentaire, NombreEtoile, Date,
+\item[] \textbf{Commentaire}(\underline{Id}, Commentaire, NombreEtoile, Date,
     Image, IdArticle, IdUtilisateur)
     \begin{description}
         \item[] Commentaire.IdArticle réfèrence Etablissement.Id.
@@ -112,11 +113,24 @@ Les contraintes sont les suivantes :
     \end{description}
 \end{description}
 
-
 \section{Hypothèses}
 
 Les utilisateur "admin" sont encodé directement dans la base de donnée.
 
 \section{Justification}
+
+J'ai décidé pour la généralisation des établissements d'hériter les clées
+principales qui sont dans établissement. De cette manière j'évite de devoir
+redéclarer à chaque fois dans chaques table spécialisée (hotel, restaurant ou
+bar) les mêmes données. De plus la recherche de d'établissement par nom est
+rendue plus simple. \newline
+
+Pour le généralistion des utilisateurs j'ai décidé d'ajouter une colonne
+"Admin" dans la table utilisateur pour permettre de savoir si un utilisateur
+est admin ou non. \newline
+
+En ce qui concerne les \emph{labels} j'ai décidé de mettre l'\emph{ID} de
+l'utilisateur dans une des colonnes, de cette façon on sait facilement savoir
+si une personne a déjà ajouté un certain label ou non.
 
 \end{document}
