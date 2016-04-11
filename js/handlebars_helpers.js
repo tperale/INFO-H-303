@@ -97,3 +97,15 @@ var makeCarousel = function (list, design) {
 
     return result;
 };
+
+
+var stars_maker = function (number) {
+    var result = "";
+    for (var i = 0; i < 5; ++i) {
+        if (i < number) {
+            result += " <span class=\"glyphicon glyphicon-star\"></span>";
+        } else {
+            result += " <span class=\"glyphicon glyphicon-star-empty\"></span>";
+        }
+    }
+};
