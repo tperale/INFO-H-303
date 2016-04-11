@@ -1,0 +1,589 @@
+<Restaurants>
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>Chez Théo Sodexho ULB</Name>
+		<Address>
+			<Street>Avenue Paul Héger</Street>
+			<Num>22</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.381571</Longitude>
+			<Latitude>50.813257</Latitude>
+		</Address>
+		<Tel>02/650 49 35</Tel>
+		<Site link="http://wwwdev.ulb.ac.be/restaurants/solbosch_s/r_pub.php3"/>
+		<Closed>
+			<On day="0"/>
+			<On day="6"/>
+			<On day="1" hour="pm"/>
+			<On day="2" hour="pm"/>
+			<On day="3" hour="pm"/>
+			<On day="4" hour="pm"/>
+			<On day="5" hour="pm"/>
+		</Closed>
+		
+		<TakeAway/>
+		<Delivery/>
+		<PriceRange>6</PriceRange>
+		<Banquet capacity="200"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Serge" date="23/10/2008" score="3">Bon steak le mercredi, ambiance retro "happy Days" très sympa! Beaucoup de monde en dehors des vacances, mais service impeccable! Surtout une serveuse blonde super souriante.
+</Comment>
+		<Comment nickname="Ivan" date="2/11/2008" score="4">La sodexo, c'est différent! Vous êtes soucieux de votre santé, vous en avez assez du 'fast food' et du sandwich ordinaire. Vous voulez quelque chose de différent. Vous avez raison. Chez Théo est un retaurant rapide de qualité, dont la devise est 'natrual, fresh and ready'.
+</Comment>
+		<Comment nickname="Joelle" date="29/10/2008" score="1">Faut pas déconner. Cher, pas bon même les choses les plus simples.</Comment>
+		<Comment nickname="Fred" date="3/11/2008" score="2">Testez absolument les nouvelles lasagnes (aubergine) et canneloni au rayon 'pates', c'est bon. Si, si, c'est bon!</Comment>
+
+
+
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Ivan"/>
+			<User nickname="Serge"/>
+		</Tag>
+		<Tag name="Bon marché">
+			<User nickname="Boris"/>
+			<User nickname="Serge"/>
+			<User nickname="Joelle"/>
+			<User nickname="Sarah"/>
+		</Tag>			
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>Mirabelle</Name>
+		<Address>
+			<Street>Chaussée de Boondael</Street>
+			<Num>459</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.389422</Longitude>
+			<Latitude>50.8163</Latitude>
+		</Address>
+		<Tel>02/649 51 73</Tel>
+		<PriceRange>40</PriceRange>
+		<Banquet capacity="40"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Serge" date="21/10/2008" score="5">Je suis un habitué de La Mirabelle, j'y ai mangé pour la première fois en 1983 (découverte de la brochette Macao qui n'est plus à la carte il me semble?) et depuis j'y retourne régulièrement, et j'apprécie beaucoup l'accueil sympa, le service rapide, et la bonne cuisine de type "brasserie", ingrédients frais et de qualité. Bien sûr le week-end en soirée ça peut être bondé et il vaudra mieux réserver, surtout pour les groupes. Samedi dernier nous avons goûté le gaspacho en suggestion et les fondus parmesan (avec le persil frit, chouette) et comme plat un waterzooï à la gantoise (copieux!) et un saumon poêlé aux légumes wok, avec 1/2 bouteille de vin. Tout était franchement très bon.
+</Comment>
+		<Comment nickname="Joelle" date="24/10/2008" score="3">Loin d'être aussi parfait que ce que l'on dit : une table mal située (face aux toilettes) alors que d'autres tables sont restées vides . Service un peu rapide et pas très souriant. Nourriture correcte. Peut-être avions-nous choisi un mauvais jour ( il pleuvait!!). 
+</Comment>
+		<Comment nickname="Ivan" date="2/11/2008" score="4">service toujours souriant et efficace, et qualité constante depuis.... ouh la la tant d'années !
+</Comment>
+
+ 
+
+
+	</Comments>
+	<Tags>
+		<Tag name="Cuisine gastronomique">
+			<User nickname="Boris"/>
+			<User nickname="Sarah"/>
+		</Tag>
+		<Tag name="Terrasse">
+			<User nickname="Serge"/>
+			<User nickname="Brenda"/>
+			<User nickname="Joelle"/>
+		</Tag>			
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>Mano a Mano</Name>
+		<Address>
+			<Street>Rue Saint-Boniface</Street>
+			<Num>8</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.364806</Longitude>
+			<Latitude>50.835827</Latitude>
+		</Address>
+		<Tel>02/502 08 01</Tel>
+		<Closed>
+			<On day="0"/>
+			<On day="6" hour="am"/>
+		</Closed>
+		
+		<TakeAway/>
+		<Delivery/>
+		<PriceRange>30</PriceRange>
+                <Banquet capacity="10"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Fred" date="25/10/2008" score="4">Resto cool et sympa où la nourriture est de qualité mais il ce n'est en rien un lieu calme et intime. </Comment>
+		<Comment nickname="Sarah" date="28/10/2008" score="4"> Qualité du service parfois déçevante mais surtout dû au fait que le lieu est très fréquenté.</Comment>
+		<Comment nickname="Ivan" date="28/10/2008" score="5"> ça déchire. L'italie en plein. J'adore.</Comment>
+		
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Ivan"/>
+			<User nickname="Sarah"/>
+		</Tag>
+		<Tag name="Terrasse">
+			<User nickname="Boris"/>
+			<User nickname="Fred"/>
+			<User nickname="Sarah"/>
+			<User nickname="Joelle"/>
+		</Tag>		
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>Le belga queen</Name>
+		<Address>
+			<Street>Rue Fossé-aux-Loups</Street>
+			<Num>32</Num>
+			<Zip>1000</Zip>
+			<City>Bruxelles</City>
+			<Longitude>4.35448</Longitude>
+			<Latitude>50.850287</Latitude>
+		</Address>
+		
+		<Site link="http://www.belgaqueen.be/"/>
+		<Tel>02/217 21 87</Tel>
+		
+		<PriceRange>50</PriceRange>
+		<Banquet capacity="180"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Joelle" date="30/10/2008" score="5">Pour la seconde fois en qlq mois j'ai pu apprécié la fraicheur des produits du comptoir à huitre. Bonne présentation du plateau de fruit de mer à 60 euros /2 personnes, avec un sympathique sauvignon chilien...tout bien sauf peut être le service un peu expéditif, genre la vidange d'asssiette se fait sans nous en demandé l'autorisation..résultat pff j'avais plus d'aiguille pour mes bigorneaux ...mais bon ... (163488)
+</Comment>
+		<Comment nickname="Sarah" date="4/11/2008" score="1">That's really incredible! Such a beautiful place and such a bad service ! As usual you think you can have your dinner at 8:30PM and enjoy a nice evening ? Well not here they absolutely want to make a lot of money so you need to be there or at 7:00PM or at 9:30PM and they tell you they'll throw you out if you are not finished! I only knew this in a few restaurants of London and by the time they realized that this helps loosing the local customers, it's too late the place is already in bankrupcy. So watch out Belga Queen team and try to behave in front of your customer, your going to need them sometime... And food is so and so, so you are really going to need them ! </Comment>
+		<Comment nickname="Joelle" date="3/10/2008" score="4">J'y suis allée pour un lunch à deux personnes. La formule Business Lunch est avantageuse et nous avons très bien mangé. A recommander !
+</Comment>
+		<Comment nickname="Ivan" date="2/10/2008" score="4">cadre superbe, bonne cuisine mais cher.</Comment>
+		<Comment nickname="Serge" date="2/10/2008" score="4">très bon</Comment>
+		<Comment nickname="Brenda" date="2/10/2008" score="4">Based in the premises of an old bank this is must visit restaurants in Brussels although its really a flashy brasserie. Dine in magnificent surroundings either at the oyster bar, beer bar or the brasserie itself where some mouth watering Belgian dishes are offered. Wine list is also extensive and will meet all tastes / budgets. Business lunch at €15 per head is fantastic value for money and worth checking out. Book in advance for weekends and evenings. Cigar lounge / club in basement finishes off an evening in style. I'm no guru but would give Belga a big thumbs up for anyone looking for a sophisticated yet charming dining experience in Brussels.</Comment>
+
+	</Comments>
+	<Tags>
+		<Tag name="Cuisine gastronomique">
+			<User nickname="Boris"/>
+			<User nickname="Ivan"/>
+		</Tag>
+		<Tag name="Fumoir">
+			<User nickname="Boris"/>
+			<User nickname="Sarah"/>
+			<User nickname="Serge"/>
+		</Tag>		
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>Indochine</Name>
+		<Address>
+			<Street>Rue Lesbroussart</Street>
+			<Num>58</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.36822</Longitude>
+			<Latitude>50.827658</Latitude>
+		</Address>
+
+		<Tel>02/649 96 15</Tel>
+		<Closed>
+			<On day="0"/>
+		</Closed>
+		
+		<TakeAway/>
+		<Delivery/>
+		<PriceRange>20</PriceRange>
+		<Banquet capacity="30"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Serge" date="12/10/2008" score="5">En un mot: hétéroclite. La clientèle, la décoration, le cadre... On y mange chinois et indonésien sur des banquettes en bois. </Comment>
+		<Comment nickname="Ivan" date="12/10/2008" score="5">Très 'couleur locale', ce petit resto où l’on est accueilli comme si on faisait partie de la famille</Comment>
+		<Comment nickname="Brenda" date="12/10/2008" score="4">Sympa! pas cher, mais vraiment sympa.</Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Sarah"/>
+			<User nickname="Brenda"/>
+			<User nickname="Boris"/>
+			<User nickname="Fred"/>
+		</Tag>
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Fred">
+	<Informations>
+		<Name>L'horloge du sud</Name>
+		<Address>
+			<Street>Rue du Trône</Street>
+			<Num>141</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.371431</Longitude>
+			<Latitude>50.835815</Latitude>
+		</Address>
+
+		<Tel>02/512 18 64</Tel>
+		<Closed>
+			<On day="0" hour="am"/>
+			<On day="6" hour="am"/>
+		</Closed>
+		
+		<TakeAway/>
+		<PriceRange>30</PriceRange>
+		<Banquet capacity="150"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Fred" date="2/10/2008" score="3">Cuisine africaine. Service lent mais sympa et surtout bonne cuisine dépaysante.</Comment>
+		<Comment nickname="Ivan" date="2/10/2008" score="4">Dépaysant, bon, les vins sont super et pas chers (Australien, Afrique du sud...).</Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Serge"/>
+			<User nickname="Boris"/>
+		</Tag>
+		<Tag name="Terrasse">
+			<User nickname="Boris"/>
+			<User nickname="Fred"/>
+			<User nickname="Sarah"/>
+		</Tag>		
+		<Tag name="Fumoir">
+			<User nickname="Ivan"/>
+			<User nickname="Joelle"/>
+			<User nickname="Serge"/>
+		</Tag>		
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Fred">
+	<Informations>
+		<Name>Grenier d'Elvire</Name>
+		<Address>
+			<Street>Chaussée de Boondael</Street>
+			<Num>339A</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.38384</Longitude>
+			<Latitude>50.818766</Latitude>
+		</Address>
+		
+		<Site link="http://www2.resto.be/grenierdelvire/"/>
+		<Tel>02/648 43 48</Tel>
+		<Closed>
+			<On day="0" hour="am"/>
+			<On day="1" hour="am"/>
+			<On day="6" hour="am"/>
+		</Closed>
+		
+		<TakeAway/>
+		<Delivery/>
+		<PriceRange>20</PriceRange>
+		<Banquet capacity="25"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Fred" date="8/10/2008" score="2">Cuisine sans plus. La terrasse est potable.</Comment>
+		<Comment nickname="Ivan" date="14/10/2008" score="5">Meilleur adresse dans le quartier. Surtout pour les salades.</Comment>
+		<Comment nickname="Sarah" date="21/10/2008" score="1">Pas bon. </Comment>
+		<Comment nickname="Serge" date="22/10/2008" score="4">Agréable jardin. Bonne ambiance parfois un peu trop bruyant. Belles salades sans oublier les pâtes...carbonara ou poulet fumé et mascarpone...un vrai délice!
+</Comment>
+		<Comment nickname="Brenda" date="29/10/2008" score="5">Superbe cadre pour déguster les petits plats proposés. Des plats simples mais qui se laissent savourer. Sans parler du moelleux au chocolat... Un service de qualité et une ambiance de fête. Le resto n'est pas très grand donc n'hésitez pas à réserver votre table. Amateurs d'ambiance et de bonne bouffe, ceci est votre adresse!
+</Comment>
+
+
+
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Boris"/>
+			<User nickname="Brenda"/>
+			<User nickname="Sarah"/>
+		</Tag>
+		<Tag name="Terrasse">
+			<User nickname="Fred"/>
+			<User nickname="Ivan"/>
+			<User nickname="Joelle"/>
+		</Tag>
+		<Tag name="Fusion">
+			<User nickname="Boris"/>
+		</Tag>		
+	
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Fred">
+	<Informations>
+		<Name>Grain de sel</Name>
+		<Address>
+			<Street>Chaussée de Vleurgat</Street>
+			<Num>9</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.371216</Longitude>
+			<Latitude>50.827518</Latitude>
+		</Address>
+		<Tel>02/648 18 58</Tel>
+		<Closed>
+			<On day="0"/>
+			<On day="1"/>
+			<On day="6" hour="am"/>
+		</Closed>
+		
+		<TakeAway/>
+		<Delivery/>
+		<PriceRange>30</PriceRange>
+		<Banquet capacity="60"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Brenda" date="2/10/2008" score="3">Comme annoncé dans les précédents commentaires, la cuisine était vraiment excellente, les plats raffinés et le rapport qualité-prix imbattable. 
+</Comment>
+		<Comment nickname="Joelle" date="2/10/2008" score="1">Nous avons été réellement déçus par le service (personnel de salle peu disponible et désagréable). En ce qui concerne l’ambiance également, nous nous attendions à un cadre plus cosy, un peu plus accueillant. </Comment>
+		<Comment nickname="Sarah" date="2/10/2008" score="2">Impression générale : malgré la qualité des plats, nous ne retournerons pas dans cet endroit à cause du service (dommage!).</Comment>
+		<Comment nickname="Serge" date="2/10/2008" score="5">Excellent!</Comment>
+		<Comment nickname="Fred" date="2/10/2008" score="5">Canneloni de saumon et fromage de chèvre, dos de bar au gros sel et épinards en branche, soupe glacé aux framboises le tout servi avec sourire et fraîcheur pour 18 euros ce midi ... Grégory Yarm (le chef-patron) n'a pas fini de m'étonner et c'est tant mieux ! </Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Boris"/>
+		</Tag>
+		<Tag name="Terrasse">
+			<User nickname="Ivan"/>
+			<User nickname="Serge"/>
+			<User nickname="Joelle"/>
+		</Tag>		
+		<Tag name="Fumoir">
+			<User nickname="Sarah"/>
+		</Tag>		
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Fred">
+	<Informations>
+		<Name>Le Fin de Siècle</Name>
+		<Address>
+			<Street>rue des Chartreux</Street>
+			<Num>10</Num>
+			<Zip>1000</Zip>
+			<City>Bruxelles</City>
+			<Longitude>4.347392</Longitude>
+			<Latitude>50.848845</Latitude>
+		</Address>
+                <Tel>02/648 80 81</Tel>
+                <Site link="http://www.lafindesiecle.be"/>
+                
+                       
+                <Banquet capacity="10"/>
+		<PriceRange>20</PriceRange>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Fred" date="2/10/2008" score="5">Meilleur adresse du centre. plat de brasserie, simple et bon. Rapport qualité prix imbattable</Comment>
+		<Comment nickname="Joelle" date="2/10/2008" score="2">Plein de bruit, service rapide, trop rapide.</Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Boris"/>
+			<User nickname="Joelle"/>
+			<User nickname="Ivan"/>
+			<User nickname="Brenda"/>
+		</Tag>
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Fred">
+	<Informations>
+		<Name>Comme Chez Soi</Name>
+		<Address>
+			<Street>Place Rouppe</Street>
+			<Num>23</Num>
+			<Zip>1000</Zip>
+			<City>Bruxelles</City>
+			<Longitude>4.345686</Longitude>
+			<Latitude>50.842639</Latitude>
+		</Address>
+		
+		<Site link="www.commechezsoi.be"/>
+		<Tel>02/512 29 21</Tel>
+		<Closed>
+			<On day="0"/>
+			<On day="1"/>
+			<On day="3" hour="am"/>
+		</Closed>
+		
+		<PriceRange>100</PriceRange>
+		<Banquet capacity="34"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Boris" date="21/10/2008" score="5">Un repas offert au meilleur projet. Ou pas...</Comment>
+		<Comment nickname="Fred" date="29/10/2008" score="5">:-)</Comment>
+		<Comment nickname="Sarah" date="23/10/2008" score="5">So great!</Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon">
+			<User nickname="Boris"/>
+			<User nickname="Fred"/>
+		</Tag>
+		<Tag name="Terrasse">
+			<User nickname="Sarah"/>
+			<User nickname="Joelle"/>
+		</Tag>		
+		<Tag name="Cuisine gastronomique">
+			<User nickname="Serge"/>
+		</Tag>		
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>Le café des épices</Name>
+		<Address>
+			<Street>Place Jourdan</Street>
+			<Num>21</Num>
+			<Zip>1040</Zip>
+			<City>Etterbeek</City>
+			<Longitude>4.381584</Longitude>
+			<Latitude>50.837219</Latitude>
+		</Address>
+		
+		<Site link="www.cafedesepices.be"/>
+		<Tel>02/280 43 17</Tel>
+		<Banquet capacity="25"/>
+		<PriceRange>40</PriceRange>
+	</Informations>
+	<Tags>
+		<Tag name="Bon marché">
+			<User nickname="Boris"/>
+			<User nickname="Serge"/>
+		</Tag>
+		<Tag name="Terrasse">
+			<User nickname="Ivan"/>
+		</Tag>		
+		<Tag name="Cuisine brasserie">
+			<User nickname="Sarah"/>
+		</Tag>		
+	</Tags>
+</Restaurant>
+                        
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>Bécasse</Name>
+		<Address>
+			<Street>Chaussée de Boondael</Street>
+			<Num>476</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.389766</Longitude>
+			<Latitude>50.815858</Latitude>
+		</Address>
+
+		<Tel>02/649 06 41</Tel>
+		
+		<PriceRange>40</PriceRange>
+		<Banquet capacity="80"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Ivan" date="23/10/2008" score="3">Une valeur sûre. Ambiance sympa, sans prétention. </Comment>
+		<Comment nickname="Serge" date="21/10/2008" score="4">Le steak est excellent, le personnel aimable et attentionné. Nous y allons souvent et tjrs avec le même plaisir.</Comment>
+		<Comment nickname="Sarah" date="29/10/2008" score="3">Good.</Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon marché">
+			<User nickname="Brenda"/>
+			<User nickname="Ivan"/>
+			<User nickname="Boris"/>
+			<User nickname="Fred"/>
+		</Tag>	
+	</Tags>
+</Restaurant>
+	
+<Restaurant creationDate="2/10/2008" nickname="Boris">
+	<Informations>
+		<Name>La Bastoche</Name>
+		<Address>
+			<Street>Chaussée de Boondael</Street>
+			<Num>473</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.389732</Longitude>
+			<Latitude>50.815899</Latitude>
+		</Address>
+
+		<Tel>02/640 34 17</Tel>
+
+		<PriceRange>20</PriceRange>
+                <Banquet capacity="20"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Ivan" date="21/10/2008" score="3">Sodexo++ ?</Comment>
+		<Comment nickname="Fred" date="22/10/2008" score="2">Bon rapport qualité/prix. Pas cher</Comment>
+		<Comment nickname="Joelle" date="25/10/2008" score="1">Nee</Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Ivan"/>
+		</Tag>
+		<Tag name="Cuisine brasserie">
+			<User nickname="Fred"/>
+			<User nickname="Boris"/>
+		</Tag>		
+	
+	</Tags>
+</Restaurant>
+	
+        
+<Restaurant creationDate="2/10/2008" nickname="Fred">
+	<Informations>
+		<Name>Au Vieux Bruxelles</Name>
+		<Address>
+			<Street>Rue Saint-Boniface</Street>
+			<Num>35</Num>
+			<Zip>1050</Zip>
+			<City>Ixelles</City>
+			<Longitude>4.363727</Longitude>
+			<Latitude>50.836346</Latitude>
+		</Address>
+		
+
+		<Tel>02/503 31 11</Tel>
+		<Closed>
+			<On day="1"/>
+		</Closed>
+		<PriceRange>40</PriceRange>
+		<Banquet capacity="40"/>
+	</Informations>
+	
+	<Comments>
+		<Comment nickname="Fred" date="2/10/2008" score="4">J'adore. </Comment>
+		<Comment nickname="Brenda" date="2/10/2008" score="3">Dans la poele, bonne cuisine d'ici.</Comment>
+		<Comment nickname="Joelle" date="2/10/2008" score="2">Nee</Comment>
+	</Comments>
+	<Tags>
+		<Tag name="Bon rapport qualité/prix">
+			<User nickname="Brenda"/>
+			<User nickname="Joelle"/>
+			<User nickname="Boris"/>
+		</Tag>
+		<Tag name="Bon">
+			<User nickname="Serge"/>
+			<User nickname="Ivan"/>
+			<User nickname="Sarah"/>
+		</Tag>		
+		<Tag name="Cuisine brasserie">
+			<User nickname="Sarah"/>
+		</Tag>		
+	</Tags>
+</Restaurant>
+</Restaurants>
+	

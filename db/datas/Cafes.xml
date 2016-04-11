@@ -1,0 +1,637 @@
+<Cafes>
+	<Cafe creationDate="1/03/2008" nickname="Boris">
+		<Informations>
+			<Name>Ratabar</Name>
+			<Address>
+				<Street>Chaussée de Boondael</Street>
+				<Num>345</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.384074</Longitude>
+				<Latitude>50.818606</Latitude>
+			</Address>
+			<Tel>02/644 09 92</Tel>
+			<Smoking/>
+		</Informations>
+		<Comments>
+			<Comment nickname="Boris" date="2/05/2008" score="5">Bonne ambiance à partir de 23h. Déco apache. Spécialité : sous marin.</Comment>
+			<Comment nickname="Brenda" date="7/08/2008" score="3">Spécialité : sous marin. Petit défaut, il n'y a rien à manger mais on peut aller chercher un durum en face.</Comment>
+
+		</Comments>
+		<Tags>
+			<Tag name="Fumeur">
+				<User nickname="Boris"/>
+				<User nickname="Brenda"/>
+				<User nickname="Fred"/>
+			</Tag>
+			
+			<Tag name="Bon marché">
+				<User nickname="Boris"/>
+				<User nickname="Ivan"/>
+				<User nickname="Fred"/>
+			</Tag>
+			
+			<Tag name="Service au bar">
+				<User nickname="Sarah"/>
+			</Tag>
+			
+			<Tag name="Babyfoot">
+				<User nickname="Serge"/>
+			</Tag>	
+		</Tags>
+	</Cafe>
+	
+	
+	<Cafe creationDate="2/01/2008" nickname="Boris">
+		<Informations>
+			<Name>Waff</Name>
+			<Address>
+				<Street>Chaussée de Boondael</Street>
+				<Num>455</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.389335</Longitude>
+				<Latitude>50.816415</Latitude>
+			</Address>
+			<Site link="http://www.waff.be"/>
+			<Tel>02/640 00 42</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+		<Comments>
+			<Comment nickname="Ivan" date="2/03/2008" score="4">Très enfumé mais superbe terrasse. Bons cocktails. Happy hour de 18 à 20h : deux cocktails pour le prix d'un. Serveurs parfois pas très sympas. Club privé avec sorteur à partir de 22h.</Comment>
+			<Comment nickname="Brenda" date="1/10/2008" score="2">Club privé avec sorteur à partir de 22h.</Comment>
+			<Comment nickname="Joelle" date="5/10/2008" score="1">Serveurs parfois pas très sympas. Club privé avec sorteur à partir de 22h.</Comment>
+
+		</Comments>
+		<Tags>
+			<Tag name="Fumeur">
+				<User nickname="Brenda"/>
+				<User nickname="Fred"/>
+			</Tag>
+				
+			<Tag name="Terrasse">
+				<User nickname="Boris"/>
+				<User nickname="Ivan"/>
+				<User nickname="Sarah"/>
+				<User nickname="Fred"/>
+			</Tag>
+				
+			<Tag name="Service au bar">
+				<User nickname="Sarah"/>
+				<User nickname="Ivan"/>	
+			</Tag>				
+			
+			<Tag name="Happy hour">
+				<User nickname="Boris"/>
+				<User nickname="Joelle"/>
+				<User nickname="Fred"/>
+				<User nickname="Serge"/>
+			</Tag>
+				
+			<Tag name="WiFi">
+				<User nickname="Boris"/>
+				<User nickname="Ivan"/>
+				<User nickname="Serge"/>
+			</Tag>	
+				
+		</Tags>
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="02/01/2008" nickname="Boris">
+		<Informations>
+			<Name>Tavernier</Name>
+			<Address>
+				<Street>Chaussée de Boondael</Street>
+				<Num>44</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.389117</Longitude>
+				<Latitude>50.816702</Latitude>
+			</Address>
+			<Tel>02/640 71 91</Tel>
+			<Site link="www.le-tavernier.be"/>
+			<Snack/>
+		</Informations>	
+		<Comments>
+			<Comment nickname="Serge" date="2/05/2008" score="4">Belle terrasse, ambiance un peu BCBG, concerts certains soirs. </Comment>
+			<Comment nickname="Joelle" date="2/02/2008" score="2">Toilettes pas très propres.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Concert">
+				<User nickname="Serge"/>
+				<User nickname="Ivan"/>
+			</Tag>
+				
+			<Tag name="Terrasse">
+				<User nickname="Serge"/>
+				<User nickname="Ivan"/>
+			</Tag>
+				
+			<Tag name="Service au bar">
+				<User nickname="Sarah"/>
+				<User nickname="Boris"/>	
+			</Tag>							
+		</Tags>
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="23/03/2008" nickname="Boris">
+		<Informations>
+			<Name>Belga</Name>
+			<Address>
+				<Street>Place Eugène Flagey</Street>
+				<Num>18</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.372582</Longitude>
+				<Latitude>50.827164</Latitude>
+			</Address>
+			<Site link="www.cafebelga.be"/>
+			<Tel>02/640 35 08</Tel>
+			<Snack/>
+		</Informations>
+	
+		<Comments>
+			<Comment nickname="Boris" date="2/04/2008" score="3">Sympa à l'extérieur en été mais très bruyant à l'intérieur. </Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Concert">
+				<User nickname="Joelle"/>
+				<User nickname="Boris"/>
+			</Tag>
+				
+			<Tag name="terrasse">
+				<User nickname="Sarah"/>
+				<User nickname="Fred"/>
+				<User nickname="Boris"/>
+			</Tag>
+				
+			<Tag name="Service au bar">
+				<User nickname="Ivan"/>
+				<User nickname="Boris"/>	
+			</Tag>		
+		</Tags>
+	</Cafe>
+	
+	
+	<Cafe creationDate="6/12/2007" nickname="Boris">
+		<Informations>
+			<Name>Marché au vin</Name>
+			<Address>
+				<Street>Rue du Belvédère</Street>
+				<Num>14</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.374044</Longitude>
+				<Latitude>50.826765</Latitude>
+			</Address>
+			<Tel>02/640 56 10</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+	
+		<Comments>
+			<Comment nickname="Ivan" date="2/10/2008" score="5">Très bonne ambiance. Le patron connaît bien ses vins. Petit en cas offert avec le vin.</Comment>
+			<Comment nickname="Boris" date="7/10/2008" score="3">Un peu chèr.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Bar à vin">
+				<User nickname="Boris"/>
+				<User nickname="Serge"/>
+				<User nickname="Fred"/>
+			</Tag>
+				
+				
+			<Tag name="Fumeur">
+				<User nickname="Sarah"/>
+				<User nickname="Joelle"/>
+				<User nickname="Fred"/>
+			</Tag>
+				
+			<Tag name="Terrasse">
+				<User nickname="Brenda"/>
+				<User nickname="Boris"/>
+			</Tag>
+				
+			<Tag name="Service au bar">
+				<User nickname="Ivan"/>
+				<User nickname="Boris"/>	
+			</Tag>					
+		</Tags>
+				
+				
+				
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="3/03/2008" nickname="Fred">
+		<Informations>
+			<Name>Delecta</Name>
+			<Address>
+				<Street>Rue lannoy</Street>
+				<Num>2</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.369927</Longitude>
+				<Latitude>50.825975</Latitude>
+			</Address>
+			<Tel>02/644 19 49</Tel>
+			<Snack/>
+		</Informations>
+	
+		<Comments>
+			<Comment nickname="Brenda" date="3/10/2008" score="3">Bar classique. Terrasse sur le trottoir. Belle sélection de Tapas.</Comment>
+			<Comment nickname="Boris" date="12/10/2008" score="5">Belle sélection de Tapas.</Comment>
+			<Comment nickname="Fred" date="12/10/2008" score="4">Bon vin et tapas. Un peu cher.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Bar à vin">
+				<User nickname="Brenda"/>
+				<User nickname="Serge"/>
+				<User nickname="Fred"/>
+			</Tag>
+				
+			<Tag name="Terrasse">
+				<User nickname="Ivan"/>
+				<User nickname="Boris"/>
+			</Tag>
+	
+		</Tags>
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="24/01/2008" nickname="Fred">
+		<Informations>
+			<Name>Piola</Name>
+			<Address>
+				<Street>Rue du page</Street>
+				<Num>2</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.359633</Longitude>
+				<Latitude>50.824129</Latitude>
+			</Address>
+			<Tel>02/538 91 29</Tel>
+			<Snack/>
+		</Informations>
+		<Comments>
+			<Comment nickname="Sarah" date="2/05/2008" score="1">Serveurs pas sympas. Carte ridicule.</Comment>
+			<Comment nickname="Fred" date="2/05/2008" score="2">Cher, tapas et vin pas mal.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Bar à vin">
+				<User nickname="Sarah"/>
+				<User nickname="Serge"/>
+				<User nickname="Fred"/>
+			</Tag>		
+		</Tags>
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="2/032008" nickname="Fred">
+		<Informations>
+			<Name>Pantin</Name>
+			<Address>
+				<Street>Chaussée d'ixelles</Street>
+				<Num>355</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.371326</Longitude>
+				<Latitude>50.827992</Latitude>
+			</Address>
+			<Tel>02/644 80 91</Tel>
+			<Smoking/>
+		</Informations>
+		<Comments>
+			<Comment nickname="Ivan" date="2/10/2008" score="5">Bar de gauchistes dont le patron s'appelle Jean-Marie.</Comment>
+			<Comment nickname="Joelle" date="9/10/2008" score="3">Très enfumé.</Comment>
+			<Comment nickname="Fred" date="9/10/2008" score="4">Sympaz, pas cher, jeu d'échec.</Comment>
+
+		</Comments>
+		<Tags>
+
+			<Tag name="Fumeur">
+				<User nickname="Joelle"/>
+				<User nickname="Brenda"/>
+				<User nickname="Fred"/>
+			</Tag>
+				
+			<Tag name="Echec">
+				<User nickname="Serge"/>
+				<User nickname="Sarah"/>
+				<User nickname="Fred"/>
+			</Tag>	
+		</Tags>
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="1/08/2008" nickname="Fred">
+		<Informations>
+			<Name>Gauguin</Name>
+			<Address>
+				<Street>Chaussée de Boondael</Street>
+				<Num>420</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.388552</Longitude>
+				<Latitude>50.817414</Latitude>
+			</Address>
+			<Tel>02/646 39 72</Tel>
+			<Smoking/>
+		</Informations>
+		<Comments>
+			<Comment nickname="Boris" date="5/10/2008" score="3">Réservé uniquement aux étudiants.</Comment>
+			<Comment nickname="Serge" date="5/09/2008" score="4">Ambiance festive.</Comment>
+			<Comment nickname="Ivan" date="1/10/2008" score="2">Très bruyant.</Comment>
+			<Comment nickname="Fred" date="1/10/2008" score="2">Impossible d'avoir une bière après 20h, trop de monde.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Fumeur">
+				<User nickname="Sarah"/>
+				<User nickname="Fred"/>
+			</Tag>		
+		</Tags>
+	</Cafe>
+	
+	
+	
+	
+	<Cafe creationDate="2/10/2008" nickname="Boris">
+		<Informations>
+			<Name>Le Corto</Name>
+			<Address>
+				<Street>Chaussée de Boondael</Street>
+				<Num>485</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.390143</Longitude>
+				<Latitude>50.815315</Latitude>
+			</Address>
+			<Tel>02/000 00 00</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+	
+		<Comments>
+			<Comment nickname="Boris" date="2/10/2008" score="4">Minuscule bar mais très bonne ambiance. Prix très raisonnables et service à table. Le saucisson goute la nourriture pour chats. Cacahuètes gratuites. Terrasse sur la rue.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Fumeur">
+				<User nickname="Serge"/>
+				<User nickname="Sarah"/>
+				<User nickname="Fred"/>
+			</Tag>
+				
+			<Tag name="Terrasse">
+				<User nickname="Joelle"/>
+				<User nickname="Boris"/>
+			</Tag>	
+		</Tags>
+	</Cafe>
+	
+	
+	
+	
+	
+	
+	<Cafe creationDate="2/04/2008" nickname="Boris">
+		<Informations>
+			<Name>Suprabailly</Name>
+			<Address>
+				<Street>Rue du bailli</Street>
+				<Num>77</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.360097</Longitude>
+				<Latitude>50.825774</Latitude>
+			</Address>
+			<Tel>02/534 09 01</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+	
+		<Comments>
+			<Comment nickname="Brenda" date="2/10/2008" score="3">Super ambiance !</Comment>
+			<Comment nickname="Boris" date="2/09/2008" score="4"> Les habitués y viennent souvent entre amis et en soirée l’atmosphère y est à l’humour et à la bonne humeur !</Comment>
+		</Comments>
+	</Cafe>
+	
+	
+	
+	
+	<Cafe creationDate="4/04/2003" nickname="Boris">
+		<Informations>
+			<Name>SuperMercado</Name>
+			<Address>
+				<Street>Rue de Florence</Street>
+				<Num>100</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.36018</Longitude>
+				<Latitude>50.8296</Latitude>
+			</Address>
+			<Tel>02/222 22 22</Tel>
+			<Smoking/>
+		</Informations>	
+		<Comments>
+			<Comment nickname="Ivan" date="2/10/2008" score="4">Bar à cocktails très sympas - Quelques bon vins Espagnols</Comment>
+			<Comment nickname="Fred" date="2/10/2008" score="4">Bonne adresse.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Bar à vin">
+				<User nickname="Brenda"/>
+				<User nickname="Ivan"/>
+				<User nickname="Boris"/>
+			</Tag>
+				
+				
+			<Tag name="Fumeur">
+				<User nickname="Sarah"/>
+				<User nickname="Joelle"/>
+				<User nickname="Fred"/>
+			</Tag>
+		</Tags>
+	</Cafe>
+	
+	
+	
+	
+	
+	
+	
+	<Cafe creationDate="2/09/2008" nickname="Fred">
+		<Informations>
+			<Name>Brasserie L'union</Name>
+			<Address>
+				<Street>Parvis de Saint-Gilles</Street>
+				<Num>55</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.346077</Longitude>
+				<Latitude>50.830774</Latitude>
+			</Address>
+			<Tel>02/538 15 79</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+	
+		<Comments>
+			<Comment nickname="Serge" date="30/10/2008" score="5">Un beau petit coin où il fait bon vivre, on s’y sent à la maison avec des bons petits plats et une ambiance multicolore... Le vrai visage de Bruxelles, qualité et ambiance! You wanna go where everybody knows your name…</Comment>
+			<Comment nickname="Boris" date="05/09/2008" score="5">Délicieux troquet, l'Union, avec sa faune toujours changeante et le plus souvent de bonne humeur. Les alcools à moins de 4 Euro y sont certainement pour quelque chose..</Comment>
+			<Comment nickname="Fred" date="05/09/2008" score="5">Top.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Fumeur">
+				<User nickname="Boris"/>
+				<User nickname="Brenda"/>
+				<User nickname="Fred"/>
+			</Tag>
+			
+			<Tag name="Bon marché">
+				<User nickname="Boris"/>
+				<User nickname="Ivan"/>
+				<User nickname="Fred"/>
+			</Tag>
+			
+		
+		</Tags>
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="4/07/2004" nickname="Fred">
+		<Informations>
+			<Name>Greenwich</Name>
+			<Address>
+				<Street>Rue des Chartreux</Street>
+				<Num>5</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.347482</Longitude>
+				<Latitude>50.848845</Latitude>
+			</Address>
+			<Tel>02/511 41 67</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+		<Comments>
+			<Comment nickname="Fred" date="5/06/2006" score="4">bistrot tranquille, jeux d'échecs pour les passionnes, authentique</Comment>
+			<Comment nickname="Ivan" date="2/10/2007" score="1">-35 ans s'abstenir</Comment>
+			<Comment nickname="Serge" date="13/09/2008" score="3">bon rapport qualité prix</Comment>
+
+		</Comments>
+		<Tags>
+			<Tag name="Echec">
+				<User nickname="Serge"/>
+				<User nickname="Boris"/>
+				<User nickname="Fred"/>
+			</Tag>
+			
+			<Tag name="Fumeur">
+				<User nickname="Ivan"/>
+				<User nickname="Joelle"/>
+				<User nickname="Fred"/>
+			</Tag>
+			
+			<Tag name="Bon marché">
+				<User nickname="Fred"/>
+				<User nickname="Ivan"/>
+				<User nickname="Boris"/>
+			</Tag>
+		</Tags>
+	</Cafe>
+	
+	
+	
+	<Cafe creationDate="2/10/2008" nickname="Fred">
+		<Informations>
+			<Name>Michael Collins</Name>
+			<Address>
+				<Street>Rue du Bailli</Street>
+				<Num>1</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.363494</Longitude>
+				<Latitude>50.827167</Latitude>
+			</Address>
+			<Tel>02/644 61 21</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+		<Comments>
+			<Comment nickname="Sarah" date="4/10/2008" score="3">Un pub traditionnel Irlandais dans Bruxelles avec comme activité principale la retransmission de match de foot ou de rugby. Bière à 4 euros et cocktails à 5 euros.</Comment>
+			<Comment nickname="Brenda" date="3/10/2008" score="3">Pub assez chèr</Comment>
+			<Comment nickname="Fred" date="3/10/2008" score="3">WiFi, quand ca marche. Hamburger++.</Comment>
+		</Comments>
+		<Tags>
+			<Tag name="Service au bar">
+				<User nickname="Serge"/>
+				<User nickname="Ivan"/>
+				<User nickname="Joelle"/>					  
+			</Tag>
+			
+			<Tag name="WiFi">
+				<User nickname="Fred"/>
+				<User nickname="Boris"/>
+				<User nickname="Sarah"/>
+			</Tag>	
+		</Tags>
+	</Cafe>
+	
+	
+	
+	
+	<Cafe creationDate="19/01/2008" nickname="Fred">
+		<Informations>
+			<Name>de Valera's</Name>
+			<Address>
+				<Street>Place Flagey</Street>
+				<Num>17</Num>
+				<Zip>1050</Zip>
+				<City>Ixelles</City>
+				<Longitude>4.371694</Longitude>
+				<Latitude>50.827513</Latitude>
+			</Address>
+			<Tel>02/649 80 54</Tel>
+			<Smoking/>
+			<Snack/>
+		</Informations>
+	
+		<Comments>
+			<Comment nickname="Fred" date="1/03/2008" score="3">Pub irlandais. Très bonne petite restauration surtout le Hamburger++.</Comment>
+			<Comment nickname="Sarah" date="9/02/2008" score="4">Serveuses charmantes mais ne parlent pas français.</Comment>
+			<Comment nickname="Boris" date="1/06/2008" score="1">Très plein les soirs de match, bruyant et enfumé.</Comment>			
+		</Comments>
+		<Tags>
+			<Tag name="WiFi">
+				<User nickname="Fred"/>
+				<User nickname="Brenda"/>
+				<User nickname="Fred"/>
+			</Tag>		
+			<Tag name="Fumeur">
+				<User nickname="Fred"/>
+				<User nickname="Boris"/>
+				<User nickname="Brenda"/>
+				<User nickname="Sarah"/>
+				<User nickname="Joelle"/>
+			</Tag>
+			<Tag name="Terrasse">
+				<User nickname="Fred"/>
+				<User nickname="Ivan"/>
+				<User nickname="Serge"/>
+			</Tag>	
+		</Tags>
+	</Cafe>
+</Cafes>	
+
+	
+	
+	
