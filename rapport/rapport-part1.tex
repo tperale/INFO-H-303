@@ -51,7 +51,8 @@ Les contraintes sont les suivantes :
   \item La longitude et la latitude doivent être comris entre -180 et 180.
   \item Le nom d'utilisateur est unique.
   \item L'email d'utilisateur est unique.
-  \item Pour les commentaire, le couple (id_utilisateur, date) est unique.
+  \item Pour les commentaire, le couple (IdUtilisateur, date) est unique. Donc
+      un même utilisateur ne peut pas écrire deux commentaires en même temps.
   \item Pour les labels, le triplet : (Label, IdArticle, IdUtilisateur) est
       unique, ça veut dire qu'une personne ne peut pas ajouter deux fois le
       même label.
@@ -62,8 +63,7 @@ Les contraintes sont les suivantes :
       temps.
   \item La Date de création d'un établissement doit précéder celle de ses commentaires.
   \item La Date d'enregistrement d'un admin doit précéder celle de création d'un établissement par celui-ci.
-  \item La Date d'enregistrement d'un utilisateur doit être antérieur celle où il a écrit un commentaire.
-  \item Un même utilisateur ne peut pas écrire deux commentaire en même temps.
+  \item La Date d'enregistrement d'un utilisateur doit être antérieur à celle où il a écrit un commentaire.
 \end{itemize}
 
 
@@ -113,9 +113,33 @@ Les contraintes sont les suivantes :
     \end{description}
 \end{description}
 
-\section{Hypothèses}
+\subsection{Contraintes}
 
+\begin{itemize}
+    \item On doit d'abord créer l'établissement avant de créer sa
+        spécialisation (restaurant, bar, hotel) de manière à pouvoir
+        référencer cet établissement.
+\end{itemize}
+
+\section{Hypothèses}
 Les utilisateur "admin" sont encodé directement dans la base de donnée.
+\newline
+
+Il est marqué dans l'énoncé :
+\begin{quote}
+    Les utilisateurs peuvent commenter plusieurs fois le même
+    établissement à des dates différentes.
+\end{quote}
+Les dates seront stocké dans ma base de donnée sous forme de \emph{timestamp},
+dés lors un utilisateur ne pourra pas envoyer deux message lors de la même seconde.
+\newline
+
+Un administrateur peut modifier un établissement, mais j'ai décidé de ne pas
+stocker les dates de modification mais seulement celle de création.
+\newline
+
+Les adresses mails ainsi que les mot de passes des \emph{Utilisateur} qui nous
+sont fournis dans le fichier \emph{Data.zip} peuvent être choisis.
 
 \section{Justification}
 
