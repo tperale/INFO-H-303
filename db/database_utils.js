@@ -158,7 +158,7 @@ module.exports = {
                 console.log("ID does not exist.");
                 return;            
             }
-            bar.smoker = row.smoker_allowed;
+            bar.smokers = row.smokers;
             bar.snacks = row.snacks;
         });
 
@@ -207,7 +207,7 @@ module.exports = {
             var st = db.prepare(command);
             st.run(restaurant, function (err) {
                 if (err) {
-                    console.log("ERROR WHILE INSERTING BAR : " + err);
+                    console.log("ERROR WHILE INSERTING RESTAURANT : " + err);
                     return;
                 }
             });
@@ -277,44 +277,35 @@ module.exports = {
         return bar;
     },
 
-    new_bar : function (latitude,
-                        longitude,
-                        name,
-                        address_street,
-                        address_town,
-                        address_number,
-                        address_zip,
-                        phone_number,
-                        website,
-                        smoker,
-                        snacks,
-                        creator) 
-    {
+    new_bar : function (obj, callback) {
         var establishment = {
-            $latitude : latitude,
-            $longitude : longitude,
-            $name : name,
-            $address_street : address_street,
-            $address_town : address_town,
-            $address_number : address_number,
-            $address_zip : address_zip,
-            $phone_number : phone_number,
-            $website : website,
-            $created_by : creator
+            $name : obj.name,
+            $latitude : obj.latitude,
+            $longitude : obj.longitude,
+            $address_street : obj.address_street,
+            $address_town : obj.address_town,
+            $address_number : obj.address_number,
+            $address_zip : obj.address_zip,
+            $phone_number : obj.phone_number,
+            $website : obj.website,
+            $created_by : obj.created_by
         };
 
         var bar = {
-            $smoker : smoker,
-            $snacks : snacks,
+            $smokers : obj.smokers,
+            $snacks : obj.snacks,
         };
 
         insert_establishment(establishment, function (id) {
-            var command = "INSERT INTO bar (id, smoker_allowed, snacks) VALUES (" + id + ", $smoker, $snacks)";
+            var command = "INSERT INTO bar (id, smokers, snacks) VALUES (" + id + ", $smokers, $snacks)";
             var st = db.prepare(command);
             st.run(bar, function (err) {
                 if (err) {
                     console.log("ERROR WHILE INSERTING BAR : " + err);
                     return;
+                }
+                if (callback) {
+                    callback(id); 
                 }
             });
         });
@@ -333,7 +324,7 @@ module.exports = {
             website : null,
             created_by : null,
 
-            smoker : null,
+            smokers : null,
             snacks : null
         };
 
@@ -360,7 +351,7 @@ module.exports = {
             console.log("OKOK");
         });
 
-        db.get("SELECT smoker_allowed, snacks FROM bar WHERE id=" + id, function(err, row) {
+        db.get("SELECT smokers, snacks FROM bar WHERE id=" + id, function(err, row) {
             if (err) {
                 console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 
                 return;
@@ -368,7 +359,7 @@ module.exports = {
                 console.log("ID does not exist.");
                 return;            
             }
-            bar.smoker = row.smoker_allowed;
+            bar.smokers = row.smokers;
             bar.snacks = row.snacks;
         });
 

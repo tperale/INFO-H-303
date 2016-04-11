@@ -71,63 +71,65 @@ var parse_bars = function () {
     var bars_array = obj.root.children;
 
     for (var i = 0; i < bars_array.length; ++i) {
+        var bar_obj = {};
+
         var bar = bars_array[i];
 
         var info = bar.children[0];
         var comment = bar.children[1];
         var label = bar.children[2];
 
-        var name = info.children[0].content;
-
-        var est_create_date = bar.attributes.creationDate;
-        var est_create_name = bar.attributes.nickname;
+        bar_obj.name = info.children[0].content;
+        bar_obj.creation_date = bar.attributes.creationDate;
+        bar_obj.created_by = bar.attributes.nickname;
 
         var address = info.children[1].children; // Array of info
-        var address_street = address[0].content;
-        var address_num = address[1].content;
-        var address_zip = address[2].content;
-        var address_city = address[3].content;
 
-        var longitude = address[4].content; // Must be Integer
-        var latitude =  address[5].content; // Must be Integer
+        bar_obj.address_street = address[0].content;
+        bar_obj.address_number = address[1].content;
+        bar_obj.address_zip = address[2].content;
+        bar_obj.address_town = address[3].content;
 
-        var phone_number = info.children[2].content ; // Array of info
+        bar_obj.longitude = address[4].content; // Must be Integer
+        bar_obj.latitude =  address[5].content; // Must be Integer
 
-        var website = null;
+        var current = 2; // Garde en mémoire le numéro utilisé mtn.
 
-        var smokers_allowed = 0;
-        var snacks = 0;
-        if (info.children.length > 3) {
-            if (info.children[3].name == "Smoking") {
-                smokers_allowed = 1;
-            } else if (info.children[3].name == "Snack") {
-            snacks = 1;
+        bar_obj.phone_number = null;
+        bar_obj.website = null;
+        if (info.children.length > current && info.children[current].name == "Tel") {
+            bar_obj.phone_number = info.children[current].content;
+            ++current;
+        } else if (info.children.length > current && info.children[current].name == "Site") {
+            bar_obj.website = info.children[current].attributes.link;
+            ++current;
+        }
+
+        if (info.children.length > current && info.children[current].name == "Tel") {
+            bar_obj.phone_number = info.children[current].content;
+            ++current;
+        } else if (info.children > current && info.children[current].name == "Site") {
+            bar_obj.website = info.children[current].attributes.link;
+            ++current;
+        }
+
+        bar_obj.smokers = 0;
+        bar_obj.snacks = 0;
+        if (info.children.length > current) {
+            if (info.children[current].name == "Smoking") {
+                bar_obj.smokers = 1;
+            } else if (info.children[current].name == "Snack") {
+                bar_obj.snacks = 1;
             } 
 
-            if ((info.children.length > 4) && info.children[4].name == "Snack") {
-                snacks = 1;
+            if ((info.children.length > current) && info.children[current].name == "Snack") {
+                bar_obj.snacks = 1;
             }
         }
 
-
-        console.log("-----------------------------------------------");
-        console.log("BAR : " + name + " (created by : " +  est_create_name + " on " + est_create_date + ").");
-        console.log("Address is : " + address_street + ", " +  address_num + " : " + address_city + " (" + address_zip + ").");
-        console.log("Longitude : " + longitude + " + latitude " +  latitude);
-        console.log("Phone : " + phone_number);
-        if (smokers_allowed)
-            console.log("Smokers allowed.");
-        else
-            console.log("No Smokers.");
-        if (snacks)
-            console.log("Sell also snacks.");
-        else
-            console.log("Don't sell any snacks.");
-        console.log("-----------------------------------------------");
-
-        parse_comment();
-
-        db.new_bar(latitude, longitude, name, address_street, address_city, address_num, address_zip, phone_number, website, smokers_allowed, snacks, est_create_name);
+        db.new_bar(bar_obj, function () {
+        
+        });
     }
 };
 
@@ -229,6 +231,6 @@ var parse_restaurant = function () {
     }
 };
 
-// parse_bars();
+parse_bars();
 parse_restaurant();
 // update_date_user();
