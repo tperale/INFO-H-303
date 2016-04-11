@@ -19,11 +19,11 @@ CREATE TABLE IF NOT EXISTS establishment (
 
     picture BLOB,
 
-    /* creation_date DATETIME NOT NULL DEFAULT NOW(), */
-    created_by INTEGER,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by TEXT,
 
     CONSTRAINT USER_EXIST
-        FOREIGN KEY (created_by) REFERENCES account (id)
+        FOREIGN KEY (created_by) REFERENCES account (username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS restaurant (
 
     delivery BOOLEAN NOT NULL,
 
-    timetable INTEGER NOT NULL, 
+    timetable INTEGER, 
 
     CONSTRAINT ESTABLISHEMENT_EXIST
         FOREIGN KEY (id) REFERENCES establishment(id)
@@ -80,13 +80,13 @@ CREATE TABLE IF NOT EXISTS hotel (
 );
 
 CREATE TABLE IF NOT EXISTS account (
-    id INTEGER PRIMARY KEY NOT NULL,
-
     username TEXT NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
 
     admin BOOL DEFAULT 0,
+
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     UNIQUE(username),
     UNIQUE(email)
@@ -95,9 +95,9 @@ CREATE TABLE IF NOT EXISTS account (
 CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY NOT NULL,
 
-    user_id INTEGER NOT NULL,
+    username TEXT NOT NULL,
 
-    timestamp DATE,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     establishment_id INTEGER NOT NULL,
 
@@ -114,11 +114,11 @@ CREATE TABLE IF NOT EXISTS comments (
         ON DELETE CASCADE,
 
     CONSTRAINT USER_EXIST
-        FOREIGN KEY (user_id) REFERENCES account (id)
+        FOREIGN KEY (username) REFERENCES account (username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    UNIQUE(user_id, timestamp)
+    UNIQUE(username, timestamp)
 );
 
 CREATE TABLE IF NOT EXISTS label (
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS label (
 
     name TEXT NOT NULL,
 
-    user_id INTEGER NOT NULL,
+    username TEXT NOT NULL,
 
     establishment_id INTEGER NOT NULL,
 
@@ -136,9 +136,9 @@ CREATE TABLE IF NOT EXISTS label (
         ON DELETE CASCADE,
 
     CONSTRAINT USER_EXIST
-        FOREIGN KEY (user_id) REFERENCES account (id)
+        FOREIGN KEY (username) REFERENCES account (username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    UNIQUE (name, establishment_id, user_id)
+    UNIQUE (name, establishment_id, username)
 );
