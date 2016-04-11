@@ -48,7 +48,7 @@ var insert_establishment = function (establishment, callback) {
 
     st.run(establishment, function (err) {
         if (err) {
-            console.log("ERROR WHILE INSERTING ESTABLISHMENT : " + err); 
+            console.log("ERROR WHILE INSERTING ESTABLISHMENT : " + err);
             return;
         }
         var cmd = "SELECT id FROM establishment WHERE latitude=" + establishment.$latitude + " AND longitude=" + establishment.$longitude;
@@ -57,8 +57,8 @@ var insert_establishment = function (establishment, callback) {
                 console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 
                 return;
             }
-            console.log("ROW ID " + row.id);
-            callback(row.id); 
+            if (callback)
+                callback(row.id); 
         });
     });
 };
@@ -162,56 +162,56 @@ module.exports = {
             bar.snacks = row.snacks;
         });
 
-        return bar;
+        return hotel;
     },
 
-    new_restaurant : function (latitude,
-                               longitude,
-                               name,
-                               address_street,
-                               address_town,
-                               address_number,
-                               address_zip,
-                               phone_number,
-                               website,
-                               creator,
-                               price,
-                               seat_number,
-                               takeaway,
-                               delivery,
-                               timetable) 
-    {
+    /* latitude,
+     * longitude,
+     * name,
+     * address_street,
+     * address_town,
+     * phone_number,
+     * website,
+     * creator,
+     * price,
+     * seat_number,
+     * takeaway,
+     * delivery,
+     * timetable
+     */
+    new_restaurant : function (obj, callback) {
         var establishment = {
-            $latitude : latitude,
-            $longitude : longitude,
-            $name : name,
-            $address_street : address_street,
-            $address_town : address_town,
-            $address_number : address_number,
-            $address_zip : address_zip,
-            $phone_number : phone_number,
-            $website : website,
-            $created_by : creator
+            $name : obj.name,
+            $latitude : obj.latitude,
+            $longitude : obj.longitude,
+            $address_street : obj.address_street,
+            $address_town : obj.address_town,
+            $address_number : obj.address_number,
+            $address_zip : obj.address_zip,
+            $phone_number : obj.phone_number,
+            $website : obj.website,
+            $created_by : obj.created_by
 
         };
 
         var restaurant = {
-            $price : price,
-            $seat_number : seat_number,
-            $takeaway : takeaway,
-            $delivery : delivery,
-            $timetable : timetable
+            $price : obj.price,
+            $seat_number : obj.seat_number,
+            $takeaway : obj.takeaway,
+            $delivery : obj.delivery,
+            $timetable : obj.timetable
         };
 
         insert_establishment(establishment, function (id) {
             var command = "INSERT INTO restaurant (id, price, seat_number, takeaway, delivery, timetable) VALUES (" + id + ", $price, $seat_number, $takeaway, $delivery, $timetable)";
             var st = db.prepare(command);
-            st.run(bar, function (err) {
+            st.run(restaurant, function (err) {
                 if (err) {
                     console.log("ERROR WHILE INSERTING BAR : " + err);
                     return;
                 }
             });
+            callback(id);
         });
     },
 
@@ -373,6 +373,58 @@ module.exports = {
         });
 
         return bar;
+    },
+
+    add_user : function (obj, callback) {
+        var user = {
+            
+        };
+    },
+
+    add_admin : function (obj, callback) {
+        db.get("SELECT username FROM account WHERE username=" + obj.username, function(err, row) {
+            // if (err) {
+            //     console.log("ERROR getting username (" + obj.username + ") in ACCOUNT : " + err);
+            //     return;
+            // }
+
+            if (row) {
+                // User already exist, promotion to admin.
+                db.run("UPDATE account SET admin=1 WHERE username=" + obj.username, function (err) {
+                    if (err) {
+                        console.log("CANNOT update to admin.");
+                    }
+                    callback();
+                });
+            } else {
+                // Undefined row, need to add new user.
+                var admin = {};
+                admin.$username = obj.username;
+
+                if (obj.email) {
+                    admin.$email = obj.email;
+                } else {
+                    admin.$email = obj.username + "@horeca.com";
+                }
+
+                if (obj.password) {
+                    admin.$password = obj.password;
+                } else {
+                    admin.$password = "admin";
+                }
+
+                var command = "INSERT INTO account (username, email, password, admin) VALUES ($username, $email, $password, 1)";
+                var st = db.prepare(command);
+                st.run(admin, function (err) {
+                    if (err) {
+                        console.log("ERROR WHILE INSERTING ACCOUNT : " + err);
+                        return;
+                    }
+                    if (callback) 
+                        callback();
+                });
+            }
+        });
     },
 
     get_establishment_type : function (id, callback) {
