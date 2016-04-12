@@ -125,4 +125,15 @@ module.exports = {
 
         return restaurant;
     },
+
+    get_restaurant_id : function () {
+        var result = [];
+
+        db.each("SELECT id FROM restaurant", function (err, row) {
+            result.push(row.id);
+        });
+
+        return result;
+    },
+
 };

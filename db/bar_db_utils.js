@@ -116,4 +116,14 @@ module.exports = {
 
         return bar;
     },
+
+    get_bar_id : function () {
+        var result = [];
+
+        db.each("SELECT id FROM bar", function (err, row) {
+            result.push(row.id);
+        });
+
+        return result;
+    },
 };

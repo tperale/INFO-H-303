@@ -117,4 +117,16 @@ module.exports = {
 
         return hotel;
     },
+
+    get_hotel_id : function () {
+        var result = [];
+
+        db.each("SELECT id FROM hotel", function (err, row) {
+            result.push(row.id);
+        });
+
+        return result;
+    },
+
+
 };

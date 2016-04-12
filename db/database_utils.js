@@ -159,35 +159,32 @@ module.exports = {
         });
     },
 
-    pick_random : function (number, establishment_number) {
+    pick_random_from : function (number, array) {
         var result = [];
 
-        var sample = range.range(1, establishment_number + 1);
-
-        var random_id = Random.sample(Random.engines.nativeMath, sample, number);
-
-        console.log("RANDOM : " + random_id);
+        var random_id = Random.sample(Random.engines.nativeMath, array, number);
 
         random_id.map(function (currentValue, index, array) {
             get_establishment_type (currentValue, function (type, id) {
                 switch (type) {
                     case "bar":
                         result.push(bar_db_utils.get_bar(id));
-                        // result.push(id);
                         break;
                     case "restaurant":
                         result.push(restaurant_db_utils.get_restaurant(id));
-                        // result.push(id);
                         break;
                     case "hotel":
                         result.push(hotel_db_utils.get_hotel(id));
-                        // result.push(id);
                         break;
                 }
             });
         });
 
         return result;
+    },
+
+    pick_random : function (number, establishment_number) {
+        return this.pick_random_from (number, range.range(1, establishment_number + 1));
     },
 
     get_establishment_locations : function (callback) {
