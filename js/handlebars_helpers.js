@@ -1,3 +1,8 @@
+var db = require('../db/database_utils.js');
+var bar = require('../db/bar_db_utils.js');
+var hotel = require('../db/hotel_db_utils.js');
+var restaurant = require('../db/restaurant_db_utils.js');
+
 var min = function (one, two) {
     if (one < two) {
         return one; 
@@ -136,15 +141,15 @@ module.exports = {
             result += "<p><span class=\"glyphicon glyphicon-road\" aria-hidden=\"true\"></span>" + establishments[i].address_street + ", " + establishments[i].address_number + " (" + establishments[i].address_town + ")." + "</p>";
             result += "<p><span class=\"glyphicon glyphicon-earphone\" aria-hidden=\"true\"></span>" + establishments[i].phone_number + "</p>";
             if (establishments[i].website)
-                resulestablishments[i].websitet += "<p><span class=\"glyphicon glyphicon-cloud\" aria-hidden=\"true\"></span><a href\"" + establishments[i].website + "\">" + establishments[i].website+ "</a></p>";
+                result += "<p><span class=\"glyphicon glyphicon-cloud\" aria-hidden=\"true\"></span><a href=\"" + establishments[i].website + "\">" + establishments[i].website + "</a></p>";
             result += "<p><a href=\"/establishment/" + establishments[i].id + "\" class=\"btn btn-primary\" role=\"button\">Me montrer</a></p>";
             result += "</div>";
             result += "</div>";
             result += "</div>";
-
         }
+
         result += "</div>";
 
         return result;
-    }
+    },
 };

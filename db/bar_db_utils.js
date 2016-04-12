@@ -117,11 +117,15 @@ module.exports = {
         return bar;
     },
 
-    get_bar_id : function () {
+    get_bar_id : function (callback) {
         var result = [];
 
-        db.each("SELECT id FROM bar", function (err, row) {
-            result.push(row.id);
+        db.all("SELECT id FROM bar", function (err, rows) {
+            rows.map(function (currentValue, index, array) {
+                result.push(currentValue.id);
+            });
+            callback(result);
+
         });
 
         return result;

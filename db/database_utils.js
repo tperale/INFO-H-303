@@ -187,6 +187,17 @@ module.exports = {
         return this.pick_random_from (number, range.range(1, establishment_number + 1));
     },
 
+    pick : function (type, callback) {
+        switch (type) {
+            case "bar":
+                bar_db_utils.get_bar_id(callback);
+            case "restaurant":
+                restaurant_db_utils.get_restaurant_id(callback);
+            case "hotel":
+                hotel_db_utils.get_hotel_id(callback);
+        }
+    },
+
     get_establishment_locations : function (callback) {
         var result = [];
 

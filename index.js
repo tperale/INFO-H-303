@@ -60,16 +60,48 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/establishments/restaurants/',  function (req, res) {
-    res.render('establishments/restaurants');
+app.get('/establishments/restaurants',  function (req, res) {
+    database_utils.pick("restaurant", function (restaurants) {
+        console.log("RESTO : " + restaurants);
+        res.render('establishments/showoff', {
+            restaurants : database_utils.pick_random_from(6, restaurants),
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            }
+        });
+    });
 });
 
 app.get('/establishments/bars',  function (req, res) {
-    res.render('establishments/bars');
+    database_utils.pick("bar", function (bars) {
+        res.render('establishments/showoff', {
+            bars : database_utils.pick_random_from(6, bars),
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            }
+        });
+    });
 });
 
 app.get('/establishments/hotels',  function (req, res) {
-    res.render('establishments/hotels');
+    database_utils.pick("hotel", function (hotels) {
+        res.render('establishments/showoff', {
+            hotels : database_utils.pick_random_from(6, hotels),
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            }
+        });
+    });
+});
+
+app.get('/establishments/',  function (req, res) {
+    res.render('establishments/showoff', {
+        restaurant : database_utils.pick_random_from(3, database_utils.pick("restaurant")),
+        bars : database_utils.pick_random_from(3, database_utils.pick("bar")),
+    });
 });
 
 app.get('/establishment/:id',  function (req, res) {
