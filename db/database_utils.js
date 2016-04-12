@@ -11,6 +11,9 @@ var restaurant_db_utils = require('./restaurant_db_utils.js');
 var bar_db_utils = require('./bar_db_utils.js');
 var hotel_db_utils = require('./hotel_db_utils.js');
 
+var Random = require('random-js');
+var range = require('range');
+
 if (!exists) {
     console.log("Creating DB file.");
     fs.openSync(file, "w");
@@ -28,6 +31,38 @@ db.serialize(function () {
         });
     }
 });
+
+var get_establishment_type = function (id, callback) {
+    db.get("SELECT id FROM bar WHERE id=" + id, function(err, row) {
+        if (err) {
+            console.log(err); 
+            return;
+        } else if (!row) {
+            return;
+        }
+        callback("bar", id);
+    });
+
+    db.get("SELECT id FROM restaurant WHERE id=" + id, function(err, row) {
+        if (err) {
+            console.log(err); 
+            return;
+        } else if (!row) {
+            return;
+        }
+        callback("restaurant", id);
+    });
+
+    db.get("SELECT id FROM hotel WHERE id=" + id, function(err, row) {
+        if (err) {
+            console.log(err); 
+            return;
+        } else if (!row) {
+            return;
+        }
+        callback("hotel", id);
+    });
+};
 
 module.exports = {
     new_hotel : hotel_db_utils.new_hotel,
@@ -107,38 +142,8 @@ module.exports = {
         });
     },
 
-    get_establishment_type : function (id, callback) {
-        db.get("SELECT id FROM bar WHERE id=" + id, function(err, row) {
-            if (err) {
-                console.log(err); 
-                return;
-            } else if (!row) {
-                return;
-            }
-            callback("bar");
-        });
-
-        db.get("SELECT id FROM restaurant WHERE id=" + id, function(err, row) {
-            if (err) {
-                console.log(err); 
-                return;
-            } else if (!row) {
-                return;
-            }
-            callback("restaurant");
-        });
-
-        db.get("SELECT id FROM hotel WHERE id=" + id, function(err, row) {
-            if (err) {
-                console.log(err); 
-                return;
-            } else if (!row) {
-                return;
-            }
-            callback("hotel");
-        });
-    },
-
+    get_establishment_type : get_establishment_type,
+        
     get_establishment_image : function (id, callback) {
     
     },
@@ -156,10 +161,15 @@ module.exports = {
 
     pick_random : function (number, establishment_number) {
         var result = [];
-        for (var i = 0; i < number; ++i) {
-            var id = Math.floor(Math.random() * (establishment_number + 1));
-            console.log(" RANDOM : " + id);
-            this.get_establishment_type (id, function (type) {
+
+        var sample = range.range(1, establishment_number + 1);
+
+        var random_id = Random.sample(Random.engines.nativeMath, sample, number);
+
+        console.log("RANDOM : " + random_id);
+
+        random_id.map(function (currentValue, index, array) {
+            get_establishment_type (currentValue, function (type, id) {
                 switch (type) {
                     case "bar":
                         result.push(bar_db_utils.get_bar(id));
@@ -175,7 +185,8 @@ module.exports = {
                         break;
                 }
             });
-        }
+        });
+
         return result;
     },
 

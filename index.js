@@ -1,6 +1,8 @@
 var database_utils = require('./db/database_utils.js');
 var utils = require('./js/utils.js');
 
+var helpers_fun = require('./js/handlebars_helpers.js');
+
 var express = require('express');
 
 var app = express();
@@ -41,7 +43,14 @@ app.get('/',  function (req, res) {
         res.render('home', {
             main : utils.average_location_calculus(establishments_locations),
             number : establishments_locations.length,
-            location : establishments_locations
+            location : establishments_locations,
+            establishments : database_utils.pick_random(6, establishments_locations.length),
+
+            helpers : {
+                // number_of_establishment : helpers_fun.count_list
+                count_list : helpers_fun.count_list,
+                thumbnailing : helpers_fun.thumbnailing
+            }
         });
     });
 });

@@ -85,14 +85,14 @@ var makeCarousel = function (list, design) {
     for (i = 0; i < min(list.length, 3); ++i) {
         result += design(list[i]);
     }
-    result "</div>";
+    result += "</div>";
 
     while (i < list.length) {
         result += "<div class=\"item\">"
         for (i = 0; i < 4; ++i) {
             result += design(list[i]);
         }
-        result "</div>";
+        result += "</div>";
     }
 
     return result;
@@ -107,5 +107,44 @@ var stars_maker = function (number) {
         } else {
             result += " <span class=\"glyphicon glyphicon-star-empty\"></span>";
         }
+    }
+};
+
+module.exports = {
+    count_list : function (list) {
+        return list.length;
+    },
+
+    thumbnailing : function (establishments) {
+        var result = "";  
+
+        var current = -1;
+
+        result += "<div class=\"row\">";
+        for (var i = 0; i < establishments.length; ++i) {
+            if ( (i % 3) == 0) {
+                result += "</div>";
+                result += "<div class=\"row\">";
+            }
+
+            result += "<div class=\"col-sm-6 col-md-4\"><div class=\"thumbnail\">";
+            result += "<img src=\"/image/" + establishments[i].id + "\">";
+            result += "<div class=\"caption\">";
+
+            result += "<h3>" + establishments[i].name + "</h3>";
+
+            result += "<p><span class=\"glyphicon glyphicon-road\" aria-hidden=\"true\"></span>" + establishments[i].address_street + ", " + establishments[i].address_number + " (" + establishments[i].address_town + ")." + "</p>";
+            result += "<p><span class=\"glyphicon glyphicon-earphone\" aria-hidden=\"true\"></span>" + establishments[i].phone_number + "</p>";
+            if (establishments[i].website)
+                resulestablishments[i].websitet += "<p><span class=\"glyphicon glyphicon-cloud\" aria-hidden=\"true\"></span><a href\"" + establishments[i].website + "\">" + establishments[i].website+ "</a></p>";
+            result += "<p><a href=\"/establishment/" + establishments[i].id + "\" class=\"btn btn-primary\" role=\"button\">Me montrer</a></p>";
+            result += "</div>";
+            result += "</div>";
+            result += "</div>";
+
+        }
+        result += "</div>";
+
+        return result;
     }
 };
