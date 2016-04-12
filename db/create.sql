@@ -53,9 +53,9 @@ CREATE TABLE IF NOT EXISTS restaurant (
 CREATE TABLE IF NOT EXISTS bar (
     id INTEGER PRIMARY KEY NOT NULL,
 
-    smoker_allowed BOOLEAN NOT NULL,
+    smokers BOOLEAN,
 
-    snacks BOOLEAN NOT NULL,
+    snacks BOOLEAN,
 
     CONSTRAINT ESTABLISHEMENT_EXIST
         FOREIGN KEY (id) REFERENCES establishment(id)
