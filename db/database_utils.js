@@ -168,7 +168,7 @@ module.exports = {
     },
 
     search_establishment : function (name, callback) {
-        db.all("SELECT id FROM establishment WHERE name LIKE '%" + name + "%'", function(err, rows) {
+        db.all("SELECT id FROM establishment WHERE UPPER(name) LIKE '%" + name.toUpperCase().replace(" ", "%") + "%'", function(err, rows) {
             async.map(rows, function (values, callback) {
                 get_establishment(values.id, function (establishment) {
                     var result = establishment;
