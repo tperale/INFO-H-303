@@ -114,8 +114,15 @@ app.get('/contact',  function (req, res) {
     res.render('contact', { csrf : 'CSRF token' } );
 });
 
-app.get('/thankyou', function (req, res) {
-    res.render('thankyou');
+app.get('/image/:id', function (req, res) {
+    database_utils.get_establishment_image(req.query.form, function (err, result) {
+        console.log("IMAGE " + result);
+        if (result) {
+            res.send(result);
+        } else {
+            res.redirect(302, 'http://blog.forbestravelguide.com/wp-content/uploads/2013/09/FTG-HeroShot-MXDC-CreditOliviaBoinet.jpg');
+        }
+    });
 });
 
 app.post('/process', function(req, res) {

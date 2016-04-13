@@ -164,7 +164,7 @@ module.exports = {
     get_establishment : get_establishment,
         
     get_establishment_image : function (id, callback) {
-    
+        db.get("SELECT image FROM establishment WHERE id=" + id, callback);
     },
 
     search_establishment : function (name, callback) {

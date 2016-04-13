@@ -65,6 +65,7 @@ module.exports = {
     get_hotel : function (id) {
         var hotel = {
             id : id,
+            type : "hotel",
             latitude : null,
             longitude : null,
             name : null,

@@ -65,6 +65,7 @@ module.exports = {
     get_bar : function (id) {
         var bar = {
             id : id,
+            type : "bar",
             latitude : null,
             longitude : null,
             name : null,

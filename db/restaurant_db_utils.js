@@ -67,6 +67,7 @@ module.exports = {
     get_restaurant : function (id) {
         var restaurant = {
             id : id,
+            type : "restaurant",
             latitude : null,
             longitude : null,
             name : null,
