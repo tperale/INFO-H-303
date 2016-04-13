@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var fs = require("fs");
+var async = require("async");
 
 // var file  = process.env.CLOUD_DIR + "/" + "test.db";
 var file  = "./db/test.db";
@@ -61,6 +62,22 @@ var get_establishment_type = function (id, callback) {
             return;
         }
         callback("hotel", id);
+    });
+};
+
+
+var get_establishment = function (id, callback) {
+    get_establishment_type(id, function (type, id) {
+        switch (type) {
+            case "bar":
+                callback(bar_db_utils.get_bar(id));
+                break;
+            case "restaurant":
+                callback(restaurant_db_utils.get_restaurant(id));
+                break;
+            case "hotel":
+                callback(hotel_db_utils.get_hotel(id));
+        }  
     });
 };
 
@@ -143,19 +160,24 @@ module.exports = {
     },
 
     get_establishment_type : get_establishment_type,
+
+    get_establishment : get_establishment,
         
     get_establishment_image : function (id, callback) {
     
     },
 
-    search_establishment : function (name) {
-        var result = [];
+    search_establishment : function (name, callback) {
+        db.all("SELECT id FROM establishment WHERE name LIKE '%" + name + "%'", function(err, rows) {
+            async.map(rows, function (values, callback) {
+                get_establishment(values.id, function (establishment) {
+                    var result = establishment;
 
-        db.each("SELECT id, name FROM establishment WHERE name LIKE '%" + name + "%'", function(err, row) {
-            result.push({ 
-                id : row.id,
-                name : row.name
-            });
+                    setTimeout(function() { 
+                        callback(null, result);
+                    }, 200); 
+                });
+            }, callback);
         });
     },
 
@@ -191,10 +213,13 @@ module.exports = {
         switch (type) {
             case "bar":
                 bar_db_utils.get_bar_id(callback);
+                break;
             case "restaurant":
                 restaurant_db_utils.get_restaurant_id(callback);
+                break;
             case "hotel":
                 hotel_db_utils.get_hotel_id(callback);
+                break;
         }
     },
 

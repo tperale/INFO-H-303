@@ -132,7 +132,16 @@ app.get('/search',  function (req, res) {
 
 app.post('/search', function (req, res){
     console.log("Got a query (POST) : " + req.body.query);
-    // res.redirect(303, '/?q=' + req.body.query);
+    database_utils.search_establishment(req.body.query, function (err, result) {
+        res.render('establishments/showoff', {
+            establishments : result,
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            }
+        });
+    });
+    
 });
 
 app.get('/about/me',  function (req, res) {
