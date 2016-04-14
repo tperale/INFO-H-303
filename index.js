@@ -1,9 +1,14 @@
 var database_utils = require('./db/database_utils.js');
 var utils = require('./js/utils.js');
+var User = require('./db/user_db.js');
 
 var helpers_fun = require('./js/handlebars_helpers.js');
 
 var express = require('express');
+var session = require('express-session');
+var parseurl = require('parseurl');
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
@@ -22,6 +27,14 @@ var formidable = require('formidable');
 
 var credentials = require('./credentials.js');
 app.use(require('cookie-parser')(credentials.cookieSecret));
+
+app.use(session ({
+    resave : false,
+    saveUninitialized : true,
+    secret : credentials.cookieSecret,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('port', process.env.PORT || 3000);
 
@@ -46,6 +59,8 @@ app.get('/',  function (req, res) {
             location : establishments_locations,
             establishments : database_utils.pick_random(6, establishments_locations.length),
 
+            user : req.user,
+
             helpers : {
                 // number_of_establishment : helpers_fun.count_list
                 count_list : helpers_fun.count_list,
@@ -55,9 +70,13 @@ app.get('/',  function (req, res) {
     });
 });
 
-app.use(function(req, res, next) {
-    console.log("Looking for URL : " + req.url);
-    next();
+app.get('/establishments/',  function (req, res) {
+    res.render('establishments/showoff', {
+        restaurant : database_utils.pick_random_from(3, database_utils.pick("restaurant")),
+        bars : database_utils.pick_random_from(3, database_utils.pick("bar")),
+
+        user : req.user,
+    });
 });
 
 app.get('/establishments/restaurants',  function (req, res) {
@@ -65,6 +84,8 @@ app.get('/establishments/restaurants',  function (req, res) {
         console.log("RESTO : " + restaurants);
         res.render('establishments/showoff', {
             restaurants : database_utils.pick_random_from(6, restaurants),
+
+            user : req.user,
 
             helpers : {
                 thumbnailing : helpers_fun.thumbnailing
@@ -78,6 +99,8 @@ app.get('/establishments/bars',  function (req, res) {
         res.render('establishments/showoff', {
             bars : database_utils.pick_random_from(6, bars),
 
+            user : req.user,
+
             helpers : {
                 thumbnailing : helpers_fun.thumbnailing
             }
@@ -90,17 +113,12 @@ app.get('/establishments/hotels',  function (req, res) {
         res.render('establishments/showoff', {
             hotels : database_utils.pick_random_from(6, hotels),
 
+            user : req.user,
+
             helpers : {
                 thumbnailing : helpers_fun.thumbnailing
             }
         });
-    });
-});
-
-app.get('/establishments/',  function (req, res) {
-    res.render('establishments/showoff', {
-        restaurant : database_utils.pick_random_from(3, database_utils.pick("restaurant")),
-        bars : database_utils.pick_random_from(3, database_utils.pick("bar")),
     });
 });
 
@@ -111,12 +129,13 @@ app.get('/establishment/:id',  function (req, res) {
 });
 
 app.get('/contact',  function (req, res) {
-    res.render('contact', { csrf : 'CSRF token' } );
+    res.render('contact', {
+            user : req.user,
+    });
 });
 
 app.get('/image/:id', function (req, res) {
     database_utils.get_establishment_image(req.query.form, function (err, result) {
-        console.log("IMAGE " + result);
         if (result) {
             res.send(result);
         } else {
@@ -143,6 +162,8 @@ app.post('/search', function (req, res){
         res.render('establishments/showoff', {
             establishments : result,
 
+            user : req.user,
+
             helpers : {
                 thumbnailing : helpers_fun.thumbnailing
             }
@@ -152,19 +173,27 @@ app.post('/search', function (req, res){
 });
 
 app.get('/about/me',  function (req, res) {
-    res.render('about/me');
+    res.render('about/me', {
+        user : req.user,
+    });
 });
 
 app.get('/about/project',  function (req, res) {
-    res.render('about/project');
+    res.render('about/project', {
+        user : req.user,
+    });
 });
 
 app.get('/about/website',  function (req, res) {
-    res.render('about/website');
+    res.render('about/website', {
+        user : req.user,
+    });
 });
 
 app.get('/about',  function (req, res) {
-    res.render('about/me');
+    res.render('about/me', {
+        user : req.user,
+    });
 });
 
 /* @desc Permet d'afficher une photo qu'un utilisateur a afficher en commentaire.
@@ -175,6 +204,11 @@ app.get('/user/:name/comment/:timestamp/:picture',  function (req, res) {
 /* @desc Permet d'afficher le profil d'un utilisateur du site.
  */
 app.get('/user/:name',  function (req, res) {
+    User.find(req.params.name, function (err, user) {
+        res.render('user', {
+            user : req.user,
+        });
+    });
 });
 
 /* @desc Permet d'áfficher tout les restaurant qui ont pour label ":name".
@@ -186,7 +220,9 @@ app.get('/bar/:id',  function (req, res) {
     res.render('establishments/bar', {
         establishment : database_utils.get_bar(req.params.id),
         comments : [],
-        labels : []
+        labels : [],
+
+        user : req.user,
     });
 });
 
@@ -194,7 +230,9 @@ app.get('/hotel/:id',  function (req, res) {
     res.render('establishments/hotel', {
         establishment : database_utils.get_bar(req.params.id),
         comments : [],
-        labels : []
+        labels : [],
+
+        user : req.user,
     });
 });
 
@@ -202,7 +240,9 @@ app.get('/restaurant/:id',  function (req, res) {
     res.render('establishments/restaurant', {
         establishment : database_utils.get_bar(req.params.id),
         comments : [],
-        labels : []
+        labels : [],
+
+        user : req.user,
     });
 });
 
@@ -241,14 +281,82 @@ app.get('/testhotel',  function (req, res) {
     });
 });
 
-var session = require('express-session');
-var parseurl = require('parseurl');
-app.use(session ({
-    resave : false,
-    saveUninitialized : true,
-    secret : credentials.cookieSecret,
+/* ---------------------------------------------
+ *    login/signup functions.
+ * ---------------------------------------------
+ */
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+app.get('/signup', function (req, res) {
+   res.render('signup', {
+        user : req.user,
+   });
+});
+
+app.post('/signup', function (req, res) {
+    if (req.body.password != req.body.password_verif) {
+        res.render('signup', {
+            password_error : true
+        });
+        return; 
+    }
+    
+    passport.authenticate('local', { 
+        successRedirect: '/',
+        failureRedirect: '/login',
+        failureFlash: true})
+});
+
+app.get('/login', function (req, res) {
+   res.render('login', {
+        user : req.user,
+    });
+});
+
+app.post('/login', passport.authenticate('local', { 
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true 
 }));
 
+passport.serializeUser(function(user, done) {
+    done(null, user.name);
+});
+
+passport.deserializeUser(function(name, done) {
+    User.find(name, function(err, user) {
+        done(err, user);
+    });
+});
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        User.find(username, function (err, user) {
+            if (err) { 
+                return done(err);
+            } 
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+            user.verify(password, function (err, result) {
+                if (result) {
+                    return done(null, user);
+                } else {
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+            });
+        });
+    }
+));
+
+/* --------------------------------------------
+ *      error handler.
+ * --------------------------------------------
+ */
 app.use(function(req, res, next) {
     var views = req.session.views;
 
@@ -263,12 +371,19 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(function(req, res, next) {
+    console.log("Looking for URL : " + req.url);
+    next();
+});
+
 /* @desc Page not found error.
  */
 app.use(function(req, res) {
     res.type('text/html');
     res.status(404);
-    res.render('404');
+    res.render('404', {
+        user : req.user,
+    });
 });
 
 /* @desc Server Error handler.
@@ -276,7 +391,9 @@ app.use(function(req, res) {
 app.use(function(err, req, res, next) {
     console.error(err.stack);
     res.status(500);
-    res.render('500')
+    res.render('500', {
+        user : req.user,
+    });
 });
 
 app.listen(app.get('port'), function () {
