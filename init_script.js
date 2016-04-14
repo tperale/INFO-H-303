@@ -1,4 +1,5 @@
 var db = require('./db/database_utils.js');
+var User = require('./db/user_db.js');
 var fs = require("fs");
 var inspect = require('util').inspect;
 var date_utils = require('./js/date_utils.js');
@@ -29,7 +30,7 @@ var add_admin = function (name, date) {
         account[name].date = date_utils.min_date(date, account[name].date);
     }
 
-    db.add_admin ({ username : name, email : name + "@gmail.com", password : "default" });
+    User.add_admin ({ username : name, email : name + "@gmail.com", password : "default" });
 };
 
 var parse_label = function (labels) {
