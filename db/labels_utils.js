@@ -15,7 +15,7 @@ module.exports = {
             $name : text
         };
 
-        var command = "INSERT INTO account (establishment_id, username, name) VALUES ($id, $username, $name)";
+        var command = "INSERT INTO label (establishment_id, username, name) VALUES ($id, $username, $name)";
         var st = db.prepare(command);
         st.run(label, function (err) {
             if (err) {

@@ -286,22 +286,18 @@ app.get('/bar/:id',  function (req, res) {
                     callback(null, result);
                 }, 200);
             });
-
         }, function(callback) { // Getting the comments.
             setTimeout(function() {
                 callback(null, []);
             }, 200);
         }, function(callback) { // Getting the labels.
             Label.get_labels(req.params.id, function (err, result) {
-                var ret = [];
                 if (err) {
                     console.log("Error getting labels : " + err);
-                } else {
-                    ret = result;
                 }
 
                 setTimeout(function() {
-                    callback(null, ret);
+                    callback(null, result);
                 }, 200);
             })
         }
@@ -404,10 +400,13 @@ app.get('/testhotel',  function (req, res) {
  *    label handling.
  * ---------------------------------------------
  */
-app.post('/label/:id', function (req, res) {
+app.get('/label', function (req, res) {
+});
+
+app.post('/label/', function (req, res) {
     if (req.user) {
-        Label.add_label(req.params.id, req.user.name, req.body.title, function () {
-            res.render('/establishment/' + req.params.id);
+        Label.add_label(req.query.id, req.user.name, req.body.title, function () {
+            res.redirect(301, '/establishment/' + req.query.id);
         });
     }
 });
