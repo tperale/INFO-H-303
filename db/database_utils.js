@@ -121,21 +121,21 @@ module.exports = {
                     case "bar":
                         bar_db_utils.get_bar(id, function (err, result) {
                              setTimeout(function() { 
-                                callback(null, result);
+                                callback(err, result);
                             }, 200); 
                         });
                         break;
                     case "restaurant":
                         restaurant_db_utils.get_restaurant(id, function (err, result) {
                             setTimeout(function() { 
-                                callback(null, result);
+                                callback(err, result);
                             }, 200); 
                         });
                         break;
                     case "hotel":
                         hotel_db_utils.get_hotel(id, function (err, result) {
                             setTimeout(function() { 
-                                callback(null, result);
+                                callback(err, result);
                             }, 200); 
                         });
                         break;
@@ -162,7 +162,6 @@ module.exports = {
                             callback(null, value.id);
                         }, 200); 
                     }, callback);
-
                 });
         }
     },

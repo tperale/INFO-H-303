@@ -1,6 +1,8 @@
 var sqlite3 = require('sqlite3').verbose();
 var fs = require("fs");
 
+var async = require('async');
+
 var misc = require('./database_misc.js');
 
 // var file  = process.env.CLOUD_DIR + "/" + "test.db";
@@ -81,16 +83,13 @@ module.exports = {
     },
 
     get_restaurant_id : function (callback) {
-        var result = [];
-
         db.all("SELECT id FROM restaurant", function (err, rows) {
-            rows.map(function (currentValue, index, array) {
-                result.push(currentValue.id);
-            });
-            callback(result);
+            async.map(rows, function (value, callback) {
+                setTimeout(function() {                                    
+                    callback(null, value.id);
+                }, 200); 
+            }, callback);
         });
-
-        return result;
     },
 
 };

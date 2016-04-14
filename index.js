@@ -1,6 +1,9 @@
 var database_utils = require('./db/database_utils.js');
 var utils = require('./js/utils.js');
 var User = require('./db/user_db.js');
+var Label = require('./db/labels_utils.js');
+
+var async = require('async');
 
 var helpers_fun = require('./js/handlebars_helpers.js');
 
@@ -52,12 +55,30 @@ app.get('/',  function (req, res) {
      *  }
      * ]
      */
-    var establishments_locations = database_utils.get_establishment_locations(function (establishments_locations) {
+    async.parallel([
+        function (callback) {
+            database_utils.get_establishment_locations(function (result) {
+                setTimeout(function() {
+                    callback(null, result);
+                }, 200);
+            });
+        },
+
+        function (callback) {
+             database_utils.pick(null, function (err, result) {
+                 database_utils.pick_random_from(6, result, function (err, result) {
+                    setTimeout(function() {
+                        callback(null, result);
+                    }, 200);
+                 });
+            });
+        }
+    ], function (err, result) {
         res.render('home', {
-            main : utils.average_location_calculus(establishments_locations),
-            number : establishments_locations.length,
-            location : establishments_locations,
-            establishments : database_utils.pick_random(6, establishments_locations.length),
+            main : utils.average_location_calculus(result[0]),
+            number : result[0].length,
+            location : result[0],
+            establishments : result[1],
 
             user : req.user,
 
@@ -71,53 +92,94 @@ app.get('/',  function (req, res) {
 });
 
 app.get('/establishments/',  function (req, res) {
-    res.render('establishments/showoff', {
-        restaurant : database_utils.pick_random_from(3, database_utils.pick("restaurant")),
-        bars : database_utils.pick_random_from(3, database_utils.pick("bar")),
+    async.parallel([
+        function (callback) {
+            database_utils.pick("restaurant", function (err, result) {
+                 database_utils.pick_random_from(3, result, function (result) {
+                    setTimeout(function() {
+                        callback(null, result);
+                    }, 200);
+                 });
+            });
+        },
 
-        user : req.user,
+        function (callback) {
+            database_utils.pick("restaurant", function (err, result) {
+                 database_utils.pick_random_from(3, result, function (result) {
+                    setTimeout(function() {
+                        callback(null, result);
+                    }, 200);
+                 });
+            });
+        },
+
+        function (callback) {
+            // database_utils.pick("restaurant", function (err, result) {
+            //      database_utils.pick_random_from(3, result, function (result) {
+            //         setTimeout(function() {
+            //             callback(null, result);
+            //         }, 200);
+            //      });
+            // });
+            setTimeout(function() {
+                callback(null, []);
+            }, 200);
+        }
+    ], function (err, result) {
+        res.render('establishments/showoff', {
+            restaurant : result[0],
+            bars : result[1],
+            
+
+            user : req.user,
+        }) 
     });
 });
 
 app.get('/establishments/restaurants',  function (req, res) {
-    database_utils.pick("restaurant", function (restaurants) {
-        console.log("RESTO : " + restaurants);
-        res.render('establishments/showoff', {
-            restaurants : database_utils.pick_random_from(6, restaurants),
+    database_utils.pick("restaurant", function (err, result) {
+        database_utils.pick_random_from(6, result, function (err, result) {
+            res.render('establishments/showoff', {
+                restaurants : result,
 
-            user : req.user,
+                user : req.user,
 
-            helpers : {
-                thumbnailing : helpers_fun.thumbnailing
-            }
+                helpers : {
+                    thumbnailing : helpers_fun.thumbnailing
+                }
+            });
         });
     });
 });
 
 app.get('/establishments/bars',  function (req, res) {
-    database_utils.pick("bar", function (bars) {
-        res.render('establishments/showoff', {
-            bars : database_utils.pick_random_from(6, bars),
+    database_utils.pick("bar", function (err, result) {
+        database_utils.pick_random_from(6, result, function (err, result) {
+            res.render('establishments/showoff', {
+                bars : result,
 
-            user : req.user,
+                user : req.user,
 
-            helpers : {
-                thumbnailing : helpers_fun.thumbnailing
-            }
+                helpers : {
+                    thumbnailing : helpers_fun.thumbnailing
+                }
+            });
         });
     });
 });
 
 app.get('/establishments/hotels',  function (req, res) {
-    database_utils.pick("hotel", function (hotels) {
-        res.render('establishments/showoff', {
-            hotels : database_utils.pick_random_from(6, hotels),
+    database_utils.pick("hotel", function (err, result) {
+        database_utils.pick_random_from(3, result, function (result) {
+            res.render('establishments/showoff', {
+                hotels : result,
 
-            user : req.user,
+                user : req.user,
 
-            helpers : {
-                thumbnailing : helpers_fun.thumbnailing
-            }
+                helpers : {
+                    thumbnailing : helpers_fun.thumbnailing
+                }
+            });
         });
     });
 });
@@ -217,18 +279,47 @@ app.get('/label/:name',  function (req, res) {
 });
 
 app.get('/bar/:id',  function (req, res) {
-    res.render('establishments/bar', {
-        establishment : database_utils.get_bar(req.params.id),
-        comments : [],
-        labels : [],
+    async.parallel([
+        function(callback) { // Getting the "bar" establishment.
+            database_utils.get_bar(req.params.id, function (err, result) {
+                setTimeout(function() {
+                    callback(null, result);
+                }, 200);
+            });
 
-        user : req.user,
+        }, function(callback) { // Getting the comments.
+            setTimeout(function() {
+                callback(null, []);
+            }, 200);
+        }, function(callback) { // Getting the labels.
+            Label.get_labels(req.params.id, function (err, result) {
+                var ret = [];
+                if (err) {
+                    console.log("Error getting labels : " + err);
+                } else {
+                    ret = result;
+                }
+
+                setTimeout(function() {
+                    callback(null, ret);
+                }, 200);
+            })
+        }
+    ], function (err, results) {
+        res.render('establishments/bar', {
+            establishment : results[0],
+            comments : results[1],
+            labels : results[2],
+
+            user : req.user,
+        });
     });
+
 });
 
 app.get('/hotel/:id',  function (req, res) {
     res.render('establishments/hotel', {
-        establishment : database_utils.get_bar(req.params.id),
+        establishment : database_utils.get_hotel(req.params.id),
         comments : [],
         labels : [],
 
@@ -237,12 +328,40 @@ app.get('/hotel/:id',  function (req, res) {
 });
 
 app.get('/restaurant/:id',  function (req, res) {
-    res.render('establishments/restaurant', {
-        establishment : database_utils.get_bar(req.params.id),
-        comments : [],
-        labels : [],
+    async.parallel([
+        function(callback) { // Getting the "bar" establishment.
+            database_utils.get_restaurant(req.params.id, function (err, result) {
+                setTimeout(function() {
+                    callback(null, result);
+                }, 200);
+            });
 
-        user : req.user,
+        }, function(callback) { // Getting the comments.
+            setTimeout(function() {
+                callback(null, []);
+            }, 200);
+        }, function(callback) { // Getting the labels.
+            Label.get_labels(req.params.id, function (err, result) {
+                var ret = [];
+                if (err) {
+                    console.log("Error getting labels : " + err);
+                } else {
+                    ret = result;
+                }
+
+                setTimeout(function() {
+                    callback(null, ret);
+                }, 200);
+            })
+        }
+    ], function (err, results) {
+        res.render('establishments/restaurant', {
+            establishment : results[0],
+            comments : results[1],
+            labels : results[2],
+
+            user : req.user,
+        });
     });
 });
 
@@ -282,13 +401,24 @@ app.get('/testhotel',  function (req, res) {
 });
 
 /* ---------------------------------------------
+ *    label handling.
+ * ---------------------------------------------
+ */
+app.post('/label/:id', function (req, res) {
+    if (req.user) {
+        Label.add_label(req.params.id, req.user.name, req.body.title, function () {
+            res.render('/establishment/' + req.params.id);
+        });
+    }
+});
+
+/* ---------------------------------------------
  *    login/signup functions.
  * ---------------------------------------------
  */
-
 app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
+    req.logout();
+    res.redirect('/');
 });
 
 app.get('/signup', function (req, res) {
