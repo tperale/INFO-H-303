@@ -62,60 +62,18 @@ module.exports = {
         });
     },
 
-    get_bar : function (id) {
-        var bar = {
-            id : id,
-            type : "bar",
-            latitude : null,
-            longitude : null,
-            name : null,
-            address_street : null,
-            address_town : null,
-            address_number : null,
-            address_zip : null,
-            phone_number : null,
-            website : null,
-            created_by : null,
-
-            smokers : null,
-            snacks : null
-        };
-
-        var cmd = "SELECT latitude, longitude, name, address_street, address_town, address_zip, address_number, phone_number, website, picture, created_by FROM establishment WHERE id=" + id;
+    get_bar : function (id, callback) {
+        var cmd = "SELECT e.*, b.* from establishment e INNER JOIN bar b on e.id = b.id";
         db.get(cmd, function(err, row) {
             if (err) {
                 console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 
-                return;
             } else if (!row) {
                 console.log("ID does not exist.");
-                return;            
+            } else {
+                row.type = "bar";
+                callback(null, row);  
             }
-
-            bar.latitude = row.latitude;
-            bar.longitude = row.longitude;
-            bar.name = row.name;
-            bar.address_street = row.address_street;
-            bar.address_town = row.address_town;
-            bar.address_number = row.address_number;
-            bar.address_zip = row.address_zip;
-            bar.phone_number = row.phone_number;
-            bar.website = row.website;
-            bar.created_by = row.created_by;
         });
-
-        db.get("SELECT smokers, snacks FROM bar WHERE id=" + id, function(err, row) {
-            if (err) {
-                console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 
-                return;
-            } else if (!row) {
-                console.log("ID does not exist.");
-                return;            
-            }
-            bar.smokers = row.smokers;
-            bar.snacks = row.snacks;
-        });
-
-        return bar;
     },
 
     get_bar_id : function (callback) {

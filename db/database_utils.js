@@ -70,13 +70,13 @@ var get_establishment = function (id, callback) {
     get_establishment_type(id, function (type, id) {
         switch (type) {
             case "bar":
-                callback(bar_db_utils.get_bar(id));
+                bar_db_utils.get_bar(id, callback);
                 break;
             case "restaurant":
-                callback(restaurant_db_utils.get_restaurant(id));
+                restaurant_db_utils.get_restaurant(id, callback)
                 break;
             case "hotel":
-                callback(hotel_db_utils.get_hotel(id));
+                hotel_db_utils.get_hotel(id, callback);
         }  
     });
 };
@@ -86,78 +86,11 @@ module.exports = {
 
     get_hotel : hotel_db_utils.get_hotel,
 
-    /* latitude,
-     * longitude,
-     * name,
-     * address_street,
-     * address_town,
-     * phone_number,
-     * website,
-     * creator,
-     * price,
-     * seat_number,
-     * takeaway,
-     * delivery,
-     * timetable
-     */
-
     get_restaurant : restaurant_db_utils.get_restaurant,
     new_restaurant : restaurant_db_utils.new_restaurant,
 
     new_bar : bar_db_utils.new_bar,
     get_bar : bar_db_utils.get_bar,
-
-    add_user : function (obj, callback) {
-        var user = {
-            
-        };
-    },
-
-    add_admin : function (obj, callback) {
-        db.get("SELECT username FROM account WHERE username=" + obj.username, function(err, row) {
-            // if (err) {
-            //     console.log("ERROR getting username (" + obj.username + ") in ACCOUNT : " + err);
-            //     return;
-            // }
-
-            if (row) {
-                // User already exist, promotion to admin.
-                db.run("UPDATE account SET admin=1 WHERE username=" + obj.username, function (err) {
-                    if (err) {
-                        console.log("CANNOT update to admin.");
-                    }
-                    callback();
-                });
-            } else {
-                // Undefined row, need to add new user.
-                var admin = {};
-                admin.$username = obj.username;
-
-                if (obj.email) {
-                    admin.$email = obj.email;
-                } else {
-                    admin.$email = obj.username + "@horeca.com";
-                }
-
-                if (obj.password) {
-                    admin.$password = obj.password;
-                } else {
-                    admin.$password = "admin";
-                }
-
-                var command = "INSERT INTO account (username, email, password, admin) VALUES ($username, $email, $password, 1)";
-                var st = db.prepare(command);
-                st.run(admin, function (err) {
-                    if (err) {
-                        console.log("ERROR WHILE INSERTING ACCOUNT : " + err);
-                        return;
-                    }
-                    if (callback) 
-                        callback();
-                });
-            }
-        });
-    },
 
     get_establishment_type : get_establishment_type,
 
@@ -170,43 +103,45 @@ module.exports = {
     search_establishment : function (name, callback) {
         db.all("SELECT id FROM establishment WHERE UPPER(name) LIKE '%" + name.toUpperCase().replace(" ", "%") + "%'", function(err, rows) {
             async.map(rows, function (values, callback) {
-                get_establishment(values.id, function (establishment) {
-                    var result = establishment;
-
+                get_establishment(values.id, function (err, establishment) {
                     setTimeout(function() { 
-                        callback(null, result);
+                        callback(null, establishment);
                     }, 200); 
                 });
             }, callback);
         });
     },
 
-    pick_random_from : function (number, array) {
-        var result = [];
-
+    pick_random_from : function (number, array, callback) {
         var random_id = Random.sample(Random.engines.nativeMath, array, number);
 
-        random_id.map(function (currentValue, index, array) {
-            get_establishment_type (currentValue, function (type, id) {
+        async.map(random_id, function (values, callback) {
+            get_establishment_type (values.id, function (type, id) {
                 switch (type) {
                     case "bar":
-                        result.push(bar_db_utils.get_bar(id));
+                        bar_db_utils.get_bar(id, function (err, result) {
+                             setTimeout(function() { 
+                                callback(null, result);
+                            }, 200); 
+                        });
                         break;
                     case "restaurant":
-                        result.push(restaurant_db_utils.get_restaurant(id));
+                        restaurant_db_utils.get_restaurant(id, function (err, result) {
+                            setTimeout(function() { 
+                                callback(null, result);
+                            }, 200); 
+                        });
                         break;
                     case "hotel":
-                        result.push(hotel_db_utils.get_hotel(id));
+                        hotel_db_utils.get_hotel(id, function (err, result) {
+                            setTimeout(function() { 
+                                callback(null, result);
+                            }, 200); 
+                        });
                         break;
                 }
             });
-        });
-
-        return result;
-    },
-
-    pick_random : function (number, establishment_number) {
-        return this.pick_random_from (number, range.range(1, establishment_number + 1));
+        }, callback);
     },
 
     pick : function (type, callback) {
@@ -220,24 +155,17 @@ module.exports = {
             case "hotel":
                 hotel_db_utils.get_hotel_id(callback);
                 break;
+            default:
+                db.all("SELECT id FROM establishment", callback)
         }
     },
 
     get_establishment_locations : function (callback) {
-        var result = [];
-
-        db.each("SELECT id, name, latitude, longitude FROM establishment", function(err, row) {
-            result.push({ 
-                latitude : row.latitude,
-                longitude : row.longitude,
-                name : row.name,
-                id : row.id
-            });
-        }, function (err, row) {
+        db.all("SELECT id, name, latitude, longitude FROM establishment", function(err, row) {
             if (err) {
                 console.log(err);            
             }
-            callback(result);
+            callback(row);
         });
     }
 };

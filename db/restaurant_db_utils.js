@@ -64,29 +64,8 @@ module.exports = {
         });
     },
 
-    get_restaurant : function (id) {
-        var restaurant = {
-            id : id,
-            type : "restaurant",
-            latitude : null,
-            longitude : null,
-            name : null,
-            address_street : null,
-            address_town : null,
-            address_number : null,
-            address_zip : null,
-            phone_number : null,
-            website : null,
-            created_by : null,
-
-            price : null,
-            seat_number : null,
-            takeaway : null,
-            delivery : null,
-            timetable : null
-        };
-
-        var cmd = "SELECT latitude, longitude, name, address_street, address_town, address_zip, address_number, phone_number, website, picture, created_by FROM establishment WHERE id=" + id;
+    get_restaurant : function (id, callback) {
+        var cmd = "SELECT e.*, r.* from establishment e INNER JOIN restaurant r on e.id = r.id";
         db.get(cmd, function(err, row) {
             if (err) {
                 console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 
@@ -94,37 +73,11 @@ module.exports = {
             } else if (!row) {
                 console.log("ID does not exist.");
                 return;            
+            } else {
+                row.type = "restaurant";
+                callback(null, row);  
             }
-
-            restaurant.latitude = row.latitude;
-            restaurant.longitude = row.longitude;
-            restaurant.name = row.name;
-            restaurant.address_street = row.address_street;
-            restaurant.address_town = row.address_town;
-            restaurant.address_number = row.address_number;
-            restaurant.address_zip = row.address_zip;
-            restaurant.phone_number = row.phone_number;
-            restaurant.website = row.website;
-            restaurant.created_by = row.created_by;
         });
-
-        db.get("SELECT price, seat_number, takeaway, delivery, timetable FROM restaurant WHERE id=" + id, function(err, row) {
-            if (err) {
-                console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 
-                return;
-            } else if (!row) {
-                console.log("ID does not exist.");
-                return;            
-            }
-
-            restaurant.price = row.price;
-            restaurant.seat_number = row.seat_number;
-            restaurant.takeaway = row.takeaway;
-            restaurant.delivery = row.delivery;
-            restaurant.timetable = row.timetable;
-        });
-
-        return restaurant;
     },
 
     get_restaurant_id : function (callback) {
