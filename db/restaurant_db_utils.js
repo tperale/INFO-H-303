@@ -65,7 +65,7 @@ module.exports = {
     },
 
     get_restaurant : function (id, callback) {
-        var cmd = "SELECT e.*, r.* from establishment e INNER JOIN restaurant r on e.id = r.id";
+        var cmd = "SELECT e.*, r.* from establishment e INNER JOIN restaurant r on e.id=r.id WHERE e.id=" + id;
         db.get(cmd, function(err, row) {
             if (err) {
                 console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 

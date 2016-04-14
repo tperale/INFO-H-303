@@ -63,7 +63,7 @@ module.exports = {
     },
 
     get_bar : function (id, callback) {
-        var cmd = "SELECT e.*, b.* from establishment e INNER JOIN bar b on e.id = b.id";
+        var cmd = "SELECT e.*, b.* from establishment e INNER JOIN bar b on e.id=b.id WHERE e.id=" + id;
         db.get(cmd, function(err, row) {
             if (err) {
                 console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 

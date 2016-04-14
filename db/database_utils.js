@@ -115,8 +115,8 @@ module.exports = {
     pick_random_from : function (number, array, callback) {
         var random_id = Random.sample(Random.engines.nativeMath, array, number);
 
-        async.map(random_id, function (values, callback) {
-            get_establishment_type (values.id, function (type, id) {
+        async.map(random_id, function (value, callback) {
+            get_establishment_type (value, function (type, id) {
                 switch (type) {
                     case "bar":
                         bar_db_utils.get_bar(id, function (err, result) {
@@ -156,7 +156,14 @@ module.exports = {
                 hotel_db_utils.get_hotel_id(callback);
                 break;
             default:
-                db.all("SELECT id FROM establishment", callback)
+                db.all("SELECT id FROM establishment", function (err, rows) {
+                    async.map(rows, function (value, callback) {
+                        setTimeout(function() { 
+                            callback(null, value.id);
+                        }, 200); 
+                    }, callback);
+
+                });
         }
     },
 
