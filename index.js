@@ -3,10 +3,10 @@ var utils = require('./js/utils.js');
 var User = require('./db/user_db.js');
 var Label = require('./db/labels_utils.js');
 
-var async = require('async');
-
 var helpers_fun = require('./js/handlebars_helpers.js');
 
+var async = require('async');
+var fs = require('fs');
 var express = require('express');
 var session = require('express-session');
 var parseurl = require('parseurl');
@@ -278,6 +278,30 @@ app.get('/user/:name',  function (req, res) {
 app.get('/label/:name',  function (req, res) {
 });
 
+/* ------------------------------------------
+ *  Gestion des établissements.
+ * ------------------------------------------
+ */
+app.post('/file-upload',  function (req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, file) {
+        if (err) {
+            return res.redirect(303, '/error'); 
+        }
+        console.log('Received File');
+
+        console.log(file);
+        fs.readFile(file.file.path, function (err, data) {
+            database_utils.insert_picture(req.query.id, data, function (err) {
+                if (err) {
+                    console.log("Error uploading the picture : " + err);
+                }
+                res.redirect( 303, '/establishment/' + req.query.id);
+            });
+        });
+    });
+});
+
 app.get('/bar/:id',  function (req, res) {
     async.parallel([
         function(callback) { // Getting the "bar" establishment.
@@ -361,46 +385,11 @@ app.get('/restaurant/:id',  function (req, res) {
     });
 });
 
-app.get('/testhotel',  function (req, res) {
-    res.render('establishments/hotel', {
-        hotel : {
-            "creator" : "thomas",
-            "creation-date" : "10/11/08",
-            "name" : "Hotel du bonheur",
-            "latitude" : 50.84665,
-            "longitude" : 4.34782,
-            "phone_number" : "+324768366",
-            "street" : "Boulevard de l'empereur",
-            "number" : 134,
-            "town" : "Bruxelle",
-            "postal_code" : 1000,
-            "website" : "http://www.salutcestcool.com"
-        },
-        comments : [
-            {
-                title : "Sympa mais le personnel grogne.",
-                date : "10/03/16",
-                text : "C'était pas mal mais le personnel est désagréable un d'eux m'a grogné dessus."
-            },
-            {
-                title : "Ça se passe ou quoi ?",
-                date : "13/03/16",
-                text : "C'était pas mal mais le personnel est trop agréable."
-            }
-
-        ],
-        labels : [
-            {label_name : "cheap"},
-            {label_name : "good value"},
-        ]
-    });
-});
-
 /* ---------------------------------------------
  *    label handling.
  * ---------------------------------------------
  */
-app.get('/label', function (req, res) {
+app.get('/label/:name', function (req, res) {
 });
 
 app.post('/label/', function (req, res) {
@@ -429,15 +418,19 @@ app.get('/signup', function (req, res) {
 app.post('/signup', function (req, res) {
     if (req.body.password != req.body.password_verif) {
         res.render('signup', {
-            password_error : true
+            password_error : true,
+
+            user : req.user,
         });
         return; 
     }
-    
-    passport.authenticate('local', { 
-        successRedirect: '/',
-        failureRedirect: '/login',
-        failureFlash: true})
+
+    User.add_user({ username : req.body.username, email : req.body.email, password : req.body.password }, function (err, user) {
+        passport.authenticate('local', { 
+            successRedirect: '/',
+            failureRedirect: '/signup',
+            failureFlash: true})
+    });
 });
 
 app.get('/login', function (req, res) {

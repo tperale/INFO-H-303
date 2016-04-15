@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+{{#if user.admin}}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Upload picture.
+</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="/file-upload/?id={{establishment.id}}" class="dropzone" enctype="multipart/form-data">
+                <div class="fallback">
+                    <input name="picture" type="file" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if establishment.image}}
+<img class="img-responsive" data-action="zoom" src="{{image}}" alt="">
+<hr>
+{{/if}}
+
+

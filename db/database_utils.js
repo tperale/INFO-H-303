@@ -100,6 +100,10 @@ module.exports = {
         db.get("SELECT image FROM establishment WHERE id=" + id, callback);
     },
 
+    insert_picture : function (id, image, callback) {
+        db.run("UPDATE establishment SET picture=`" + image + "` WHERE id=" + id, callback);
+    },
+
     search_establishment : function (name, callback) {
         db.all("SELECT id FROM establishment WHERE UPPER(name) LIKE '%" + name.toUpperCase().replace(" ", "%") + "%'", function(err, rows) {
             async.map(rows, function (values, callback) {
