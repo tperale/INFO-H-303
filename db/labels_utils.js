@@ -26,6 +26,10 @@ module.exports = {
         });
     },
 
+    remove_label : function (id, callback) {
+        db.run("DELETE FROM label WHERE id=" + id, callback);
+    },
+
     /* @desc : 
      *
      * @param {establishment_id} :
@@ -34,7 +38,7 @@ module.exports = {
      */
     get_labels : function (establishment_id, callback) {
         // TODO ne pas loader les doublons.
-        db.all("SELECT name FROM label WHERE establishment_id=" + establishment_id, function (err, rows) {
+        db.all("SELECT id, name FROM label WHERE establishment_id=" + establishment_id + " GROUP BY name ORDER BY COUNT(name)", function (err, rows) {
             if (err) {
                 callback(err, null); 
             } else {

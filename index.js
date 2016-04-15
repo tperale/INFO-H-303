@@ -296,7 +296,7 @@ app.post('/file-upload',  function (req, res) {
                 if (err) {
                     console.log("Error uploading the picture : " + err);
                 }
-                res.redirect( 303, '/establishment/' + req.query.id);
+                res.redirect('back');
             });
         });
     });
@@ -392,10 +392,23 @@ app.get('/restaurant/:id',  function (req, res) {
 app.get('/label/:name', function (req, res) {
 });
 
+app.get('/label/remove/:id', function (req, res) {
+    if (req.user.admin) {
+        Label.remove_label(req.params.id, function (err) {
+            if (err) {
+                console.log("Error removing a label : " + err); 
+            }
+            res.redirect('back');
+        });
+    } else {
+        // Not authorized. 
+    }
+});
+
 app.post('/label/', function (req, res) {
     if (req.user) {
         Label.add_label(req.query.id, req.user.name, req.body.title, function () {
-            res.redirect(301, '/establishment/' + req.query.id);
+            res.redirect('back');
         });
     }
 });

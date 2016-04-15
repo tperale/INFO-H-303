@@ -4,24 +4,15 @@
     <!-- Blog Post Content Column -->
     <div class="col-lg-8">
 
-        <!-- Blog Post -->
-
-        {{#with establishment}}
-        <!-- Title -->
-        <h1><span class="glyphicon glyphicon-glass" aria-hidden="true"></span>{{name}}</h1>
+        <h1><span class="glyphicon glyphicon-glass" aria-hidden="true"></span>{{establishment.name}}</h1>
 
         <div class="creator-section">
-            by <a href="/user/{{creator}}">{{created_by}}</a> ({{creation-date}})
+            by <a href="/user/{{establishment.creator}}">{{establishment.created_by}}</a> ({{establishment.creation-date}})
         </div>
 
         <hr>
 
-
-        {{#if image}}
-            <img class="img-responsive" data-action="zoom" src="{{image}}" alt="">
-            <hr>
-        {{/if}}
-
+        {{> image}}
 
         {{> map}}
 
@@ -32,7 +23,6 @@
         <!-- Blog Comments -->
 
         <!-- Comments Form -->
-        {{/with}}
 
         <!-- Posted Comments -->
 
@@ -53,19 +43,25 @@
                 <div class="col-lg-12">
                     <ul class="list-unstyled">
                         {{#each labels}}
-                            <li><a href="/label/{{label_name}}">{{label_name}}</a> </li>
+                            <li><a href="/label/{{name}}">{{name}}</a>
+                            {{#if ../user.admin}}
+                            <a href="/label/remove/{{id}}">(remove)</a>
+                            {{/if}}
+                            </li>
                         {{/each }}
                     </ul>
                 </div>
 
-                <form role="form">
+                {{#if user}}
+                <form action="/label/?id={{establishment.id}}" method="post">
                     <div class="input-group">
-                        <textarea class="form-control" name="title" rows="1" placeholder="Add a label"></textarea>
+                        <textarea class="form-control" name="title" rows="1" placeholder="Ajouter un label"></textarea>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Add.</button>
+                            <button class="btn btn-default" type="submit">Ajouter.</button>
                         </span>
                     </div>
                 </form>
+                {{/if}}
 
             </div>
             <!-- /.row -->
