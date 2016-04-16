@@ -2,6 +2,7 @@ var database_utils = require('./db/database_utils.js');
 var utils = require('./js/utils.js');
 var User = require('./db/user_db.js');
 var Label = require('./db/labels_utils.js');
+var Comments = require('./db/comment_utils.js');
 
 var helpers_fun = require('./js/handlebars_helpers.js');
 
@@ -311,17 +312,23 @@ app.get('/bar/:id',  function (req, res) {
                 }, 200);
             });
         }, function(callback) { // Getting the comments.
-            setTimeout(function() {
-                callback(null, []);
-            }, 200);
+            Comments.get_comments(req.params.id, function (err, results) {
+                if (err) {
+                    console.log("Error getting comments : " + err);
+                }
+
+                setTimeout(function() {
+                    callback(null, results);
+                }, 200);
+            });
         }, function(callback) { // Getting the labels.
-            Label.get_labels(req.params.id, function (err, result) {
+            Label.get_labels(req.params.id, function (err, results) {
                 if (err) {
                     console.log("Error getting labels : " + err);
                 }
 
                 setTimeout(function() {
-                    callback(null, result);
+                    callback(null, results);
                 }, 200);
             })
         }
@@ -357,9 +364,15 @@ app.get('/restaurant/:id',  function (req, res) {
             });
 
         }, function(callback) { // Getting the comments.
-            setTimeout(function() {
-                callback(null, []);
-            }, 200);
+            Comments.get_comments(req.params.id, function (err, results) {
+                if (err) {
+                    console.log("Error getting comments : " + err);
+                }
+
+                setTimeout(function() {
+                    callback(null, results);
+                }, 200);
+            });
         }, function(callback) { // Getting the labels.
             Label.get_labels(req.params.id, function (err, result) {
                 var ret = [];
@@ -413,6 +426,17 @@ app.post('/label/', function (req, res) {
     }
 });
 
+/* ---------------------------------------------
+ *    commentaire functions.
+ * ---------------------------------------------
+ */
+app.post('/comment', function (req, res ) {
+    if (req.user) {
+        Comments.add_comment(req.query.id, req.user.name, req.body.rating, req.body.picture, req.body.comment, function (err) {
+            res.redirect('back');
+        });
+    }
+});
 /* ---------------------------------------------
  *    login/signup functions.
  * ---------------------------------------------

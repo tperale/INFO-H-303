@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 
+{{#if user}}
 <div class="well">
     <h4>Leave a Comment:</h4>
-    <form role="form">
-        <div class="form-group">
-            <!-- <span class="input-group-addon" id="basic-title-addon">Title</span> -->
-            <textarea class="form-control" name="title" rows="1" placeholder="Title"></textarea>
-        </div>
+    <form action="/comment/?id={{establishment.id}}" role="form" method="POST">
         <div class="form-group">
             <textarea class="form-control" name="comment" rows="3" placeholder="Comment"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="row">
+            <div class="col-md-6">
+                <input name="rating" type="text" class="rating" data-size="xs" >
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary pull-right">Envoyer</button>
+            </div>
+        </div>
     </form>
 </div>
 
 <hr>
+{{/if}}
 
 <!-- Comment -->
 {{#each comments}}
-<div class="media">
-    <a class="pull-left" href="#">
-        <img class="media-object" src="{{image}}" alt="">
-    </a>
-    <div class="media-body">
-        <h4 class="media-heading">{{title}}
-            <small>{{date}}</small>
-        </h4>
-        {{text}}
+<div class="well">
+    <div class="row">
+        {{#if image_attached}}
+        <div class="col-md-3">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="{{image_attached}}" alt="">
+            </a>
+        </div>
+        {{/if}}
+
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6 pull-left">
+                    {{username}}
+                    </br>
+                    {{timestamp}}
+                </div>
+                <div class="col-md-6 pull-right">
+                    {{rating}} étoiles
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                {{comment_text}}
+            </div>
+        </div>
     </div>
 </div>
 {{/each}}
