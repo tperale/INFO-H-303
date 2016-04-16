@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS comments (
     rating INTEGER NOT NULL
         CHECK(0<rating AND rating<=5),
     
-    comment_text TEXT,
+    comment_text TEXT NOT NULL,
 
     picture_attached BLOB,
     
