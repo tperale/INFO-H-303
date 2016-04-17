@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<div class="row">
+    <!-- Blog Post Content Column -->
+    <div class="col-lg-8">
+
+        <h1>
+            {{{icon establishment.type}}}
+            {{establishment.name}}
+        </h1>
+
+        <div class="creator-section">
+            by <a href="/user/{{establishment.creator}}">{{establishment.created_by}}</a> ({{establishment.creation-date}})
+        </div>
+
+        <hr>
+
+        {{> image}}
+
+        {{> map}}
+
+        {{> establishment_info}}
+
+        <hr>
+
+        <!-- Blog Comments -->
+
+        <!-- Comments Form -->
+
+        <!-- Posted Comments -->
+
+        {{> comments}}
+
+    </div>
+
+    <!-- Blog Sidebar Widgets Column -->
+    <div class="col-md-4">
+
+        {{> labels}}
+
+    </div>
+
+</div>
+<!-- /.row -->
+
+<hr>
+
+<!-- Footer -->
+<!-- <footer> -->
+<!--     <div class="row"> -->
+<!--         <div class="col-lg-12"> -->
+<!--             <p>Copyright &copy; Your Website 2014</p> -->
+<!--         </div> -->
+<!--     </div> -->
+<!--     <1!-- /.row --1> -->
+<!-- </footer> -->
