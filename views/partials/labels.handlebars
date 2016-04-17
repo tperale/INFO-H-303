@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<div class="well">
+    <h4>{{establishment.name}} labels</h4>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="list-unstyled">
+                {{#each labels}}
+                    <li><a href="/label/{{name}}">{{name}}</a>
+                    {{#if ../user.admin}}
+                    <a href="/label/remove/{{id}}">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                    {{/if}}
+                    </li>
+                {{/each }}
+            </ul>
+        </div>
+
+        {{#if user}}
+        <form action="/label/?id={{establishment.id}}" method="post">
+            <div class="input-group">
+                <textarea class="form-control" name="title" rows="1" placeholder="Ajouter un label"></textarea>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Ajouter.</button>
+                </span>
+            </div>
+        </form>
+        {{/if}}
+
+    </div>
+</div>

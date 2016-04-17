@@ -4,18 +4,18 @@
     <table>
         <tr>
             <td><span class="glyphicon glyphicon-earphone"></span></td>
-            <td>{{phone_number}}</td>
+            <td>{{establishment.phone_number}}</td>
         </tr>
 
         <tr>
             <td><span class="glyphicon glyphicon-road"></span></td>
-            <td>{{address_street}}, {{address_number}}, {{address_town}} ({{address_zip}}).</td>
+            <td>{{establishment.address_street}}, {{establishment.address_number}}, {{establishment.address_town}} ({{establishment.address_zip}}).</td>
         </tr>
 
-        {{#if website}}
+        {{#if establishment.website}}
         <tr>
             <td><span class="glyphicon glyphicon-cloud"></span></td>
-            <td><a href={{website}}>{{website}}</a></td>
+            <td><a href={{website}}>{{establishment.website}}</a></td>
         </tr>
         {{/if}}
 
