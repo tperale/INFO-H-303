@@ -120,6 +120,19 @@ module.exports = {
         return list.length;
     },
 
+    icon : function (type) {
+        switch (type) {
+            case "bar":
+                return "<span class=\"glyphicon glyphicon-glass\" aria-hidden=\"true\"></span>";
+            case "hotel":
+                return "<span class=\"glyphicon glyphicon-bed\" aria-hidden=\"true\"></span>";
+            case "restaurant":
+                return "<span class=\"glyphicon glyphicon-cutlery\" aria-hidden=\"true\"></span>";
+            default:
+                return "";
+        }
+    },
+
     thumbnailing : function (establishments) {
         var result = "";  
 
@@ -142,7 +155,7 @@ module.exports = {
             result += "<p><span class=\"glyphicon glyphicon-earphone\" aria-hidden=\"true\"></span>" + establishments[i].phone_number + "</p>";
             if (establishments[i].website)
                 result += "<p><span class=\"glyphicon glyphicon-cloud\" aria-hidden=\"true\"></span><a href=\"" + establishments[i].website + "\">" + establishments[i].website + "</a></p>";
-            result += "<p><a href=\"/establishment/" + establishments[i].id + "\" class=\"btn btn-primary\" role=\"button\">Me montrer</a></p>";
+            result += "<p><a href=\"/establishment/" + establishments[i].id + "\" class=\"btn btn-success\" role=\"button\">Me montrer</a></p>";
             result += "</div>";
             result += "</div>";
             result += "</div>";

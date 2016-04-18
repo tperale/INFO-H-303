@@ -198,7 +198,7 @@ app.get('/contact',  function (req, res) {
 });
 
 app.get('/image/:id', function (req, res) {
-    database_utils.get_establishment_image(req.query.form, function (err, result) {
+    database_utils.get_establishment_image(req.params.id, function (err, result) {
         if (result) {
             res.send(result);
         } else {
@@ -259,16 +259,13 @@ app.get('/about',  function (req, res) {
     });
 });
 
-/* @desc Permet d'afficher une photo qu'un utilisateur a afficher en commentaire.
- */
-app.get('/user/:name/comment/:timestamp/:picture',  function (req, res) {
-});
-
 /* @desc Permet d'afficher le profil d'un utilisateur du site.
  */
 app.get('/user/:name',  function (req, res) {
-    User.find(req.params.name, function (err, user) {
+    User.find(req.params.name, function (err, current_user) {
         res.render('user', {
+            profile : current_user,
+
             user : req.user,
         });
     });
@@ -333,12 +330,16 @@ app.get('/bar/:id',  function (req, res) {
             })
         }
     ], function (err, results) {
-        res.render('establishments/bar', {
+        res.render('establishments/establishment', {
             establishment : results[0],
             comments : results[1],
             labels : results[2],
 
             user : req.user,
+
+            helpers : {
+                icon : helpers_fun.icon
+            }
         });
     });
 
@@ -388,12 +389,16 @@ app.get('/restaurant/:id',  function (req, res) {
             })
         }
     ], function (err, results) {
-        res.render('establishments/restaurant', {
+        res.render('establishments/establishment', {
             establishment : results[0],
             comments : results[1],
             labels : results[2],
 
             user : req.user,
+
+            helpers : {
+                icon : helpers_fun.icon
+            }
         });
     });
 });
@@ -430,6 +435,12 @@ app.post('/label/', function (req, res) {
  *    commentaire functions.
  * ---------------------------------------------
  */
+
+/* @desc Permet d'afficher une photo qu'un utilisateur a afficher en commentaire.
+ */
+app.get('/user/:name/comment/:timestamp/:picture',  function (req, res) {
+});
+
 app.post('/comment', function (req, res ) {
     if (req.user) {
         Comments.add_comment(req.query.id, req.user.name, req.body.rating, req.body.picture, req.body.comment, function (err) {

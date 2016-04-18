@@ -97,11 +97,17 @@ module.exports = {
     get_establishment : get_establishment,
         
     get_establishment_image : function (id, callback) {
-        db.get("SELECT image FROM establishment WHERE id=" + id, callback);
+        db.get("SELECT picture FROM establishment WHERE id=" + id, function (err, row) {
+            if (err) {
+                console.log("ERROR GETTING PICTURE : " + err); 
+                callback(err, null);
+            }
+            callback(null, row.picture);
+        });
     },
 
     insert_picture : function (id, image, callback) {
-        db.run("UPDATE establishment SET picture=`" + image + "` WHERE id=" + id, callback);
+        db.run("UPDATE establishment SET picture=? WHERE id=?", image, id, callback);
     },
 
     search_establishment : function (name, callback) {
