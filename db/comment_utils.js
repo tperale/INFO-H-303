@@ -28,6 +28,19 @@ module.exports = {
         });
     },
 
+    get_attached_picture : function (name, timestamp, callback) {
+        db.get("SELECT picture_attached FROM comments WHERE username='" + name + "' AND timestamp='" + timestamp + "'", function (err, row) {
+            if (err) {
+                console.log("Error getting picture from comment : " + err);
+                callback(err, null);
+            } else if (row) {
+                callback(null, row.picture_attached);
+            } else {
+                console.log("No result.");
+            }
+        });
+    },
+
     remove_comment : function (id, callback) {
         db.run("DELETE FROM comments WHERE id=" + id, callback);
     },
@@ -51,5 +64,15 @@ module.exports = {
                 }, callback);
             }
         });            
-    }
+    },
+
+    get_average : function (establishment_id, callback) {
+         db.get("SELECT AVG(rating) as score FROM comments WHERE establishment_id=" + establishment_id, function (err, row) {
+             if (err) {
+                 callback (err, null);
+             } else {
+                 callback (null, row.score);
+             }
+         });
+    },
 };

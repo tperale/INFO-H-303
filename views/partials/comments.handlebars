@@ -2,14 +2,18 @@
 
 {{#if user}}
 <div class="well">
-    <h4>Leave a Comment:</h4>
-    <form action="/comment/?id={{establishment.id}}" role="form" method="POST">
+    <h4>Laisser un commentaire :</h4>
+    <form action="/comment/?id={{establishment.id}}" role="form" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <textarea class="form-control" name="comment" rows="3" placeholder="Comment"></textarea>
+            <div class="fallback dropzone">
+                <input type="file"name="picture">
+            </div>
+            <hr>
+            <input type=text" class="form-control" name="comment" rows="3" placeholder="Comment">
         </div>
         <div class="row">
             <div class="col-md-6">
-                <input name="rating" type="text" class="rating" data-size="xs" >
+                <input type="text" name="rating" class="rating" data-size="xs">
             </div>
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary pull-right">Envoyer</button>
@@ -24,11 +28,10 @@
 {{#each comments}}
 <div class="well">
     <div class="row">
-        {{#if image_attached}}
+        {{#if picture_attached}}
         <div class="col-md-3">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="{{image_attached}}" alt="">
-            </a>
+            <!-- <a class="pull-left" href="#"> </a> -->
+            <img class="media-object" src="/user/{{username}}/comment/{{timestamp}}/picture" alt="">
         </div>
         {{/if}}
 

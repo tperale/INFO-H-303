@@ -13,6 +13,8 @@ var session = require('express-session');
 var parseurl = require('parseurl');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
+var util = require('util');
+
 
 var app = express();
 
@@ -286,9 +288,8 @@ app.post('/file-upload',  function (req, res) {
         if (err) {
             return res.redirect(303, '/error'); 
         }
-        console.log('Received File');
-
         console.log(file);
+
         fs.readFile(file.file.path, function (err, data) {
             database_utils.insert_picture(req.query.id, data, function (err) {
                 if (err) {
@@ -438,15 +439,41 @@ app.post('/label/', function (req, res) {
 
 /* @desc Permet d'afficher une photo qu'un utilisateur a afficher en commentaire.
  */
-app.get('/user/:name/comment/:timestamp/:picture',  function (req, res) {
+app.get('/user/:name/comment/:timestamp/picture',  function (req, res) { 
+    Comments.get_attached_picture(req.params.name, req.params.timestamp, function (err, result) {
+        if (result) {
+            res.send(result);
+        } 
+    });
 });
 
-app.post('/comment', function (req, res ) {
-    if (req.user) {
-        Comments.add_comment(req.query.id, req.user.name, req.body.rating, req.body.picture, req.body.comment, function (err) {
-            res.redirect('back');
-        });
+/* @desc : User comment on an establishment.
+ */
+app.post('/comment', function (req, res) {
+    if (!req.user) {
+        return;
     }
+
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, file) {
+        if (err) {
+            return res.redirect(303, '/error'); 
+        }
+
+        console.log("Fields : " + util.inspect(fields) + " and file " + util.inspect(file));
+
+        if (file.picture) {
+            fs.readFile(file.picture.path, function (err, data) {
+                Comments.add_comment(req.query.id, req.user.name, fields.rating, data, fields.comment, function (err) {
+                    res.redirect('back');
+                });
+            });
+        } else {
+            Comments.add_comment(req.query.id, req.user.name, fields.rating, null, fields.comment, function (err) {
+                res.redirect('back');
+            });
+        }
+    });
 });
 /* ---------------------------------------------
  *    login/signup functions.
@@ -488,7 +515,7 @@ app.get('/login', function (req, res) {
 });
 
 app.post('/login', passport.authenticate('local', { 
-    successRedirect: '/',
+    successRedirect: 'back',
     failureRedirect: '/login',
     failureFlash: true 
 }));
