@@ -462,7 +462,7 @@ app.post('/comment', function (req, res) {
 
         console.log("Fields : " + util.inspect(fields) + " and file " + util.inspect(file));
 
-        if (file.picture) {
+        if (file.picture.size) {
             fs.readFile(file.picture.path, function (err, data) {
                 Comments.add_comment(req.query.id, req.user.name, fields.rating, data, fields.comment, function (err) {
                     res.redirect('back');
