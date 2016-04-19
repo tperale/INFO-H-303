@@ -447,6 +447,23 @@ app.get('/user/:name/comment/:timestamp/picture',  function (req, res) {
     });
 });
 
+/* @desc : Supprime un commentaire.
+ */
+app.get('/comment/remove/:id', function (req, res) {
+    if (req.user.admin) {
+        Comments.remove_comment(req.params.id, function (err) {
+            if (err) {
+                console.log("Error removing a comment : " + err); 
+            }
+            res.redirect('back');
+        });
+    } else {
+        // Not authorized. 
+    }
+});
+
+
+
 /* @desc : User comment on an establishment.
  */
 app.post('/comment', function (req, res) {
