@@ -1,5 +1,39 @@
 <!DOCTYPE html>
 
-<h3>{{name}}</h3>
-{{#if admin}}
+{{#if profile.admin}}
+<h3>Admin : {{profile.name}}</h3>
+{{else}}
+<h3>{{profile.name}}</h3>
 {{/if}}
+
+<hr>
+
+<h2>Commentaires</h2>
+{{#each comments}}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Sur l'établissement : {{establishment_id}}<h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            {{#if picture_attached}}
+            <div class="col-md-3">
+                <img class="media-object img-responsive" data-action="zoom" src="/user/{{username}}/comment/{{timestamp}}/picture" alt="">
+            </div>
+            <div class="col-md-9">
+            {{else}}
+            <div class="col-md-12">
+            {{/if}}
+                {{comment_text}}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{/each}}
+
+<hr>
+

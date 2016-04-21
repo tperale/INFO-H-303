@@ -45,14 +45,13 @@ module.exports = {
         db.run("DELETE FROM comments WHERE id=" + id, callback);
     },
 
-    /* @desc : 
+    /* @desc : Get comments from an establishment.
      *
-     * @param {establishment_id} :
+     * @param {establishment_id} : ID of the establishment.
      *
      * @param {callback} : function (err, result) {}
      */
     get_comments : function (establishment_id, callback) {
-        // TODO ne pas loader les doublons.
         db.all("SELECT * FROM comments WHERE establishment_id=" + establishment_id + " ORDER BY timestamp", function (err, rows) {
             if (err) {
                 callback(err, null); 
@@ -64,6 +63,21 @@ module.exports = {
                 }, callback);
             }
         });            
+    },
+
+    get_all : function (name, callback) {
+         db.all("SELECT * FROM comments WHERE username='" + name + "' ORDER BY timestamp", function (err, rows) {
+            if (err) {
+                callback(err, null); 
+            } else {
+                async.map(rows, function (values, callback) {
+                    setTimeout(function() { 
+                        callback(null, values);
+                    }, 200); 
+                }, callback);
+            }
+        });            
+   
     },
 
     get_average : function (establishment_id, callback) {

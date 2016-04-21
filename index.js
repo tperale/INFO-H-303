@@ -264,9 +264,28 @@ app.get('/about',  function (req, res) {
 /* @desc Permet d'afficher le profil d'un utilisateur du site.
  */
 app.get('/user/:name',  function (req, res) {
-    User.find(req.params.name, function (err, current_user) {
+    async.parallel([
+        function(callback) { // Getting the "bar" establishment.
+            User.find(req.params.name, function (err, result) {
+                setTimeout(function() {
+                    callback(null, result);
+                }, 200);
+            });
+        }, function(callback) { // Getting the comments.
+            Comments.get_all(req.params.name, function (err, results) {
+                if (err) {
+                    console.log("Error getting comments : " + err);
+                }
+                setTimeout(function() {
+                    callback(null, results);
+                }, 200);
+            });
+        }
+    ], function (err, results) {
         res.render('user', {
-            profile : current_user,
+            profile : results[0],
+
+            comments : results[1],
 
             user : req.user,
         });
