@@ -77,7 +77,6 @@ module.exports = {
                 }, callback);
             }
         });            
-   
     },
 
     get_average : function (establishment_id, callback) {

@@ -30,6 +30,20 @@ module.exports = {
         db.run("DELETE FROM label WHERE id=" + id, callback);
     },
 
+    get_all : function (name, callback) {
+         db.all("SELECT * FROM label WHERE username='" + name + "'", function (err, rows) {
+            if (err) {
+                callback(err, null); 
+            } else {
+                async.map(rows, function (values, callback) {
+                    setTimeout(function() { 
+                        callback(null, values);
+                    }, 200); 
+                }, callback);
+            }
+        });            
+    },
+
     /* @desc : 
      *
      * @param {establishment_id} :

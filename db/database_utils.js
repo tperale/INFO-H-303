@@ -95,6 +95,16 @@ module.exports = {
     get_establishment_type : get_establishment_type,
 
     get_establishment : get_establishment,
+
+    get_name : function (id, callback) {
+        db.get("SELECT name FROM establishment WHERE id=" + id, function (err, row) {
+            if (err) {
+                console.log("ERROR GETTING name : " + err); 
+                callback(err, null);
+            }
+            callback(null, row.name);
+        });
+    },
         
     get_establishment_image : function (id, callback) {
         db.get("SELECT picture FROM establishment WHERE id=" + id, function (err, row) {

@@ -73,6 +73,7 @@ module.exports = {
                 console.log("ID does not exist.");
             } else {
                 row.type = "bar";
+                row.bar = true;
                 callback(null, row);  
             }
         });

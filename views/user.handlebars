@@ -8,32 +8,48 @@
 
 <hr>
 
-<h2>Commentaires</h2>
-{{#each comments}}
-
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Sur l'établissement : {{establishment_id}}<h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            {{#if picture_attached}}
-            <div class="col-md-3">
-                <img class="media-object img-responsive" data-action="zoom" src="/user/{{username}}/comment/{{timestamp}}/picture" alt="">
-            </div>
-            <div class="col-md-9">
-            {{else}}
-            <div class="col-md-12">
-            {{/if}}
-                {{comment_text}}
+<div class="row">
+    <div class="col-md-6">
+    <h2>Commentaires</h2>
+    <hr>
+    {{#each comments}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="/establishment/{{establishment_id}}">Commentaire</a><h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                {{#if picture_attached}}
+                <div class="col-md-3">
+                    <img class="media-object img-responsive" data-action="zoom" src="/user/{{username}}/comment/{{timestamp}}/picture" alt="">
+                </div>
+                <div class="col-md-9">
+                {{else}}
+                <div class="col-md-12">
+                {{/if}}
+                    {{comment_text}}
+                </div>
             </div>
         </div>
     </div>
+    {{/each}}
+    </div>
+
+    <div class="col-md-6">
+    <h2>Labels</h2>
+    <hr>
+    {{#each labels}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="/establishment/{{establishment_id}}">Label</a><h3>
+        </div>
+        <div class="panel-body">
+            {{name}}
+        </div>
+    </div>
+    {{/each}}
+    </div>
 </div>
-
-
-{{/each}}
 
 <hr>
 

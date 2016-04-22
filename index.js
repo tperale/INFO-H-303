@@ -280,12 +280,23 @@ app.get('/user/:name',  function (req, res) {
                     callback(null, results);
                 }, 200);
             });
+        }, function(callback) { // Getting the comments.
+            Label.get_all(req.params.name, function (err, results) {
+                if (err) {
+                    console.log("Error getting comments : " + err);
+                }
+                setTimeout(function() {
+                    callback(null, results);
+                }, 200);
+            });
         }
     ], function (err, results) {
         res.render('user', {
             profile : results[0],
 
             comments : results[1],
+
+            labels : results[2],
 
             user : req.user,
         });

@@ -77,6 +77,7 @@ module.exports = {
                 return;            
             } else {
                 row.type = "restaurant";
+                row.restaurant = true;
                 callback(null, row);  
             }
         });
