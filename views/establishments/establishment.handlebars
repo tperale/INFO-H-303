@@ -9,7 +9,7 @@
         </h1>
 
         <div class="creator-section">
-            by <a href="/user/{{establishment.creator}}">{{establishment.created_by}}</a> ({{establishment.creation-date}})
+e           by <a href="/user/{{establishment.creator}}">{{establishment.created_by}}</a> ({{establishment.creation_date}})
         </div>
 
         <hr>
@@ -19,6 +19,42 @@
         {{> map}}
 
         {{> establishment_info}}
+
+        <div class="well">
+        {{#if establishment.restaurant}}
+            {{#if establishment.takeaway}}
+                <span class="glyphicon glyphicon-shopping-cart"></span> Possibilité de prendre à emporter. <br>
+            {{else}}
+                <span class="glyphicon glyphicon-shopping-cart"></span> Impossible de prendre à emporter.<br>
+            {{/if}}
+
+            {{#if establishment.delivery}}
+                <span class="glyphicon glyphicon-plane"></span> Livraison à domicile.<br>
+            {{else}}
+                <span class="glyphicon glyphicon-plane"></span> Aucune livraison à domicile.<br>
+            {{/if}}
+            <span class="glyphicon glyphicon-euro"></span> Prix moyen : {{establishment.price}}<br>
+            <span class="glyphicon glyphicon-info-sign"></span> Nombre de places : {{establishment.price}}<br>
+        {{/if}}
+
+        {{#if bar}}
+            {{#if establishment.smockers}}
+                <span class="glyphicon glyphicon-leaf"></span> Fumeur authorisé.
+            {{else}}
+                <span class="glyphicon glyphicon-leaf"></span> Non fumeur.
+            {{/if}}
+            {{#if establishment.snacks}}
+                <span class="glyphicon glyphicon-piggy-bank"></span> Snacks sur place
+            {{else}}
+            {{/if}}
+        {{/if}}
+
+        {{#if establishment.hotel}}
+            <span class="glyphicon glyphicon-bed"></span> Nombre de chambre : {{establishment.room_number}} <br>
+            <span class="glyphicon glyphicon-euro"></span> Prix moyen : {{establishment.price}}<br>
+            Nombre d'étoile : {{establishment.stars}} <br>
+        {{/if}}
+        </div>
 
         <hr>
 
