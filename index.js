@@ -456,8 +456,11 @@ app.get('/label/remove/:id', function (req, res) {
 
 app.post('/label/', function (req, res) {
     if (req.user) {
-        Label.add_label(req.query.id, req.user.name, req.body.title, function () {
-            res.redirect('back');
+        var labels = req.body.label.split(',');
+        labels.map(function (label) {
+            Label.add_label(req.query.id, req.user.name, label, function () {
+                res.redirect('back');
+            });
         });
     }
 });

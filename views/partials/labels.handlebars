@@ -21,14 +21,38 @@
         </div>
 
         {{#if user}}
-        <form action="/label/?id={{establishment.id}}" method="post">
-            <div class="input-group">
-                <textarea class="form-control" name="title" rows="1" placeholder="Ajouter un label"></textarea>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">Ajouter.</button>
-                </span>
+        <form id="selectizeForm" action="/label/?id={{establishment.id}}" method="post" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-6 labelContainer">
+                    <select id="selectLabel" name="label" placeholder="Choisir un label..">
+                        {{#each labels}}
+                        <option name="title" value="{{name}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
             </div>
         </form>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                //initialize selectize for both fields
+                $("#selectLabel").selectize({
+                    delimiter: ',',
+                    persist: false,
+                    create: function(input) {
+                        return {
+                            value: input,
+                            text: input
+                        }
+                    }
+                });
+            });
+        </script>
+
         {{/if}}
 
     </div>
