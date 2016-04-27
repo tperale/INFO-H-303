@@ -3,17 +3,17 @@
 {{#if user}}
 <div class="well">
     <h4>Laisser un commentaire :</h4>
-    <form action="/comment/?id={{establishment.id}}" role="form" method="POST" enctype="multipart/form-data">
+    <form action="/comment/?id={{establishment.id}}" id="commentForm" role="form" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <div class="fallback dropzone">
                 <input type="file"name="picture">
             </div>
             <hr>
-            <input type=text" class="form-control" name="comment" rows="3" placeholder="Comment">
+            <input type=text" class="form-control" id="comment" name="comment" rows="3" placeholder="Comment">
         </div>
         <div class="row">
             <div class="col-md-6">
-                <input type="text" name="rating" class="rating" data-size="xs">
+                <input type="text" id="rating" name="rating" class="rating" data-size="xs">
             </div>
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary pull-right">Envoyer</button>
@@ -23,6 +23,24 @@
 </div>
 
 <hr>
+
+<script>
+    $("#commentForm").validate({
+        rules: {
+            rating: {
+                required: true,
+            },
+            comment: {
+                required: true,
+            },
+        }
+    });
+
+    // http://stackoverflow.com/questions/2457032/jquery-validation-change-default-error-message
+    jQuery.extend(jQuery.validator.messages, {
+        required: "Veuillez completer cette section.",
+    });
+</script>
 {{/if}}
 
 {{#each comments}}

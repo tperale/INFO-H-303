@@ -4,14 +4,14 @@
 <hr>
 
 <div class="well">
-    <form action="/signup" method="post">
+    <form id="signupForm" action="/signup" method="post">
 {{#if username_error}}
         <div class="alert alert-warning" role="alert">
             <a href="#" class="alert-link">Nom d'utilisateur existe déjà</a>
         </div>
 {{/if}}
         <div>
-            <input type="text" name="username" class="form-control" placeholder="Entrer nom d'utilisateur.">
+            <input type="text" id="username" name="username" class="form-control" placeholder="Entrer nom d'utilisateur.">
         </div>
 
 {{#if email_error}}
@@ -20,7 +20,7 @@
         </div>
 {{/if}}
         <div>
-            <input type="text" name="email" class="form-control" placeholder="Addresse email.">
+            <input type="text" id="email" name="email" class="form-control" placeholder="Addresse email.">
         </div>
 
 {{#if password_error}}
@@ -29,14 +29,48 @@
         </div>
 {{/if}}
         <div>
-            <input type="password" name="password" class="form-control" placeholder="Mot de passe">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe">
         </div>
         <div>
-            <input type="password" name="password_verif" class="form-control" placeholder="Retaper votre mot de passe.">
+            <input type="password" id="password_verif" name="password_verif" class="form-control" placeholder="Retaper votre mot de passe.">
         </div>
 
         <div>
             <input type="submit" class="btn btn-success" value="S'inscrire"/>
         </div>
     </form>
+
+    <script>
+        $("#signupForm").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 32,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                password: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 64,
+                },
+
+                password_verif : {
+                    equalTo: "#password",
+                    minlength: 2,
+                    maxlength: 64
+                },
+            }
+        });
+
+        // http://stackoverflow.com/questions/2457032/jquery-validation-change-default-error-message
+        jQuery.extend(jQuery.validator.messages, {
+            required: "Veuillez completer cette section.",
+            email: "Entrez un email valide.",
+            equalTo: "Veuillez entrer le même mot de passe.",
+        });
+    </script>
 </div>
