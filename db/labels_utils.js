@@ -8,6 +8,15 @@ var db = new sqlite3.Database(file);
 db.serialize(function () {});
 
 module.exports = {
+    /* @desc : Ajoute un label.
+     *
+     * @param {establishment_id} : ID de l'établissement sur lequel il faut
+     *      ajouter le label.
+     *
+     * @param {username} : Nom d'utilisateur de la personne qui a ajouté le label.
+     *
+     * @param {text} : Contenu du label.
+     */
     add_label : function (establishment_id, username, text, callback) {
         var label = {
             $id : establishment_id,
@@ -26,10 +35,18 @@ module.exports = {
         });
     },
 
+    /* @desc : Supprime le label d'"ID" passé en paramètre.
+     *
+     * @param {id} : Label à supprimer.
+     */
     remove_label : function (id, callback) {
         db.run("DELETE FROM label WHERE id=" + id, callback);
     },
 
+    /* @desc : Recherche tout les labels du nom passé en paramètre.
+     *
+     * @param {name} : Nom d'utilisateur qu'on doit rechercher.
+     */
     get_all : function (name, callback) {
          db.all("SELECT * FROM label WHERE username='" + name + "'", function (err, rows) {
             if (err) {
@@ -63,5 +80,19 @@ module.exports = {
                 }, callback);
             }
         });            
+    },
+
+    /* @desc : Chercher tout les labels ayant le nom passé en paramètre.
+     *
+     * @param {query} : Label rechché.
+     */
+    search_label : function (query, callback) {
+        db.all("SELECT * FROM label WHERE name LIKE '%" + query + "%' GROUP BY name ORDER BY COUNT(name)", function (err, rows) {
+            if (err) { 
+                return callback(err, null); 
+            }
+
+            callback(null, rows);
+        });
     }
 };
