@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<h2>Add establishment</h2>
+<hr>
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRestaurant" aria-expanded="false" aria-controls="">
+    Add new Restaurant.
+</button>
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseBar" aria-expanded="false" aria-controls="">
+    Add new Bar.
+</button>
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHotel" aria-expanded="false" aria-controls="">
+    Add new Hotel.
+</button>
+
+<div class="collapse" id="collapseRestaurant">
+    <div class="well">
+        <form action="/establishment/add" method="post">
+            <input type="text" name="name" placeholder="Nom de l'établissement.">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="address_street" placeholder="Rue.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_town" placeholder="Ville.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_number" placeholder="Numéro.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_zip" placeholder="Code postal.">
+                </div>
+            </div>
+            <input type="text" name="phone_number" placeholder="Numéro de téléphone">
+
+            <input type="text" name="webiste" placeholder="Site internet">
+
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+<div class="collapse" id="collapseBar">
+    <div class="well">
+        <form action="/establishment/add" method="post">
+            <input type="text" name="name" placeholder="Nom de l'établissement.">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="address_street" placeholder="Rue.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_town" placeholder="Ville.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_number" placeholder="Numéro.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_zip" placeholder="Code postal.">
+                </div>
+            </div>
+            <input type="text" name="phone_number" placeholder="Numéro de téléphone">
+
+            <input type="text" name="webiste" placeholder="Site internet">
+
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+<div class="collapse" id="collapseHotel">
+    <div class="well">
+        <form action="/establishment/add" method="post">
+            <input type="text" name="name" placeholder="Nom de l'établissement.">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="address_street" placeholder="Rue.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_town" placeholder="Ville.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_number" placeholder="Numéro.">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="address_zip" placeholder="Code postal.">
+                </div>
+            </div>
+            <input type="text" name="phone_number" placeholder="Numéro de téléphone">
+
+            <input type="text" name="webiste" placeholder="Site internet">
+
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+
+
