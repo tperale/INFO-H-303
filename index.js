@@ -46,6 +46,9 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
+var AdminRoutes = require('./routes/admin.js');
+app.use('/admin', AdminRoutes);
+
 /* Importing differents pages */
 
 app.get('/',  function (req, res) {

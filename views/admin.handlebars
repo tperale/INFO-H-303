@@ -1,41 +1,83 @@
 <!DOCTYPE html>
 
-<h2>Add establishment</h2>
+<h2>Ajouter un établissement.</h2>
 <hr>
 
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRestaurant" aria-expanded="false" aria-controls="">
-    Add new Restaurant.
+    Ajouter un nouveau restaurant.
 </button>
 
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseBar" aria-expanded="false" aria-controls="">
-    Add new Bar.
+    Ajouter un nouveau bar.
 </button>
 
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseHotel" aria-expanded="false" aria-controls="">
-    Add new Hotel.
+    Ajouter un nouvel hotel.
 </button>
+
+<hr>
 
 <div class="collapse" id="collapseRestaurant">
     <div class="well">
-        <form action="/establishment/add" method="post">
-            <input type="text" name="name" placeholder="Nom de l'établissement.">
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" name="address_street" placeholder="Rue.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_town" placeholder="Ville.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_number" placeholder="Numéro.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_zip" placeholder="Code postal.">
+        <form action="/admin/add" method="post">
+            <div class="form-group">
+                <label for="restaurantNameInput">Nom du restaurant</label>
+                <input type="text" id="restaurantNameInput" class="form-control" name="name" placeholder="Nom de l'établissement.">
+            </div>
+
+            <div class="form-group">
+                <label for="restaurantAddressInput">Addresse</label>
+                <div class="form-inline">
+                    <input type="text" class="form-control" id="restaurantAddressInput" name="address_street" placeholder="Rue.">
+                    <input type="text" class="form-control" id="restaurantAddressInput" name="address_town" placeholder="Ville.">
+                    <input type="text" class="form-control" id="restaurantAddressInput" name="address_number" placeholder="Numéro.">
+                    <input type="text" class="form-control" id="restaurantAddressInput" name="address_zip" placeholder="Code postal.">
                 </div>
             </div>
-            <input type="text" name="phone_number" placeholder="Numéro de téléphone">
 
-            <input type="text" name="webiste" placeholder="Site internet">
+            <div class="form-group">
+                <label for="restaurantPhoneNumberInput">Numéro de téléphone</label>
+                <input type="tel" class="form-control" name="phone_number" placeholder="Numéro de téléphone">
+            </div>
+
+            <div class="form-group">
+                <label for="restaurantWebsiteInput">Site internet</label>
+                <input type="url" class="form-control" name="webiste" placeholder="Site internet">
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <label for="restaurantAveragePriceInput">Prix moyen</label>
+                <div class="input-group">
+                    <input type="number" id="restaurantAveragePriceInput" class="form-control" name="price" placeholder="Prix moyen." aria-describedby="moneySymbol">
+                    <span class="input-group-addon " id="moneySymbol">
+                        <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="restaurantSeatNumberInput">Nombre de place</label>
+                <input type="number" id="restaurantSeatNumberInput" class="form-control" name="seat_number" placeholder="Numbre de place.">
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Nourriture à emporter : </label>
+                    <input type="checkbox" name="takeaway" checked>
+                    <script>
+                        $("[name='takeaway']").bootstrapSwitch();
+                    </script>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Livraison : </label>
+                    <input type="checkbox" name="delivery" checked>
+                    <script>
+                        $("[name='delivery']").bootstrapSwitch();
+                    </script>
+                </div>
+            </div>
 
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
@@ -44,25 +86,51 @@
 
 <div class="collapse" id="collapseBar">
     <div class="well">
-        <form action="/establishment/add" method="post">
-            <input type="text" name="name" placeholder="Nom de l'établissement.">
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" name="address_street" placeholder="Rue.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_town" placeholder="Ville.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_number" placeholder="Numéro.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_zip" placeholder="Code postal.">
+        <form action="/admin/add" method="post">
+            <div class="form-group">
+                <label for="barNameInput">Nom du bar</label>
+                <input type="text" id="barNameInput" class="form-control" name="name" placeholder="Nom de l'établissement.">
+            </div>
+
+            <div class="form-group">
+                <label for="barAddressInput">Addresse</label>
+                <div class="form-inline">
+                    <input type="text" class="form-control" id="barAddressInput" name="address_street" placeholder="Rue.">
+                    <input type="text" class="form-control" id="barAddressInput" name="address_town" placeholder="Ville.">
+                    <input type="text" class="form-control" id="barAddressInput" name="address_number" placeholder="Numéro.">
+                    <input type="text" class="form-control" id="barAddressInput" name="address_zip" placeholder="Code postal.">
                 </div>
             </div>
-            <input type="text" name="phone_number" placeholder="Numéro de téléphone">
 
-            <input type="text" name="webiste" placeholder="Site internet">
+            <div class="form-group">
+                <label for="barPhoneNumberInput">Numéro de téléphone</label>
+                <input type="tel" class="form-control" name="phone_number" placeholder="Numéro de téléphone">
+            </div>
+
+            <div class="form-group">
+                <label for="barWebsiteInput">Site internet</label>
+                <input type="url" class="form-control" name="webiste" placeholder="Site internet">
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Fumeurs autorisés : </label>
+                    <input type="checkbox" name="smokers" checked>
+                    <script>
+                        $("[name='smokers']").bootstrapSwitch();
+                    </script>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Snacks disponibles : </label>
+                    <input type="checkbox" name="snacks" checked>
+                    <script>
+                        $("[name='snacks']").bootstrapSwitch();
+                    </script>
+                </div>
+            </div>
 
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
@@ -71,25 +139,53 @@
 
 <div class="collapse" id="collapseHotel">
     <div class="well">
-        <form action="/establishment/add" method="post">
-            <input type="text" name="name" placeholder="Nom de l'établissement.">
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" name="address_street" placeholder="Rue.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_town" placeholder="Ville.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_number" placeholder="Numéro.">
-                </div>
-                <div class="col-md-2">
-                    <input type="text" name="address_zip" placeholder="Code postal.">
+        <form action="/admin/add" method="post">
+            <div class="form-group">
+                <label for="hotelNameInput">Nom du hotel</label>
+                <input type="text" id="hotelNameInput" class="form-control" name="name" placeholder="Nom de l'établissement.">
+            </div>
+
+            <div class="form-group">
+                <label for="hotelAddressInput">Addresse</label>
+                <div class="form-inline">
+                    <input type="text" class="form-control" id="hotelAddressInput" name="address_street" placeholder="Rue.">
+                    <input type="text" class="form-control" id="hotelAddressInput" name="address_town" placeholder="Ville.">
+                    <input type="text" class="form-control" id="hotelAddressInput" name="address_number" placeholder="Numéro.">
+                    <input type="text" class="form-control" id="hotelAddressInput" name="address_zip" placeholder="Code postal.">
                 </div>
             </div>
-            <input type="text" name="phone_number" placeholder="Numéro de téléphone">
 
-            <input type="text" name="webiste" placeholder="Site internet">
+            <div class="form-group">
+                <label for="hotelPhoneNumberInput">Numéro de téléphone</label>
+                <input type="tel" class="form-control" name="phone_number" placeholder="Numéro de téléphone">
+            </div>
+
+            <div class="form-group">
+                <label for="hotelWebsiteInput">Site internet</label>
+                <input type="url" class="form-control" name="webiste" placeholder="Site internet">
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <label for="hotelStars">Nombre d'étoile</label>
+                <input type="text" id="hotelStars" name="stars" class="rating" data-size="xs">
+            </div>
+
+            <div class="form-group">
+                <label for="hotelRoomPrice">Prix d'une chambre</label>
+                <div class="input-group">
+                    <input type="number" id="hotelRoomPrice" class="form-control" name="price" placeholder="Prix d'une chambre." aria-describedby="moneySymbol">
+                    <span class="input-group-addon " id="moneySymbol">
+                        <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hotelRoomNumber">Nombre de chambre</label>
+                <input type="number" id="hotelRoomNumber" class="form-control" name="room_number" placeholder="Nombre de chambre.">
+            </div>
 
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
