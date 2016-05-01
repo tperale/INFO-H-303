@@ -107,7 +107,7 @@ app.get('/establishments/',  function (req, res) {
         },
 
         function (callback) {
-            database_utils.pick("restaurant", function (err, result) {
+            database_utils.pick("bar", function (err, result) {
                  database_utils.pick_random_from(3, result, function (result) {
                     setTimeout(function() {
                         callback(null, result);
@@ -117,7 +117,7 @@ app.get('/establishments/',  function (req, res) {
         },
 
         function (callback) {
-            // database_utils.pick("restaurant", function (err, result) {
+            // database_utils.pick("hotel", function (err, result) {
             //      database_utils.pick_random_from(3, result, function (result) {
             //         setTimeout(function() {
             //             callback(null, result);
@@ -455,14 +455,16 @@ app.get('/label/remove/:id', function (req, res) {
 });
 
 app.post('/label/', function (req, res) {
-    if (req.user) {
-        var labels = req.body.label.split(',');
-        labels.map(function (label) {
-            Label.add_label(req.query.id, req.user.name, label, function () {
-                res.redirect('back');
-            });
-        });
+    if (!req.user || !req.body.label) {
+        return res.redirect(303, '/error');
     }
+
+    var labels = req.body.label.split(',');
+    labels.map(function (label) {
+        Label.add_label(req.query.id, req.user.name, label, function () {
+            res.redirect('back');
+        });
+    });
 });
 
 /* ---------------------------------------------
