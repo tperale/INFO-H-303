@@ -19,7 +19,7 @@
 
 <div class="collapse" id="collapseRestaurant">
     <div class="well">
-        <form action="/admin/add" method="post">
+        <form action="/admin/add/restaurant" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="restaurantNameInput">Nom du restaurant</label>
                 <input type="text" id="restaurantNameInput" class="form-control" name="name" placeholder="Nom de l'établissement.">
@@ -86,7 +86,7 @@
 
 <div class="collapse" id="collapseBar">
     <div class="well">
-        <form action="/admin/add" method="post">
+        <form action="/admin/add/bar" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="barNameInput">Nom du bar</label>
                 <input type="text" id="barNameInput" class="form-control" name="name" placeholder="Nom de l'établissement.">
@@ -139,7 +139,7 @@
 
 <div class="collapse" id="collapseHotel">
     <div class="well">
-        <form action="/admin/add" method="post">
+        <form action="/admin/add/hotel" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="hotelNameInput">Nom du hotel</label>
                 <input type="text" id="hotelNameInput" class="form-control" name="name" placeholder="Nom de l'établissement.">
