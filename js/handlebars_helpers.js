@@ -1,4 +1,5 @@
 var db = require('../db/database_utils.js');
+var async = require('async');
 var bar = require('../db/bar_db_utils.js');
 var hotel = require('../db/hotel_db_utils.js');
 var restaurant = require('../db/restaurant_db_utils.js');
@@ -146,7 +147,7 @@ module.exports = {
             }
 
             result += "<div class=\"col-sm-6 col-md-4\"><div class=\"thumbnail\">";
-            result += "<img src=\"/image/" + establishments[i].id + "\">";
+            result += "<img src=\"/establishments/image/" + establishments[i].id + "\">";
             result += "<div class=\"caption\">";
 
             result += "<h3>" + establishments[i].name + "</h3>";
@@ -155,7 +156,7 @@ module.exports = {
             result += "<p><span class=\"glyphicon glyphicon-earphone\" aria-hidden=\"true\"></span>" + establishments[i].phone_number + "</p>";
             if (establishments[i].website)
                 result += "<p><span class=\"glyphicon glyphicon-cloud\" aria-hidden=\"true\"></span><a href=\"" + establishments[i].website + "\">" + establishments[i].website + "</a></p>";
-            result += "<p><a href=\"/establishment/" + establishments[i].id + "\" class=\"btn btn-success\" role=\"button\">Me montrer</a></p>";
+            result += "<p><a href=\"/establishments/" + establishments[i].id + "\" class=\"btn btn-success\" role=\"button\">Me montrer</a></p>";
             result += "</div>";
             result += "</div>";
             result += "</div>";
