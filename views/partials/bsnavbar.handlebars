@@ -43,7 +43,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li><a href="/user/{{user.name}}">Profil</a></li>
                                 {{#if user.admin}}
-                                    <li><a href="/create">Ajouter un établissement</a></li>
+                                    <li><a href="/admin/add">Ajouter un établissement</a></li>
                                 {{/if}}
                                 <li><a href="/settings">Paramètres</a></li>
                                 <li role="separator" class="divider"></li>
@@ -54,24 +54,25 @@
                         <li><a data-toggle="modal" data-target="#signin">Sign In</a></li>
 
                         <div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="signinmodal">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog" role="document" aria-labelledby="myModalLabel">
                                 <div class="modal-content">
-                                    <div class="well">
-                                        <form action="/login" method="post">
-                                            <div>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Se connecter.</h4>
+                                    </div>
+                                    <form action="/login" method="post">
+                                        <div class="modal-body">
+                                            <div class="form-group">
                                                 <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur">
                                             </div>
-                                            <hr>
-                                            <div>
+                                            <div class="form-group">
                                                 <input type="password" name="password" class="form-control" placeholder="Mot de passe">
                                             </div>
-                                            <hr>
-                                            <div>
-                                                <a href="/signup" class="pull-left">S'inscrire</a>
-                                                <input type="submit" class="btn btn-success pull-right" value="Log In"/>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="/signup" class="pull-left">S'inscrire</a>
+                                            <input type="submit" class="btn btn-success pull-right" value="Se connecter"/>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
