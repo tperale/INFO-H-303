@@ -8,9 +8,9 @@ var creation_script_file = "./db/create.sql";
 
 var exists = fs.existsSync(file);
 
-var restaurant_db_utils = require('./restaurant_db_utils.js');
-var bar_db_utils = require('./bar_db_utils.js');
-var hotel_db_utils = require('./hotel_db_utils.js');
+var Restaurant = require('./restaurant_db_utils.js');
+var Bar = require('./bar_db_utils.js');
+var Hotel = require('./hotel_db_utils.js');
 
 var Random = require('random-js');
 var range = require('range');
@@ -70,27 +70,27 @@ var get_establishment = function (id, callback) {
     get_establishment_type(id, function (type, id) {
         switch (type) {
             case "bar":
-                bar_db_utils.get_bar(id, callback);
+                Bar.get_bar(id, callback);
                 break;
             case "restaurant":
-                restaurant_db_utils.get_restaurant(id, callback)
+                Restaurant.get_restaurant(id, callback)
                 break;
             case "hotel":
-                hotel_db_utils.get_hotel(id, callback);
+                Hotel.get_hotel(id, callback);
         }  
     });
 };
 
 module.exports = {
-    new_hotel : hotel_db_utils.new_hotel,
+    new_hotel : Hotel.new_hotel,
 
-    get_hotel : hotel_db_utils.get_hotel,
+    get_hotel : Hotel.get_hotel,
 
-    get_restaurant : restaurant_db_utils.get_restaurant,
-    new_restaurant : restaurant_db_utils.new_restaurant,
+    get_restaurant : Restaurant.get_restaurant,
+    new_restaurant : Restaurant.new_restaurant,
 
-    new_bar : bar_db_utils.new_bar,
-    get_bar : bar_db_utils.get_bar,
+    new_bar : Bar.new_bar,
+    get_bar : Bar.get_bar,
 
     get_establishment_type : get_establishment_type,
 
@@ -139,24 +139,18 @@ module.exports = {
             get_establishment_type (value, function (type, id) {
                 switch (type) {
                     case "bar":
-                        bar_db_utils.get_bar(id, function (err, result) {
-                             setTimeout(function() { 
-                                callback(err, result);
-                            }, 200); 
+                        Bar.get_bar(id, function (err, result) {
+                            callback(err, result);
                         });
                         break;
                     case "restaurant":
-                        restaurant_db_utils.get_restaurant(id, function (err, result) {
-                            setTimeout(function() { 
-                                callback(err, result);
-                            }, 200); 
+                        Restaurant.get_restaurant(id, function (err, result) {
+                            callback(err, result);
                         });
                         break;
                     case "hotel":
-                        hotel_db_utils.get_hotel(id, function (err, result) {
-                            setTimeout(function() { 
-                                callback(err, result);
-                            }, 200); 
+                        Hotel.get_hotel(id, function (err, result) {
+                            callback(err, result);
                         });
                         break;
                 }
@@ -167,13 +161,13 @@ module.exports = {
     pick : function (type, callback) {
         switch (type) {
             case "bar":
-                bar_db_utils.get_bar_id(callback);
+                Bar.get_bar_id(callback);
                 break;
             case "restaurant":
-                restaurant_db_utils.get_restaurant_id(callback);
+                Restaurant.get_restaurant_id(callback);
                 break;
             case "hotel":
-                hotel_db_utils.get_hotel_id(callback);
+                Hotel.get_hotel_id(callback);
                 break;
             default:
                 db.all("SELECT id FROM establishment", function (err, rows) {

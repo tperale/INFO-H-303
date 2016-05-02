@@ -10,47 +10,44 @@ var Comments = require('../db/comment_utils.js');
 
 var async = require('async');
 
-router.get('/',  function (req, res) {
+router.get('/', function (req, res) {
     async.parallel([
         function (callback) {
             db.pick("restaurant", function (err, result) {
-                 db.pick_random_from(3, result, function (result) {
-                    setTimeout(function() {
-                        callback(null, result);
-                    }, 200);
+                 db.pick_random_from(3, result, function (err, result) {
+                    callback(null, result);
                  });
             });
         },
 
         function (callback) {
             db.pick("bar", function (err, result) {
-                 db.pick_random_from(3, result, function (result) {
-                    setTimeout(function() {
-                        callback(null, result);
-                    }, 200);
+                 db.pick_random_from(3, result, function (err, result) {
+                    callback(null, result);
                  });
             });
         },
 
-        function (callback) {
-            // db.pick("hotel", function (err, result) {
-            //      db.pick_random_from(3, result, function (result) {
-            //         setTimeout(function() {
-            //             callback(null, result);
-            //         }, 200);
-            //      });
-            // });
-            setTimeout(function() {
-                callback(null, []);
-            }, 200);
-        }
+        // function (callback) {
+        //     db.pick("hotel", function (err, result) {
+        //          db.pick_random_from(3, result, function (err, result) {
+        //              callback(null, result);
+        //          });
+        //     });
+        //     setTimeout(function() {
+        //         callback(null, []);
+        //     }, 200);
+        // }
     ], function (err, result) {
         res.render('establishments/showoff', {
-            restaurant : result[0],
+            restaurants : result[0],
             bars : result[1],
-            
 
             user : req.user,
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            },
         }) 
     });
 });
