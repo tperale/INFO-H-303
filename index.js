@@ -15,7 +15,6 @@ var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 var util = require('util');
 
-
 var app = express();
 
 app.disable('x-powered-by');
@@ -48,6 +47,10 @@ app.use(express.static(__dirname + '/public'));
 
 var AdminRoutes = require('./routes/admin.js');
 app.use('/admin', AdminRoutes);
+var LabelRoutes = require('./routes/label.js');
+app.use('/label', LabelRoutes);
+var EstablishmentsRoutes = require('./routes/establishments.js');
+app.use('/establishments', EstablishmentsRoutes);
 
 /* Importing differents pages */
 
@@ -97,118 +100,9 @@ app.get('/',  function (req, res) {
     });
 });
 
-app.get('/establishments/',  function (req, res) {
-    async.parallel([
-        function (callback) {
-            database_utils.pick("restaurant", function (err, result) {
-                 database_utils.pick_random_from(3, result, function (result) {
-                    setTimeout(function() {
-                        callback(null, result);
-                    }, 200);
-                 });
-            });
-        },
-
-        function (callback) {
-            database_utils.pick("bar", function (err, result) {
-                 database_utils.pick_random_from(3, result, function (result) {
-                    setTimeout(function() {
-                        callback(null, result);
-                    }, 200);
-                 });
-            });
-        },
-
-        function (callback) {
-            // database_utils.pick("hotel", function (err, result) {
-            //      database_utils.pick_random_from(3, result, function (result) {
-            //         setTimeout(function() {
-            //             callback(null, result);
-            //         }, 200);
-            //      });
-            // });
-            setTimeout(function() {
-                callback(null, []);
-            }, 200);
-        }
-    ], function (err, result) {
-        res.render('establishments/showoff', {
-            restaurant : result[0],
-            bars : result[1],
-            
-
-            user : req.user,
-        }) 
-    });
-});
-
-app.get('/establishments/restaurants',  function (req, res) {
-    database_utils.pick("restaurant", function (err, result) {
-        database_utils.pick_random_from(6, result, function (err, result) {
-            res.render('establishments/showoff', {
-                restaurants : result,
-
-                user : req.user,
-
-                helpers : {
-                    thumbnailing : helpers_fun.thumbnailing
-                }
-            });
-        });
-    });
-});
-
-app.get('/establishments/bars',  function (req, res) {
-    database_utils.pick("bar", function (err, result) {
-        database_utils.pick_random_from(6, result, function (err, result) {
-            res.render('establishments/showoff', {
-                bars : result,
-
-                user : req.user,
-
-                helpers : {
-                    thumbnailing : helpers_fun.thumbnailing
-                }
-            });
-        });
-    });
-});
-
-app.get('/establishments/hotels',  function (req, res) {
-    database_utils.pick("hotel", function (err, result) {
-        database_utils.pick_random_from(3, result, function (result) {
-            res.render('establishments/showoff', {
-                hotels : result,
-
-                user : req.user,
-
-                helpers : {
-                    thumbnailing : helpers_fun.thumbnailing
-                }
-            });
-        });
-    });
-});
-
-app.get('/establishment/:id',  function (req, res) {
-    database_utils.get_establishment_type(req.params.id, function (type) {
-        res.redirect('/' + type + '/' + req.params.id);
-    });
-});
-
 app.get('/contact',  function (req, res) {
     res.render('contact', {
             user : req.user,
-    });
-});
-
-app.get('/image/:id', function (req, res) {
-    database_utils.get_establishment_image(req.params.id, function (err, result) {
-        if (result) {
-            res.send(result);
-        } else {
-            res.redirect(302, 'http://blog.forbestravelguide.com/wp-content/uploads/2013/09/FTG-HeroShot-MXDC-CreditOliviaBoinet.jpg');
-        }
     });
 });
 
@@ -306,11 +200,6 @@ app.get('/user/:name',  function (req, res) {
     });
 });
 
-/* @desc Permet d'áfficher tout les restaurant qui ont pour label ":name".
- */
-app.get('/label/:name',  function (req, res) {
-});
-
 /* ------------------------------------------
  *  Gestion des établissements.
  * ------------------------------------------
@@ -330,142 +219,6 @@ app.post('/file-upload',  function (req, res) {
                 }
                 res.redirect('back');
             });
-        });
-    });
-});
-
-app.get('/bar/:id',  function (req, res) {
-    async.parallel([
-        function(callback) { // Getting the "bar" establishment.
-            database_utils.get_bar(req.params.id, function (err, result) {
-                setTimeout(function() {
-                    callback(null, result);
-                }, 200);
-            });
-        }, function(callback) { // Getting the comments.
-            Comments.get_comments(req.params.id, function (err, results) {
-                if (err) {
-                    console.log("Error getting comments : " + err);
-                }
-
-                setTimeout(function() {
-                    callback(null, results);
-                }, 200);
-            });
-        }, function(callback) { // Getting the labels.
-            Label.get_labels(req.params.id, function (err, results) {
-                if (err) {
-                    console.log("Error getting labels : " + err);
-                }
-
-                setTimeout(function() {
-                    callback(null, results);
-                }, 200);
-            })
-        }
-    ], function (err, results) {
-        res.render('establishments/establishment', {
-            establishment : results[0],
-            comments : results[1],
-            labels : results[2],
-
-            user : req.user,
-
-            helpers : {
-                icon : helpers_fun.icon
-            }
-        });
-    });
-
-});
-
-app.get('/hotel/:id',  function (req, res) {
-    res.render('establishments/hotel', {
-        establishment : database_utils.get_hotel(req.params.id),
-        comments : [],
-        labels : [],
-
-        user : req.user,
-    });
-});
-
-app.get('/restaurant/:id',  function (req, res) {
-    async.parallel([
-        function(callback) { // Getting the "bar" establishment.
-            database_utils.get_restaurant(req.params.id, function (err, result) {
-                setTimeout(function() {
-                    callback(null, result);
-                }, 200);
-            });
-
-        }, function(callback) { // Getting the comments.
-            Comments.get_comments(req.params.id, function (err, results) {
-                if (err) {
-                    console.log("Error getting comments : " + err);
-                }
-
-                setTimeout(function() {
-                    callback(null, results);
-                }, 200);
-            });
-        }, function(callback) { // Getting the labels.
-            Label.get_labels(req.params.id, function (err, result) {
-                var ret = [];
-                if (err) {
-                    console.log("Error getting labels : " + err);
-                } else {
-                    ret = result;
-                }
-
-                setTimeout(function() {
-                    callback(null, ret);
-                }, 200);
-            })
-        }
-    ], function (err, results) {
-        res.render('establishments/establishment', {
-            establishment : results[0],
-            comments : results[1],
-            labels : results[2],
-
-            user : req.user,
-
-            helpers : {
-                icon : helpers_fun.icon
-            }
-        });
-    });
-});
-
-/* ---------------------------------------------
- *    label handling.
- * ---------------------------------------------
- */
-app.get('/label/:name', function (req, res) {
-});
-
-app.get('/label/remove/:id', function (req, res) {
-    if (req.user.admin) {
-        Label.remove_label(req.params.id, function (err) {
-            if (err) {
-                console.log("Error removing a label : " + err); 
-            }
-            res.redirect('back');
-        });
-    } else {
-        // Not authorized. 
-    }
-});
-
-app.post('/label/', function (req, res) {
-    if (!req.user || !req.body.label) {
-        return res.redirect(303, '/error');
-    }
-
-    var labels = req.body.label.split(',');
-    labels.map(function (label) {
-        Label.add_label(req.query.id, req.user.name, label, function () {
-            res.redirect('back');
         });
     });
 });
@@ -499,8 +252,6 @@ app.get('/comment/remove/:id', function (req, res) {
         // Not authorized. 
     }
 });
-
-
 
 /* @desc : User comment on an establishment.
  */
