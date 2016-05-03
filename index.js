@@ -33,6 +33,9 @@ var formidable = require('formidable');
 var credentials = require('./credentials.js');
 app.use(require('cookie-parser')(credentials.cookieSecret));
 
+var flash = require('connect-flash');
+app.use(flash());
+
 app.use(session ({
     resave : false,
     saveUninitialized : true,
@@ -210,7 +213,6 @@ app.post('/file-upload',  function (req, res) {
         if (err) {
             return res.redirect(303, '/error'); 
         }
-        console.log(file);
 
         fs.readFile(file.file.path, function (err, data) {
             database_utils.insert_picture(req.query.id, data, function (err) {

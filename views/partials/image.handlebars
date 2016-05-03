@@ -10,7 +10,7 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form method="post" action="/file-upload/?id={{establishment.id}}" class="dropzone" enctype="multipart/form-data">
+            <form method="post" action="/admin/file-upload/?id={{establishment.id}}" class="dropzone" enctype="multipart/form-data">
                 <div class="fallback">
                     <input name="picture" type="file" />
                 </div>
@@ -21,6 +21,6 @@
 {{/if}}
 
 {{#if establishment.picture}}
-<img class="img-responsive" data-action="zoom" src="/image/{{establishment.id}}" alt="">
+<img class="img-responsive" data-action="zoom" src="/establishments/image/{{establishment.id}}" alt="">
 <hr>
 {{/if}}
