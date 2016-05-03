@@ -37,14 +37,14 @@ e           by <a href="/user/{{establishment.creator}}">{{establishment.created
             <span class="glyphicon glyphicon-info-sign"></span> Nombre de places : {{establishment.price}}<br>
         {{/if}}
 
-        {{#if bar}}
-            {{#if establishment.smockers}}
-                <span class="glyphicon glyphicon-leaf"></span> Fumeur authorisé.
+        {{#if establishment.bar}}
+            {{#if establishment.smokers}}
+                <span class="glyphicon glyphicon-leaf"></span> Fumeur authorisé.<br>
             {{else}}
-                <span class="glyphicon glyphicon-leaf"></span> Non fumeur.
+                <span class="glyphicon glyphicon-leaf"></span> Non fumeur.<br>
             {{/if}}
             {{#if establishment.snacks}}
-                <span class="glyphicon glyphicon-piggy-bank"></span> Snacks sur place
+                <span class="glyphicon glyphicon-piggy-bank"></span> Snacks sur place.<br>
             {{else}}
             {{/if}}
         {{/if}}
