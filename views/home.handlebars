@@ -59,7 +59,7 @@
 
         {{#each location}}
             var marker = L.marker([{{latitude}}, {{longitude}}]).addTo(mymap);
-            marker.bindPopup("<a href=\"/establishment/{{id}}\">{{name}}.</a>").openPopup();
+            marker.bindPopup("<a href=\"/establishments/{{id}}\">{{name}}.</a>").openPopup();
         {{/each}}
         </script>
     </div>
