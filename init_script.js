@@ -30,7 +30,11 @@ var add_admin = function (name, date) {
         account[name].date = date_utils.min_date(date, account[name].date);
     }
 
-    User.add_admin ({ username : name, email : name + "@gmail.com", password : "default" });
+    User.add_admin ({ username : name, email : name + "@gmail.com", password : "default" }, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
 };
 
 var parse_label = function (labels) {
