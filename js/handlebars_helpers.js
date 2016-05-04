@@ -137,7 +137,7 @@ module.exports = {
     deleteProfile : function (profileName, userName) {
         var result = "";
         if (profileName == userName) {
-            result = "<a href=\"/admin/remove/user/" + userName + "\">Delete</a>";
+            result = "<a href=\"/user/remove/" + userName + "\">Delete</a>";
         }
         return result;
     },

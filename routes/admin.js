@@ -19,18 +19,6 @@ router.get('/add', function (req, res) {
     });
 });
 
-router.get('/remove/user/:name', function (req, res) {
-    if (req.params.name != req.user.name) {
-        return res.redirect(303, '404');
-    }
-
-    User.remove(req.params.name, function (err) {
-        if (err) {
-            console.log("Erreur pour supprimer l'utilisateur : " + err);
-        }
-    });
-});
-
 router.get('/remove/:id', function (req, res) {
     if (!req.user || !req.user.admin) {
         return res.redirect(303, 'error');

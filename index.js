@@ -161,6 +161,19 @@ app.get('/about',  function (req, res) {
     });
 });
 
+app.get('/user/remove/:name',  function (req, res) {
+    if (req.params.name != req.user.name) {
+        return res.redirect(303, '404');
+    }
+
+    User.remove(req.params.name, function (err) {
+        if (err) {
+            console.log("Erreur pour supprimer l'utilisateur : " + err);
+        }
+        return res.redirect(303, '/');
+    });
+});
+
 /* @desc Permet d'afficher le profil d'un utilisateur du site.
  */
 app.get('/user/:name',  function (req, res) {
