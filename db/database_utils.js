@@ -6,8 +6,6 @@ var async = require("async");
 var file  = "./db/test.db";
 var creation_script_file = "./db/create.sql";
 
-var exists = fs.existsSync(file);
-
 var Restaurant = require('./restaurant_db_utils.js');
 var Bar = require('./bar_db_utils.js');
 var Hotel = require('./hotel_db_utils.js');
@@ -15,22 +13,10 @@ var Hotel = require('./hotel_db_utils.js');
 var Random = require('random-js');
 var range = require('range');
 
-if (!exists) {
-    console.log("Creating DB file.");
-    fs.openSync(file, "w");
-}
-
 var db = new sqlite3.Database(file);
 
 db.serialize(function () {
-    if (!exists) {
-        fs.readFile(creation_script_file, 'utf8', function (err, data) {
-            if (err) {
-                return console.log(err);
-            }
-            db.run(data); 
-        });
-    }
+    db.run("PRAGMA foreign_keys = ON"); 
 });
 
 var get_establishment_type = function (id, callback) {
