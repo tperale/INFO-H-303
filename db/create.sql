@@ -1,10 +1,13 @@
+PRAGMA foreign_keys = ON;
+PRAGMA busy_timeout=30000; 
+
 CREATE TABLE IF NOT EXISTS establishment (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-    latitude REAL NOT NULL
-        CHECK(-90<=latitude AND latitude<=90) DEFAULT 0,
-    longitude REAL NOT NULL
-        CHECK(-180<=longitude AND longitude<=180) DEFAULT 0,
+    latitude REAL 
+        CHECK(-90<=latitude AND latitude<=90),
+    longitude REAL 
+        CHECK(-180<=longitude AND longitude<=180),
 
     name TEXT NOT NULL,
 
@@ -13,17 +16,18 @@ CREATE TABLE IF NOT EXISTS establishment (
     address_number INTEGER NOT NULL,
     address_zip INTEGER NOT NULL,
 
-    phone_number VARCHAR(20) NOT NULL,
+    phone_number INTEGER(13) NOT NULL,
 
-    website TEXT,
+    website TEXT
+        CHECK (website LIKE '%.%.%'),
 
     picture BLOB,
 
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     created_by TEXT,
 
-    CONSTRAINT USER_EXIST
-        FOREIGN KEY (created_by) REFERENCES account (username)
+    FOREIGN KEY (created_by) REFERENCES account (username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
@@ -32,7 +36,9 @@ CREATE TABLE IF NOT EXISTS establishment (
 
 
 CREATE TABLE IF NOT EXISTS restaurant (
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY NOT NULL REFERENCES establishment(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
     price INTEGER NOT NULL,
 
@@ -42,46 +48,40 @@ CREATE TABLE IF NOT EXISTS restaurant (
 
     delivery BOOLEAN NOT NULL,
 
-    timetable INTEGER, 
-
-    CONSTRAINT ESTABLISHEMENT_EXIST
-        FOREIGN KEY (id) REFERENCES establishment(id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    timetable INTEGER(7)
+        CHECK(0<=timetable AND timetable<=9)
 );
 
 CREATE TABLE IF NOT EXISTS bar (
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY NOT NULL REFERENCES establishment(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
     smokers BOOLEAN,
 
-    snacks BOOLEAN,
-
-    CONSTRAINT ESTABLISHEMENT_EXIST
-        FOREIGN KEY (id) REFERENCES establishment(id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    snacks BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS hotel (
-    id INTEGER PRIMARY KEY NOT NULL,
+    id INTEGER PRIMARY KEY NOT NULL REFERENCES establishment(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
     stars INTEGER NOT NULL
         CHECK(0<=stars AND stars<=5),
 
-    room_number INTEGER NOT NULL,
+    room_number INTEGER NOT NULL
+        CHECK(0<room_number),
 
-    price INTEGER NOT NULL,
-
-    CONSTRAINT ESTABLISHEMENT_EXIST
-        FOREIGN KEY (id) REFERENCES establishment(id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    price INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS account (
     username TEXT PRIMARY KEY NOT NULL,
-    email TEXT NOT NULL,
+
+    email TEXT NOT NULL
+        CHECK (email LIKE '%@%.%'),
+
     password TEXT NOT NULL,
 
     admin BOOL DEFAULT 0,
@@ -94,11 +94,15 @@ CREATE TABLE IF NOT EXISTS account (
 CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-    username TEXT NOT NULL,
+    username TEXT NOT NULL REFERENCES account (username)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    establishment_id INTEGER NOT NULL,
+    establishment_id INTEGER NOT NULL REFERENCES establishment (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
 
     rating INTEGER NOT NULL
         CHECK(0<rating AND rating<=5),
@@ -107,16 +111,6 @@ CREATE TABLE IF NOT EXISTS comments (
 
     picture_attached BLOB,
     
-    CONSTRAINT ESTABLISHEMENT_EXIST
-        FOREIGN KEY (establishment_id) REFERENCES establishment (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-
-    CONSTRAINT USER_EXIST
-        FOREIGN KEY (username) REFERENCES account (username)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-
     UNIQUE(username, timestamp)
 );
 
@@ -125,17 +119,11 @@ CREATE TABLE IF NOT EXISTS label (
 
     name TEXT NOT NULL,
 
-    username TEXT NOT NULL,
-
-    establishment_id INTEGER NOT NULL,
-
-    CONSTRAINT ESTABLISHEMENT_EXIST
-        FOREIGN KEY (establishment_id) REFERENCES establishment (id)
+    username TEXT NOT NULL REFERENCES account (username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    CONSTRAINT USER_EXIST
-        FOREIGN KEY (username) REFERENCES account (username)
+    establishment_id INTEGER NOT NULL REFERENCES establishment (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
