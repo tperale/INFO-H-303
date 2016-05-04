@@ -134,6 +134,14 @@ module.exports = {
         }
     },
 
+    deleteProfile : function (profileName, userName) {
+        var result = "";
+        if (profileName == userName) {
+            result = "<a href=\"/admin/remove/user/" + userName + "\">Delete</a>";
+        }
+        return result;
+    },
+
     thumbnailing : function (establishments) {
         var result = "";  
 

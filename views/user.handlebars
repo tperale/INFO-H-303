@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 
+<h3>
 {{#if profile.admin}}
-<h3>Admin : {{profile.name}}</h3>
-{{else}}
-<h3>{{profile.name}}</h3>
+    Admin :
 {{/if}}
+    {{profile.name}}
+{{{deleteProfile profile.name user.name}}}
+</h3>
 
 <hr>
 

@@ -1,5 +1,4 @@
 var sqlite3 = require('sqlite3').verbose();
-var fs = require("fs");
 
 var async = require('async');
 
@@ -9,24 +8,10 @@ var misc = require('./database_misc.js');
 var file  = "./db/test.db";
 var creation_script_file = "./db/create.sql";
 
-var exists = fs.existsSync(file);
-
-if (!exists) {
-    console.log("Creating DB file.");
-    fs.openSync(file, "w");
-}
-
 var db = new sqlite3.Database(file);
 
 db.serialize(function () {
-    if (!exists) {
-        fs.readFile(creation_script_file, 'utf8', function (err, data) {
-            if (err) {
-                return console.log(err);
-            }
-            db.run(data); 
-        });
-    }
+    db.run("PRAGMA foreign_keys = ON"); 
 });
 
 module.exports = {

@@ -5,7 +5,58 @@ var file  = "./db/test.db";
 
 var db = new sqlite3.Database(file);
 
-db.serialize(function () {});
+db.serialize(function () {
+    db.run("PRAGMA foreign_keys = ON"); 
+});
+
+
+
+/* @desc : Model pour faciliter l'ajout de label à la base de donnée.
+ *
+ * @param {obj} : Peut avoir les valeurs suivante :
+ *      - establishment_id : ID de l'établissement auquel on veut ajouter le label.
+ *      - username : Nom de la personne qui ajoute le label.
+ *      - name : Contenu du label.
+ */
+// var LabelsModel = function (obj) {
+//     this._table = "label";
+//     this.$establishment_id = obj.establishment_id;
+//     this.$name = obj.name;
+//     this.$username = obj.username;
+
+//     this.save = function (callback) {
+//         var command = "INSERT INTO label (establishment_id, username, name) VALUES ($id, $username, $name)";
+//         var st = db.prepare(command);
+//         st.run(this, function (err) {
+//             if (err) {
+//                 console.log(err);
+//             } else if (callback) {
+//                 callback(); 
+//             }
+//         });
+//     };
+
+//     this._makecmd = function (query, callback) {
+//         async.map(Object.keys(query), function (item, callback) {
+//             callback(null, [item, query[item]].join("="));
+//         }, function (err, res) {
+//             if (err) {
+//                callback(err, null);
+//             }
+//             callback(null, res.join(" "));
+//         });
+//     };
+
+//     this.query(query, callback) {
+//         this._makecmd(query, function (err, cond) {
+//             var cmd =  "SELECT * FROM " + this._table + " WHERE " + cond;
+//             db.all(cmd, function (err, rows) {
+                 
+//             });
+//         });
+       
+//     };
+// };
 
 module.exports = {
     /* @desc : Ajoute un label.

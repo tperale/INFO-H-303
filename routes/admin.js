@@ -4,6 +4,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 
 var db = require('../db/database_utils.js');
+var User = require('../db/user_db.js');
 var Restaurant = require('../db/restaurant_db_utils.js');
 var Bar = require('../db/bar_db_utils.js');
 var Hotel = require('../db/hotel_db_utils.js');
@@ -11,11 +12,35 @@ var Hotel = require('../db/hotel_db_utils.js');
 router.get('/add', function (req, res) {
     if ((!req.user) || (!req.user.admin)) {
         return res.redirect(303, '404');
-    
     }
 
     res.render('admin', {
         user : req.user,
+    });
+});
+
+router.get('/remove/user/:name', function (req, res) {
+    if (req.params.name != req.user.name) {
+        return res.redirect(303, '404');
+    }
+
+    User.remove(req.params.name, function (err) {
+        if (err) {
+            console.log("Erreur pour supprimer l'utilisateur : " + err);
+        }
+    });
+});
+
+router.get('/remove/:id', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect(303, 'error');
+    }
+
+    db.remove(req.params.id, function (err) {
+        if (err) {
+            console.log("Error removing restaurant : " + err);        
+        }
+        return res.redirect(303, '/');
     });
 });
 

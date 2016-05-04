@@ -199,6 +199,10 @@ app.get('/user/:name',  function (req, res) {
             labels : results[2],
 
             user : req.user,
+
+            helpers : {
+                deleteProfile : helpers_fun.deleteProfile
+            }
         });
     });
 });

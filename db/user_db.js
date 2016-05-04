@@ -4,7 +4,9 @@ var file  = "./db/test.db";
 
 var db = new sqlite3.Database(file);
 
-db.serialize(function () {});
+db.serialize(function () {
+    db.run("PRAGMA foreign_keys = ON"); 
+});
 
 function Account (name, admin) {
     this.name = name;
@@ -40,6 +42,10 @@ module.exports = {
                 callback(null, null);
             }
         }) 
+    },
+
+    remove : function (name, callback) {
+        db.run("DELETE FROM account WHERE username='" + name + "'", callback);
     },
 
     // create : function (obj) {
