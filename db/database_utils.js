@@ -82,6 +82,15 @@ var get_establishment = function (id, callback) {
 };
 
 module.exports = {
+    remove : function (id, callback) {
+        cmd = "DELETE FROM establishment WHERE id=" + id;
+
+        db.run(cmd, function (err) {
+            callback(err);
+        });
+    },
+
+
     new_hotel : Hotel.new_hotel,
 
     get_hotel : Hotel.get_hotel,
@@ -133,6 +142,10 @@ module.exports = {
     },
 
     pick_random_from : function (number, array, callback) {
+        if (array.length == 0) {
+            return callback(null, array);        
+        }
+
         var random_id = Random.sample(Random.engines.nativeMath, array, number);
 
         async.map(random_id, function (value, callback) {
