@@ -77,6 +77,39 @@
             <div class="row">
                 {{comment_text}}
             </div>
+
+            <hr>
+
+            <div class="row">
+                <form action="/comment/{{id}}/up" id="commentsRatingsUp" role="form" method="POST" enctype="multipart/form-data">
+                    <button type="submit" class="btn btn-primary pull-left">
+                        <span class="glyphicon glyphicon-thumbs-up" id="upvote" aria-hidden="true"></span>
+                        <script>
+                        var rates = 0;
+                        {{#each ratings}}
+                            {{#if UP}}
+                                ++rates;
+                            {{/if}}
+                        {{/each}}
+                        document.getElementById('upvote').innerHTML = rates;
+                        </script>
+                    </button>
+                </form>
+                <form action="/comment/{{id}}/down" id="commentsRatingsDown" role="form" method="POST" enctype="multipart/form-data">
+                    <button type="submit" class="btn btn-primary pull-left">
+                        <span class="glyphicon glyphicon-thumbs-down" id="downvote" aria-hidden="true"></span>
+                        <script>
+                        var rates = 0;
+                        {{#each ratings}}
+                            {{#if DOWN}}
+                                --rates;
+                            {{/if}}
+                        {{/each}}
+                        document.getElementById('downvote').innerHTML = rates;
+                        </script>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

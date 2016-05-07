@@ -114,6 +114,25 @@ CREATE TABLE IF NOT EXISTS comments (
     UNIQUE(username, timestamp)
 );
 
+CREATE TABLE IF NOT EXISTS comment_rating (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    username TEXT NOT NULL REFERENCES account (username)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    comments INTEGER NOT NULL REFERENCES comments(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    UP BOOLEAN DEFAULT 0,
+    DOWN BOOLEAN DEFAULT 0,
+
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE(username, comments)
+);
+
 CREATE TABLE IF NOT EXISTS label (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 

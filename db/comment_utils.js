@@ -5,7 +5,13 @@ var file  = "./db/test.db";
 
 var db = new sqlite3.Database(file);
 
-db.serialize(function () {});
+db.serialize(function () {
+    db.run("PRAGMA foreign_keys = ON"); 
+});
+
+var delete_vote = function (username, comment_id, callback) {
+    db.run("DELETE FROM comment_rating WHERE username='" + username + "' AND comments=" + comment_id, callback)
+};
 
 module.exports = {
     add_comment : function (establishment_id, username, rating, picture, comment, callback) {
@@ -52,19 +58,80 @@ module.exports = {
      * @param {callback} : function (err, result) {}
      */
     get_comments : function (establishment_id, callback) {
-        db.all("SELECT * FROM comments WHERE establishment_id=" + establishment_id + " ORDER BY timestamp", function (err, rows) {
+        var cmd = "SELECT * FROM comments WHERE establishment_id=" + establishment_id + " ORDER BY timestamp"
+        db.all(cmd, function (err, rows) {
             if (err) {
                 callback(err, null); 
-            } else {
-                async.map(rows, function (values, callback) {
-                    setTimeout(function() { 
-                        callback(null, values);
-                    }, 200); 
-                }, callback);
             }
+            async.map(rows, function (comment_row, callback) {
+                var rates = "SELECT * FROM comment_rating WHERE comments=" + comment_row.id;
+                db.all(rates, function (err, rating_rows) {
+                    if (err) {
+                        callback(err, null);
+                    }
+                    comment_row.ratings = rating_rows;
+                    callback(null, comment_row);
+                });
+            }, callback);
         });            
     },
 
+    upvote : function (username, comments, callback) {
+        var comment_rating = {
+            $username : username,
+            $comments : comments,
+            $up : 1
+        };
+
+        delete_vote(username, comments, function () {
+            if (err) {
+                callback(err)
+            }
+
+            var command = "INSERT INTO comment_rating (username, comments, up) VALUES ($username, $comments, $up)";
+            var st = db.prepare(command);
+            st.run(comment_rating, function (err) {
+                if (err) {
+                    console.log("Error inserting comment rate " + err);
+                } else if (callback) {
+                    callback(); 
+                }
+            });
+        });
+    },
+
+    downvote : function (username, comments, callback) {
+        var comment_rating = {
+            $username : username,
+            $comments : comments,
+            $down : 1
+        };
+
+        delete_vote(username, comments, function (err) {
+            if (err) {
+                callback(err)
+            }
+
+            var command = "INSERT INTO comment_rating (username, comments, down) VALUES ($username, $comments, $down)";
+            var st = db.prepare(command);
+            st.run(comment_rating, function (err) {
+                if (err) {
+                    console.log("Error inserting comment rate " + err);
+                } else if (callback) {
+                    callback(); 
+                }
+            });
+        });
+    },
+
+
+
+    /* @desc : Get all commands from a username.
+     *
+     * @param {name} : User to retrive comments from.
+     *
+     * @param {callback} : function (err, results) {}
+     */
     get_all : function (name, callback) {
          db.all("SELECT * FROM comments WHERE username='" + name + "' ORDER BY timestamp", function (err, rows) {
             if (err) {

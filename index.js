@@ -78,9 +78,10 @@ app.get('/',  function (req, res) {
 
         function (callback) {
              database_utils.pick(null, function (err, result) {
-                 database_utils.pick_random_from(6, result, function (err, result) {
+                console.log("pick + " + JSON.stringify(result));
+                 database_utils.pick_random_from(6, result, function (err, rand) {
                     setTimeout(function() {
-                        callback(null, result);
+                        callback(null, rand);
                     }, 200);
                  });
             });
@@ -272,6 +273,20 @@ app.get('/comment/remove/:id', function (req, res) {
     }
 });
 
+
+app.post('/comment/:comment_id/up', function (req, res) {
+    if (req.user) {
+        Comments.upvote(req.user.name, req.params.comment_id, function () {}) 
+    }
+    res.redirect('back');
+});
+
+app.post('/comment/:comment_id/down', function (req, res) {
+    if (req.user) {
+        Comments.downvote(req.user.name, req.params.comment_id, function () {}) 
+    }
+    res.redirect('back');
+});
 /* @desc : User comment on an establishment.
  */
 app.post('/comment', function (req, res) {
