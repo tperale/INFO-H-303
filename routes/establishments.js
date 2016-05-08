@@ -183,12 +183,50 @@ router.get('/bar/:id',  function (req, res) {
 });
 
 router.get('/hotel/:id',  function (req, res) {
-    res.render('establishments/hotel', {
-        establishment : db.get_hotel(req.params.id),
-        comments : [],
-        labels : [],
+    async.parallel([
+        function(callback) { // Getting the "bar" establishment.
+            db.get_hotel(req.params.id, function (err, result) {
+                setTimeout(function() {
+                    callback(null, result);
+                }, 200);
+            });
 
-        user : req.user,
+        }, function(callback) { // Getting the comments.
+            Comments.get_comments(req.params.id, function (err, results) {
+                if (err) {
+                    console.log("Error getting comments : " + err);
+                }
+
+                setTimeout(function() {
+                    callback(null, results);
+                }, 200);
+            });
+        }, function(callback) { // Getting the labels.
+            Label.get_labels(req.params.id, function (err, result) {
+                var ret = [];
+                if (err) {
+                    console.log("Error getting labels : " + err);
+                } else {
+                    ret = result;
+                }
+
+                setTimeout(function() {
+                    callback(null, ret);
+                }, 200);
+            })
+        }
+    ], function (err, results) { 
+        res.render('establishments/establishment', {
+            establishment : results[0],
+            comments : results[1],
+            labels : results[2],
+
+            user : req.user,
+
+            helpers : {
+                icon : helpers_fun.icon
+            }
+        });
     });
 });
 

@@ -112,7 +112,7 @@ module.exports = {
         });            
     },
 
-    /* @desc : 
+    /* @desc :  
      *
      * @param {establishment_id} :
      *

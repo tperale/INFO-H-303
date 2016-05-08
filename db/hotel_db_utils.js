@@ -30,12 +30,13 @@ module.exports = {
         };
 
         var hotel = {
-            $smokers : obj.smokers,
-            $snacks : obj.snacks,
+            $stars : obj.stars,
+            $room_number : obj.room_number,
+            $price : obj.price,
         };
 
         misc.insert_establishment(establishment, function (id) {
-            var command = "INSERT INTO hotel (id, smokers, snacks) VALUES (" + id + ", $smokers, $snacks)";
+            var command = "INSERT INTO hotel (id, stars, room_number, price) VALUES (" + id + ", $stars, $room_number, $price)";
             var st = db.prepare(command);
             st.run(hotel, function (err) {
                 if (err) {
@@ -50,16 +51,21 @@ module.exports = {
     },
 
     get_hotel : function (id, callback) {
-        var cmd = "SELECT e.*, b.* from establishment e INNER JOIN hotel h on e.id=h.id WHERE e.id=" + id;
+        var cmd = "SELECT e.*, h.* from establishment e INNER JOIN hotel h on e.id=h.id WHERE e.id=" + id;
         db.get(cmd, function(err, row) {
             if (err) {
                 console.log("ERROR WHILE getting id : " + err + " WITH : " + cmd); 
+                return;
             } else if (!row) {
                 console.log("ID does not exist.");
+                return;
             } else {
                 row.type = "hotel";
                 row.hotel = true;
-                callback(null, row);  
+
+                if (callback) {
+                    callback(null, row);  
+                }
             }
         });
     },
