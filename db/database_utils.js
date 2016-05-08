@@ -111,6 +111,17 @@ module.exports = {
         });
     },
 
+    update : function (id, column, value, callback) {
+        var cmd = "UPDATE establishment SET " + column + "=";
+        if (typeof(value) == "number") {
+            cmd += String(value);
+        } else {
+            cmd += "'" + String(value) + "'";
+        }
+        cmd += " WHERE id=" + id;
+        db.run(cmd, callback);
+    },
+
     insert_picture : function (id, image, callback) {
         db.run("UPDATE establishment SET picture=? WHERE id=?", image, id, callback);
     },
@@ -134,8 +145,11 @@ module.exports = {
 
         var random_id = Random.sample(Random.engines.nativeMath, array, number);
 
+        console.log("sample : " + random_id);
+
         async.map(random_id, function (value, callback) {
             get_establishment_type (value, function (type, id) {
+                console.log("type is : " + type);
                 switch (type) {
                     case "bar":
                         Bar.get_bar(id, function (err, result) {

@@ -52,6 +52,33 @@ router.get('/', function (req, res) {
     });
 });
 
+router.post('/update/:id/address', function (req, res) {
+    async.parallel([
+        function (callback) {
+            db.update(req.params.id, 'address_street', req.body['address_street'], function (err) {
+            });
+        }, function (callback) {
+            db.update(req.params.id, 'address_town', req.body['address_town'], function (err) {
+            });
+        }, function (callback) {
+            db.update(req.params.id, 'address_number', req.body['address_number'], function (err) {
+            });
+        }, function (callback) {
+            db.update(req.params.id, 'address_zip', req.body['address_zip'], function (err) {
+            });
+        }
+    ]);
+});
+
+router.post('/update/:id/:type', function (req, res) {
+    db.update(req.params.id, req.params.type, req.body[req.params.type], function (err) {
+        if (err) {
+            console.log(err);
+        }
+        res.redirect('back');
+    });
+});
+
 router.get('/restaurants',  function (req, res) {
     db.pick("restaurant", function (err, result) {
         db.pick_random_from(6, result, function (err, result) {

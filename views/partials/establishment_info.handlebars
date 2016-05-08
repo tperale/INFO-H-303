@@ -6,6 +6,31 @@
             <td>
                 <span class="glyphicon glyphicon-earphone"> </span>
                 {{establishment.phone_number}}
+
+                {{#if user.admin}}
+                    <a data-toggle="modal" data-target="#updatePhone">Update</a>
+
+                    <div class="modal fade" id="updatePhone" tabindex="-1" role="dialog" aria-labelledby="updatePhone">
+                        <div class="modal-dialog" role="document" aria-labelledby="myModalLabel">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Mettre à jour le numéro de téléphone.</h4>
+                                </div>
+                                <form action="/establishments/update/{{establishment.id}}/phone_number" method="post">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <input type="tel" name="phone_number" class="form-control" placeholder="Numéro de téléphone">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                {{/if}}
             </td>
         </tr>
 
@@ -13,6 +38,37 @@
             <td>
                 <span class="glyphicon glyphicon-road"> </span>
                 {{establishment.address_street}}, {{establishment.address_number}}, {{establishment.address_town}} ({{establishment.address_zip}}).
+
+                {{#if user.admin}}
+                    <a data-toggle="modal" data-target="#updateAddress">Update</a>
+
+                    <div class="modal fade" id="updateAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" aria-labelledby="updateAddress">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Mettre à jour l'adresse.</h4>
+                                </div>
+                                <form action="/establishments/update/{{establishment.id}}/address" method="post">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="form-inline">
+                                                <input type="text" class="form-control" id="restaurantAddressInput" name="address_street" placeholder="Rue.">
+                                                <input type="text" class="form-control" id="restaurantAddressInput" name="address_town" placeholder="Ville.">
+                                                <input type="text" class="form-control" id="restaurantAddressInput" name="address_number" placeholder="Numéro.">
+                                                <input type="text" class="form-control" id="restaurantAddressInput" name="address_zip" placeholder="Code postal.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                {{/if}}
+
             </td>
         </tr>
 
@@ -21,6 +77,32 @@
             <td>
                 <span class="glyphicon glyphicon-cloud"> </span>
                 <a href={{website}}>{{establishment.website}}</a>
+
+                {{#if user.admin}}
+                    <a data-toggle="modal" data-target="#updateWebsite">Update</a>
+
+                    <div class="modal fade" id="updateWebsite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" aria-labelledby="updateWebsite">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Mettre à jour le site.</h4>
+                                </div>
+                                <form action="/establishments/update/{{establishment.id}}/website" method="post">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <input type="url" name="phone" class="form-control" placeholder="Site web">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                {{/if}}
+
             </td>
         </tr>
         {{/if}}
