@@ -83,7 +83,7 @@ module.exports = {
             $up : 1
         };
 
-        delete_vote(username, comments, function () {
+        delete_vote(username, comments, function (err) {
             if (err) {
                 callback(err)
             }
