@@ -6,10 +6,16 @@
         <h1>
             {{{icon establishment.type}}}
             {{establishment.name}}
+
+            {{#if user.admin}}
+                <a href="/admin/remove/{{establishment.id}}">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </a>
+            {{/if}}
         </h1>
 
         <div class="creator-section">
-e           by <a href="/user/{{establishment.creator}}">{{establishment.created_by}}</a> ({{establishment.creation_date}})
+            by <a href="/user/{{establishment.creator}}">{{establishment.created_by}}</a> ({{establishment.creation_date}})
         </div>
 
         <hr>
