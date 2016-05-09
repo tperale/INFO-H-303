@@ -295,7 +295,7 @@
 	
 	
 	
-	<Cafe creationDate="2/032008" nickname="Fred">
+    <Cafe creationDate="2/03/2008" nickname="Fred">
 		<Informations>
 			<Name>Pantin</Name>
 			<Address>
@@ -612,7 +612,6 @@
 		</Comments>
 		<Tags>
 			<Tag name="WiFi">
-				<User nickname="Fred"/>
 				<User nickname="Brenda"/>
 				<User nickname="Fred"/>
 			</Tag>		
