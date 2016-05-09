@@ -98,15 +98,15 @@ def parse_bar(s, conn):
             website = website.text
 
         cmd = "insert into establishment (latitude,longitude,name,address_street,address_town,address_number,address_zip,phone_number,website,creation_date,created_by)\
-                values (%f,%f,'%s','%s','%s',%i,%i,'%s','%s','%s','%s')" % \
-                (float(latitude), float(longitude), name, address_street, address_town, int(address_number), int(address_zip), phone_number, website, created_by, creation_date)
+                values (%f,%f,'%s','%s','%s',%s,%i,'%s','%s','%s','%s')" % \
+                (float(latitude), float(longitude), name, address_street, address_town, address_number, int(address_zip), phone_number, website, created_by, creation_date)
         print(cmd)
 
         db = con.cursor()
         db.execute("insert into establishment (latitude,longitude,name,address_street,address_town,address_number,address_zip,phone_number,website,creation_date,created_by)\
                 values(?,?,?,?,?,?,?,?,?,?,?)",
-                (float(latitude), float(longitude), name, address_street, address_town, int(address_number),
-                    int(address_zip), phone_number, website, created_by, creation_date))
+                (float(latitude), float(longitude), name, address_street, address_town, address_number,
+                    int(address_zip), phone_number, website, creation_date, created_by))
         con.commit()
         db.close()
 
@@ -129,6 +129,70 @@ def parse_bar(s, conn):
         parse_label(cafe.find_all('tag'), _id, db)
         db.close()
 
+def parse_restaurant(s, conn):
+    """
+    Parse bar file.
+    """
+    for cafe in s.find_all("restaurant"):
+        created_by = cafe['nickname']
+        creation_date = parse_date(cafe['creationdate'])
+
+        db = con.cursor()
+        new_user(created_by, db, creation_date, 1)
+        db.close()
+
+        obj = {}
+        info = cafe.find('informations')
+        name = info.find('name').text # Bar name.
+        address_street = info.find('address').find('street').text
+        address_number = info.find('address').find('num').text
+        address_zip = info.find('address').find('zip').text
+        address_town = info.find('address').find('city').text
+        longitude = info.find('address').find('longitude').text
+        latitude = info.find('address').find('latitude').text
+
+        phone_number = info.find('tel').text
+        website = info.find('website')
+        if website:
+            website = website.text
+
+        cmd = "insert into establishment (latitude,longitude,name,address_street,address_town,address_number,address_zip,phone_number,website,creation_date,created_by)\
+                values (%f,%f,'%s','%s','%s',%s,%i,'%s','%s','%s','%s')" % \
+                (float(latitude), float(longitude), name, address_street, address_town, address_number, int(address_zip), phone_number, website, created_by, creation_date)
+        print(cmd)
+
+        db = con.cursor()
+        db.execute("insert into establishment (latitude,longitude,name,address_street,address_town,address_number,address_zip,phone_number,website,creation_date,created_by)\
+                values(?,?,?,?,?,?,?,?,?,?,?)",
+                (float(latitude), float(longitude), name, address_street, address_town, address_number,
+                    int(address_zip), phone_number, website, creation_date, created_by))
+        con.commit()
+        db.close()
+
+        _id = db.lastrowid
+
+        takeaway = bool(info.find('takeaway'))
+        delivery = bool(info.find('delivery'))
+        price = int(info.find('pricerange').text)
+        seat_number = int(info.find('banquet')['capacity'])
+
+        cmd = "INSERT INTO restaurant (id,takeaway,delivery,price,seat_number) VALUES (%i,%i,%i,%i,%i)" % (_id,takeaway,delivery,price,seat_number)
+        db = con.cursor()
+        db.execute(cmd)
+        con.commit()
+        db.close()
+
+        db = con.cursor()
+        parse_comments(cafe.find_all('comment'), _id, db)
+        db.close()
+
+        db = con.cursor()
+        parse_label(cafe.find_all('tag'), _id, db)
+        db.close()
+
+
+
 
 if __name__ == "__main__":
     parse_bar(BeautifulSoup(open(DATA_PATH + "Cafes.xml").read(), 'html.parser'), con)
+    parse_restaurant(BeautifulSoup(open(DATA_PATH + "Restaurants.xml").read(), 'html.parser'), con)
