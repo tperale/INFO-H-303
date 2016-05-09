@@ -1,65 +1,134 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import dateutil.parser
 import sqlite3 as lite
 import sys
+import datetime
 from bs4 import BeautifulSoup
 
 DATA_PATH = "./db/datas/"
 
-def parse_comments(comments, _id):
-    for comment in comments:
-        comm = {}
-        comm['username'] = comment['nickname']
-        comm['timestamp'] = comment['date']
-        comm['establishment_id'] = _id
-        comm['rating'] =  comment['score']
-        comm['comment_text'] = comment.text
+USER_DICT = dict()
 
-def parse_label(label, _id):
+con = lite.connect('./db/test.db')
+
+def parse_date(date):
+    foo = dateutil.parser.parse(date)
+    print(foo)
+    return foo
+
+def new_user(username, db, date=None, admin=0):
+    user = USER_DICT.get(username)
+    if user:
+        if date and date < user['date']:
+            cmd = "UPDATE account SET creation_date='%s' WHERE username='%s'" % (date, username)
+            print(cmd)
+            db.execute(cmd)
+            user['date'] = date
+        else:
+            pass
+    else:
+        if date:
+            # Si l'utilisateur n'existe pas.
+            cmd = "INSERT INTO account (username, email, password, admin, creation_date) VALUES ('%s','%s','default',%i,'%s')" % (username, username + "@gmail.com", admin, date)
+            print(cmd)
+            db.execute(cmd)
+        else:
+            cmd = "INSERT INTO account (username, email, password, admin) VALUES ('%s','%s','default',%i)" % (username, username + "@gmail.com", admin)
+            print(cmd)
+            db.execute(cmd)
+            date = datetime.datetime.now()
+
+        USER_DICT[username] = dict()
+        USER_DICT[username]['date'] = date
+
+    con.commit()
+
+
+def parse_comments(comments, _id, db):
+    for comment in comments:
+        username = comment['nickname']
+        timestamp = parse_date(comment['date'])
+
+        new_user(username, db, timestamp)
+
+        rating = comment['score']
+        comment_text = comment.text
+
+        db.execute("INSERT INTO comments (username, timestamp, establishment_id, rating, comment_text) VALUES (?,?,?,?,?)", (username, timestamp, _id, int(rating), comment_text))
+
+    con.commit()
+
+def parse_label(label, _id, db):
     for tag in label:
         name = tag['name']
-        establishment_id = _id
-        users = []
         for user in tag.find_all('user'):
-            users.append(user['nickname'])
+            new_user(user['nickname'], db)
+            cmd = "INSERT INTO label(name,username,establishment_id) VALUES ('%s','%s',%i)" % (name, user['nickname'], _id)
+            print(cmd)
+            db.execute(cmd)
 
 
-def parse_bar(s, db):
+def parse_bar(s, conn):
     """
     Parse bar file.
     """
-    for cafe in s.find_all("Cafe"):
+    for cafe in s.find_all("cafe"):
+        created_by = cafe['nickname']
+        creation_date = parse_date(cafe['creationdate'])
+
+        db = con.cursor()
+        new_user(created_by, db, creation_date, 1)
+        db.close()
+
         obj = {}
         info = cafe.find('informations')
-        obj['name'] = info.find('name').text
-        obj['address_street'] = info.find('address').find('street').text
-        obj['address_number'] = info.find('address').find('num').text
-        obj['address_zip'] = info.find('address').find('zip').text
-        obj['address_town'] = info.find('address').find('city').text
-        obj['longitude'] = info.find('address').find('longitude').text
-        obj['latitude'] = info.find('address').find('latitude').text
+        name = info.find('name').text # Bar name.
+        address_street = info.find('address').find('street').text
+        address_number = info.find('address').find('num').text
+        address_zip = info.find('address').find('zip').text
+        address_town = info.find('address').find('city').text
+        longitude = info.find('address').find('longitude').text
+        latitude = info.find('address').find('latitude').text
 
-        obj['phone_number'] = info.find('tel').text
-        obj['website'] = info.find('website').text
+        phone_number = info.find('tel').text
+        website = info.find('website')
+        if website:
+            website = website.text
 
-        _id = None
+        cmd = "insert into establishment (latitude,longitude,name,address_street,address_town,address_number,address_zip,phone_number,website,creation_date,created_by)\
+                values (%f,%f,'%s','%s','%s',%i,%i,'%s','%s','%s','%s')" % \
+                (float(latitude), float(longitude), name, address_street, address_town, int(address_number), int(address_zip), phone_number, website, created_by, creation_date)
+        print(cmd)
 
-        obj['smoking'] = bool(info.find('smoking'))
-        obj['snack'] = bool(info.find('snack'))
+        db = con.cursor()
+        db.execute("insert into establishment (latitude,longitude,name,address_street,address_town,address_number,address_zip,phone_number,website,creation_date,created_by)\
+                values(?,?,?,?,?,?,?,?,?,?,?)",
+                (float(latitude), float(longitude), name, address_street, address_town, int(address_number),
+                    int(address_zip), phone_number, website, created_by, creation_date))
+        con.commit()
+        db.close()
 
-        parse_comments(cafe.find_all('comment'), _id)
+        _id = db.lastrowid
 
-        parse_label(cafe.find_all('tag'), _id)
+        smokers = bool(info.find('smoking'))
+        snacks = bool(info.find('snack'))
 
-        # db.execute("INSERT INTO establishment (latitude,longitude,name,address_street,address_town,address_number,address_zip,phone_number,website,creation_date,created_by)\
-        #         VALUES (%s,%s,'%s','%s','%s',%s,%s,%s,'%s',%s,'%s')",
-        #         latitude, longitude, name, address_street, address_town, address_number, address_zip, phone_number, website)
+        cmd = "INSERT INTO bar (id,smokers,snacks) VALUES (%i,%i,%i)" % (_id,smokers, snacks)
+        db = con.cursor()
+        db.execute(cmd)
+        con.commit()
+        db.close()
 
+        db = con.cursor()
+        parse_comments(cafe.find_all('comment'), _id, db)
+        db.close()
 
+        db = con.cursor()
+        parse_label(cafe.find_all('tag'), _id, db)
+        db.close()
 
 
 if __name__ == "__main__":
-    con = lite.connect('test.db')
-
     parse_bar(BeautifulSoup(open(DATA_PATH + "Cafes.xml").read(), 'html.parser'), con)
