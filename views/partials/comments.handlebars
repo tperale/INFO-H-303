@@ -83,7 +83,7 @@
             <div class="row">
                 <form action="/comment/{{id}}/up" id="commentsRatingsUp" role="form" method="POST" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-primary pull-left">
-                        <span class="glyphicon glyphicon-thumbs-up" id="upvote" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-thumbs-up" id="upvote-{{id}}" aria-hidden="true"></span>
                         <script>
                         var rates = 0;
                         {{#each ratings}}
@@ -91,13 +91,13 @@
                                 ++rates;
                             {{/if}}
                         {{/each}}
-                        document.getElementById('upvote').innerHTML = rates;
+                        document.getElementById('upvote-{{id}}').innerHTML = rates;
                         </script>
                     </button>
                 </form>
                 <form action="/comment/{{id}}/down" id="commentsRatingsDown" role="form" method="POST" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-primary pull-left">
-                        <span class="glyphicon glyphicon-thumbs-down" id="downvote" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-thumbs-down" id="downvote-{{id}}" aria-hidden="true"></span>
                         <script>
                         var rates = 0;
                         {{#each ratings}}
@@ -105,7 +105,7 @@
                                 --rates;
                             {{/if}}
                         {{/each}}
-                        document.getElementById('downvote').innerHTML = rates;
+                        document.getElementById('downvote-{{id}}').innerHTML = rates;
                         </script>
                     </button>
                 </form>
