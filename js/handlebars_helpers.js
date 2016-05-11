@@ -104,22 +104,29 @@ var makeCarousel = function (list, design) {
     return result;
 };
 
-
-var stars_maker = function (number) {
-    var result = "";
-    for (var i = 0; i < 5; ++i) {
-        if (i < number) {
-            result += " <span class=\"glyphicon glyphicon-star\"></span>";
-        } else {
-            result += " <span class=\"glyphicon glyphicon-star-empty\"></span>";
-        }
-    }
-};
-
 module.exports = {
     count_list : function (list) {
         return list.length;
     },
+
+    stars_maker : function (number) {
+        console.log(number)
+        var result = "";
+        var MAX_STARS = 5;
+        var i = 0;
+        for (i = 1; i <= MAX_STARS; ++i) {
+            if (i <= number) {
+                result += "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>"
+            } else if ((number % (i - 1)) && (number % (i - 1)) < 1) {
+                result += "<i class=\"fa fa-star-half-o\" aria-hidden=\"true\"></i>"
+            } else {
+                result += "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>"
+            }
+        }
+
+        return result;
+    },
+
 
     icon : function (type) {
         switch (type) {

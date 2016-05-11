@@ -176,6 +176,7 @@ router.get('/bar/:id',  function (req, res) {
 
             helpers : {
                 icon : helpers_fun.icon,
+                stars : helpers_fun.stars_maker,
                 average : helpers_fun.average
             }
         });
@@ -226,6 +227,7 @@ router.get('/hotel/:id',  function (req, res) {
 
             helpers : {
                 icon : helpers_fun.icon,
+                stars : helpers_fun.stars_maker,
                 average : helpers_fun.average
             }
         });
@@ -275,6 +277,7 @@ router.get('/restaurant/:id',  function (req, res) {
 
             helpers : {
                 icon : helpers_fun.icon,
+                stars : helpers_fun.stars_maker,
                 average : helpers_fun.average
             }
         });
