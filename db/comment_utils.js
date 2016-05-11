@@ -35,7 +35,7 @@ module.exports = {
     },
 
     get_attached_picture : function (name, timestamp, callback) {
-        db.get("SELECT picture_attached FROM comments WHERE username='" + name + "' AND timestamp='" + timestamp + "'", function (err, row) {
+        db.get("SELECT picture_attached FROM comments WHERE username='" + name + "' AND timestamp='" + timestamp + "' ORDER BY timestamp DESC", function (err, row) {
             if (err) {
                 console.log("Error getting picture from comment : " + err);
                 callback(err, null);
