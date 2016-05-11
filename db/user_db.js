@@ -8,10 +8,11 @@ db.serialize(function () {
     db.run("PRAGMA foreign_keys = ON"); 
 });
 
-function Account (name, admin) {
-    this.name = name;
-
-    this.admin = admin;
+function Account (obj) {
+    this.name = obj.username;
+    this.admin = obj.admin;
+    this.email = obj.email;
+    this.creation_date = obj.creation_date;
 
     this.verify = function (password, callback) {
         var cmd = "SELECT username FROM account WHERE username='" + this.name + "' AND password='" + password + "'";
@@ -31,12 +32,12 @@ function Account (name, admin) {
 
 module.exports = {
     find : function (username, callback) {
-        db.get("SELECT username, admin FROM account WHERE username='" + username + "'", function (err, row) {
+        db.get("SELECT * FROM account WHERE username='" + username + "'", function (err, row) {
             if (err) {
                 callback(err, null); 
             } else if (row) {
                 // Si l'utilisateur a été trouvé.
-                callback(null, new Account(row.username, row.admin));
+                callback(null, new Account(row));
             } else {
                 // Résultat indéfini donc on a rien trouvé dans la bdd.
                 callback(null, null);
@@ -71,7 +72,7 @@ module.exports = {
                 return;
             }
             if (callback) {
-                callback(null, new Account(obj.username, 0));
+                callback(null, new Account(obj));
             }
         });
     },
@@ -95,7 +96,8 @@ module.exports = {
                     if (err) {
                         console.log("CANNOT update to admin.");
                     } else {
-                        callback(null, new Account(obj.username, 1));
+                        obj.admin = 1;
+                        callback(null, new Account(obj));
                     }
                 });
             } else {
@@ -123,7 +125,8 @@ module.exports = {
                         return;
                     }
                     if (callback) 
-                        callback(null, new Account(obj.username, 1));
+                        obj.admin = 1;
+                        callback(null, new Account(obj));
                 });
             }
         });
