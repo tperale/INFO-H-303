@@ -2,12 +2,40 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');                                                                                                                                        
 var fs = require('fs');
+var async = require('async');
 
 var db = require('../db/database_utils.js');
 var User = require('../db/user_db.js');
 var Restaurant = require('../db/restaurant_db_utils.js');
 var Bar = require('../db/bar_db_utils.js');
 var Hotel = require('../db/hotel_db_utils.js');
+
+router.get('/manage', function (req, res) {
+    if ((!req.user) || (!req.user.admin)) {
+        return res.redirect(303, '404');
+    }
+    User.get_all(function (err, results) {
+        res.render('admin/add_admin', {
+            profiles : results,
+            user : req.user ,
+        });
+    });
+});
+
+router.post('/manage', function (req, res) {
+    if ((!req.user) || (!req.user.admin)) {
+        return res.redirect(303, '404');
+    }
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, file) {
+        console.log(JSON.stringify(fields));
+        async.map(fields, function (value, callback) {
+            console.log(value);
+            // var admin = (value == 'on') ? 1 : 0;
+            // User.add_admin(admin)
+        })
+    });
+});
 
 router.get('/add', function (req, res) {
     if ((!req.user) || (!req.user.admin)) {

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<h3>Ajouter des utilisateurs au poste d'administrateur.</h3>
+<hr>
+
+<form action="/admin/manage" method="post" enctype="multipart/form-data">
+    {{#each profiles}}
+    <div class="row">
+        <div class="content">
+            <a href="/user/{{username}}/">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                {{username}}
+                {{#if admin}}
+                    <input type="checkbox" id="{{username}}" name="{{username}}" checked>
+                {{else}}
+                    <input type="checkbox" id="{{username}}" name="{{username}}">
+                {{/if}}
+                <script>
+                    $("[name='{{username}}']").bootstrapSwitch()
+                </script>
+
+            </a>
+        </div>
+        <hr>
+    </div>
+    {{/each}}
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+</form>
