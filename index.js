@@ -124,18 +124,33 @@ app.get('/search',  function (req, res) {
 
 app.post('/search', function (req, res){
     console.log("Got a query (POST) : " + req.body.query);
-    database_utils.search_establishment(req.body.query, function (err, result) {
-        res.render('establishments/showoff', {
-            establishments : result,
+    async.parallel([
+        function(callback) {
+            database_utils.search_establishment(req.body.query, function (err, results) {
+                callback(err, results);
+            });
+        }, function (callback) {
+            Label.search_label(req.body.query, function (err, results) {
+                callback(err, results) 
+            });
+        }, function (callback) {
+            User.search(req.body.query, function (err, results) {
+                callback(err, results) 
+            });
+        }
+        ], function(err, results) {
+            res.render('establishments/showoff', {
+                establishments : results[0],
+                labels : results[1],
+                users : results[2],
 
-            user : req.user,
+                user : req.user,
 
-            helpers : {
-                thumbnailing : helpers_fun.thumbnailing
-            }
+                helpers : {
+                    thumbnailing : helpers_fun.thumbnailing
+                }
+            });
         });
-    });
-    
 });
 
 app.get('/about/me',  function (req, res) {

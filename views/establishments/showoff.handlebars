@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<div class="page-header">
-    <h3> Establishments </h3>
-</div>
-
 {{#if establishments}}
+<h3> Establishments </h3>
+<hr>
 
 {{{thumbnailing establishments}}}
 
@@ -40,6 +38,22 @@
 
 
 <hr>
+{{/if}}
+
+{{#if labels}}
+<h3>Labels</h3>
+<hr>
+{{#each labels}}
+<li><a href="/label/{{name}}">{{name}}</a></li>
+{{/each}}
+{{/if}}
+
+{{#if users}}
+<h3>Utilisateurs</h3>
+<hr>
+{{#each users}}
+<li><a href="/user/{{username}}">{{username}}</a></li>
+{{/each}}
 {{/if}}
 
 </div>

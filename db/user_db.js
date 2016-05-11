@@ -45,6 +45,22 @@ module.exports = {
         }) 
     },
 
+    search : function (query, callback) {
+        db.all("SELECT * FROM account WHERE username LIKE '%" + query + "%'", function (err, rows) {
+            if (err) {
+                callback(err, null); 
+            } else if (rows) {
+                // Si l'utilisateur a été trouvé.
+                callback(null, rows);
+            } else {
+                // Résultat indéfini donc on a rien trouvé dans la bdd.
+                callback(null, null);
+            }
+        }) 
+    },
+
+
+
     remove : function (name, callback) {
         db.run("DELETE FROM account WHERE username='" + name + "'", callback);
     },
