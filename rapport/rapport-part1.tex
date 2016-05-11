@@ -28,7 +28,7 @@
     framexbottommargin=2pt,
     extendedchars=false,
     inputencoding=utf8,
-    literate={à}{{\'a}}1 {é}{{\'e}}1,
+    literate={à}{{\`a}}1 {è}{{\`e}}1 {é}{{\'e}}1,
 }
 
 
@@ -210,19 +210,65 @@ classée selon la moyenne des scores attribués.}
 classée selon la moyenne des scores des établissements ayant ce label.}
     \lstinputlisting[language=SQL]{../db/6.sql}
 
+\section{Implémentation}
+\section{Language et libraires}
+\begin{itemize}
+    \item \emph{Express.js} comme frameword web pour le language \emph{node.js}.
+    \item \emph{Handlebars.js} comme moteur de template pour \emph{express.js}.
+    \item \emph{Bootstrap} et \emph{jQuery} comme framework de frontend.
+    \item \emph{SQLite3} comme moteur de base de donnée.
+\end{itemize}
+\section{Script d'insértion de données}
+    \lstinputlisting[language=python]{../init.py}
+    \pagebreak
+
+\section{}
+
 \section{Apports personnels}
 \subsection{Site adapté aux téléphones mobiles}
 
 \subsection{Gestion des privilèges}
 
 \subsection{Localisation des restaurants sur une carte}
+    Afin de permettre de pouvoir directement voir l'emplacement des
+    établissements sur une l'application intêgre des cartes pour visualiser
+    l'emplacement de l'établissement \emph{HORECA}. Celles-ci sont intégrées à
+    la page web à l'aide d'une bibliothèque Javascript, Leaflet.
+    En plus de montrer l'emplacement sur une carte celles-ci montre aussi un
+    rapide aperçu des caractéristiques de l'établissement.
+
+    % include image de l'enroule.
 
 \subsection{Géolocalisation sur la carte}
+    En plus de montrer la localisation des restaurants, l'application permet
+    de pouvoir se géolocaliser sur la carte, par apport aux établissements.
+    \newline
+    Cette fonctionnalitée est d'autant plus la bienvenue que l'application est
+    adaptée aux téléphones mobiles.
 
 \subsection{Gestion des photos}
+    L'application gère le stockage d'image dans la base de donnée.
+    Chaques utilisateur inscrit sur le site peuvent dés lors écrire un
+    commentaire dans la section adaptée accompagné d'une photo de
+    l'établissement visité par exemple. \newline
+    Quant aux utilisateurs dit \emph{administrateur}, ils peuvent modifier
+    la photo de l'établissement pour que chaques visiteur aie un aperçu de
+    l'apparence de l'établissement. \newline
+    De plus la gestion de ces photos permet de les visionner de manière
+    comfortable à l'aide du module enhance.js. En effet celui-ci permet de voir
+    une photo \emph{en grand}, sans devoir changer de page.
+
+    % insert picture of upload and look and enhance.js.
 
 \subsection{Recherche de label similaire.}
+    Pour permettre aux visiteurs de trouver des établissements avec des
+    contraintes spécifiques, l'application lie tout les labels de chaques
+    établissements. Un visiteurs peut dés lors retrouver tout les
+    établissements qui possède le label de son choix, par exemple
+    \emph{Fumeur}.
 
 \subsection{Vote dans les commentaires}
-
+    Un système de vote individuel à chaques commentaire est mit en place pour
+    que chaque utilisateur inscript aie le droit de juger des commentaires
+    qui selon lui ne sont pas raisonnable ou inversément.
 \end{document}
