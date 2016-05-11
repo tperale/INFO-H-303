@@ -26,8 +26,9 @@ def new_user(username, db, date=None, admin=0):
             print(cmd)
             db.execute(cmd)
             user['date'] = date
-        else:
-            pass
+        if admin:
+            cmd = "UPDATE account SET admin=%i WHERE username='%s'" % (admin, username)
+            db.execute(cmd)
     else:
         if date:
             # Si l'utilisateur n'existe pas.
