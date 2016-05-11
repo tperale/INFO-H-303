@@ -120,7 +120,7 @@ module.exports = {
      */
     get_labels : function (establishment_id, callback) {
         // TODO ne pas loader les doublons.
-        db.all("SELECT id, name FROM label WHERE establishment_id=" + establishment_id + " GROUP BY name ORDER BY COUNT(name)", function (err, rows) {
+        db.all("SELECT id, name, COUNT(name) AS number FROM label WHERE establishment_id=" + establishment_id + " GROUP BY name ORDER BY COUNT(name) DESC ", function (err, rows) {
             if (err) {
                 callback(err, null); 
             } else {
@@ -138,7 +138,7 @@ module.exports = {
      * @param {query} : Label rechché.
      */
     search_label : function (query, callback) {
-        db.all("SELECT * FROM label WHERE name LIKE '%" + query + "%' GROUP BY name ORDER BY COUNT(name)", function (err, rows) {
+        db.all("SELECT *, COUNT(name) AS number FROM label WHERE name LIKE '%" + query + "%' GROUP BY name ORDER BY COUNT(name) DESC", function (err, rows) {
             if (err) { 
                 return callback(err, null); 
             }
