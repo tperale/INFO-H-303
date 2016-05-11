@@ -2,7 +2,6 @@
 <div class="row">
     <!-- Blog Post Content Column -->
     <div class="col-lg-8">
-
         <h1>
             {{{icon establishment.type}}}
             {{establishment.name}}
@@ -14,8 +13,13 @@
             {{/if}}
         </h1>
 
-        <div class="creator-section">
-            by <a href="/user/{{establishment.created_by}}">{{establishment.created_by}}</a> ({{establishment.creation_date}})
+        <div class="row">
+            <div class="col-md-6 creator-section">
+                by <a href="/user/{{establishment.created_by}}">{{establishment.created_by}}</a> ({{establishment.creation_date}})
+            </div>
+            <div class="col-md-6 creator-section pull-right">
+                Moyenne des utilisateurs : {{average comments}} étoiles.
+            </div>
         </div>
 
         <hr>

@@ -174,4 +174,14 @@ module.exports = {
 
         return result;
     },
+
+    average : function (comments) {
+        var result = 0;    
+
+        for (var i = 0; i < comments.length; ++i) {
+            result += comments[i].rating; 
+        }
+
+        return result / comments.length;
+    },
 };
