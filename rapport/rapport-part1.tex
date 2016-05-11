@@ -5,8 +5,31 @@
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{listings}
 
 \linespread{1.1}
+
+\usepackage{xcolor}
+\usepackage{inconsolata}
+\lstset{
+    pad\mathcal{R}o
+    basicstyle=\ttfamily\small,
+    numberstyle=\footnotesize,
+    numbers=left,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    tabsize=2,
+    rulecolor=\color{black!30},
+    title=\lstname,
+    escapeinside={\%*}{*)},
+    breaklines=true,
+    breakatwhitespace=true,
+    framextopmargin=2pt,
+    framexbottommargin=2pt,
+    extendedchars=false,
+    inputencoding=utf8,
+    literate={à}{{\'a}}1 {é}{{\'e}}1,
+}
 
 
 
@@ -19,7 +42,7 @@
 %\textbf{\textsc{Département d'Informatique}}
 \vfill{}\vfill{}
 \begin{center}{\Huge Rapport : HORECA}\end{center}{\Huge \par}
-\begin{center}{\large Thomas Perale}\end{center}{\Huge \par}
+\begin{center}{\large Thomas Perale (408160)}\end{center}{\Huge \par}
 \vfill{}\vfill{} \vfill{}
 \begin{flushleft}{\large \textbf{INFO-H-303 Base de données}}\hfill{Esteban Zimányi, Michaël Waumans}\end{flushleft}{\large\par}
 \vfill{}\vfill{}\enlargethispage{3cm}
@@ -156,5 +179,50 @@ est admin ou non. \newline
 En ce qui concerne les \emph{labels} j'ai décidé de mettre l'\emph{ID} de
 l'utilisateur dans une des colonnes, de cette façon on sait facilement savoir
 si une personne a déjà ajouté un certain label ou non.
+
+\section{Script SQL DDL}
+    \lstinputlisting[language=SQL]{../db/create.sql}
+
+    \pagebreak
+
+\section{Requêtes}
+\subsection{Tous les Utilisateurs qui apprécient au moins 3 établissements que
+l'utilisateur \emph{Brenda} apprécie.}
+    \lstinputlisting[language=SQL]{../db/1.sql}
+
+\subsection{Tous les établissements qu'apprécie au moins un utilisateur qui
+apprécie tous les établissements que \emph{Brenda} apprécie.}
+    \lstinputlisting[language=SQL]{../db/2.sql}
+
+\subsection{Tous les établissements pour lesquels il y a au plus un
+commentaire.}
+    \lstinputlisting[language=SQL]{../db/3.sql}
+
+\subsection{La liste des administrateurs n'ayant pas commenté tous les
+établissements qu'ils ont crées.}
+    \lstinputlisting[language=SQL]{../db/4.sql}
+
+\subsection{La liste des établissements ayant au minimum trois commentaires,
+classée selon la moyenne des scores attribués.}
+    \lstinputlisting[language=SQL]{../db/5.sql}
+
+\subsection{La liste des labels étant appliqués à au moins 5 établissements,
+classée selon la moyenne des scores des établissements ayant ce label.}
+    \lstinputlisting[language=SQL]{../db/6.sql}
+
+\section{Apports personnels}
+\subsection{Site adapté aux téléphones mobiles}
+
+\subsection{Gestion des privilèges}
+
+\subsection{Localisation des restaurants sur une carte}
+
+\subsection{Géolocalisation sur la carte}
+
+\subsection{Gestion des photos}
+
+\subsection{Recherche de label similaire.}
+
+\subsection{Vote dans les commentaires}
 
 \end{document}
