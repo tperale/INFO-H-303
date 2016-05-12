@@ -137,17 +137,24 @@ app.post('/search', function (req, res){
             User.search(req.body.query, function (err, results) {
                 callback(err, results) 
             });
+        }, function (callback) {
+            database_utils.rankings(function (err, results) {
+                callback(err, results) 
+            });
         }
+
         ], function(err, results) {
             res.render('establishments/showoff', {
                 establishments : results[0],
                 labels : results[1],
                 users : results[2],
+                also : results[3].slice(0,6),
 
                 user : req.user,
 
                 helpers : {
-                    thumbnailing : helpers_fun.thumbnailing
+                    thumbnailing : helpers_fun.thumbnailing,
+                    count : helpers_fun.count,
                 }
             });
         });
