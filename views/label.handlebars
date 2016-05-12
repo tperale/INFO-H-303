@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 
-<h2>Labels</h2>
+{{#if labels.number}}
+<h2>Il y a {{labels.number}} établissments qui utilisent le label "{{labels.name}}"</h2>
+{{else}}
+<h2>Il y a aucun établissement utilise ce label"</h2>
+{{/if}}
 <hr>
 {{{thumbnailing establishments}}}
 </div>

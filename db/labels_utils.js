@@ -138,7 +138,7 @@ module.exports = {
      * @param {query} : Label rechché.
      */
     search_label : function (query, callback) {
-        db.all("SELECT *, COUNT(name) AS number FROM label WHERE name LIKE '%" + query + "%' GROUP BY name ORDER BY COUNT(name) DESC", function (err, rows) {
+        db.all("SELECT *, COUNT(name) AS number FROM label WHERE name LIKE '%" + query + "%' GROUP BY establishment_id", function (err, rows) {
             if (err) { 
                 return callback(err, null); 
             }
