@@ -44,8 +44,9 @@
                                 <li><a href="/user/{{user.name}}">Profil</a></li>
                                 {{#if user.admin}}
                                     <li><a href="/admin/add">Ajouter un établissement</a></li>
+                                    <li><a href="/admin/manage">Gère les administrateurs</a></li>
                                 {{/if}}
-                                <li><a href="/settings">Paramètres</a></li>
+                                <li><a href="/user/settings">Paramètres</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="/logout">Se déconnecter</a></li>
                             </ul>

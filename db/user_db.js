@@ -59,6 +59,19 @@ module.exports = {
         }) 
     },
 
+    update : function (username, column, value, callback) {
+        var cmd = "UPDATE account SET ?=? WHERE username=?";
+        // var cmd = "UPDATE account SET " + column + "=";
+        // if (typeof(value) == "number") {
+        //     cmd += String(value);
+        // } else {
+        //     cmd += "'" + String(value) + "'";
+        // }
+        // cmd += " WHERE id=" + id;
+        db.run(cmd, [column, value, username], callback);
+    },
+
+
 
 
     remove : function (name, callback) {
@@ -91,6 +104,16 @@ module.exports = {
                 callback(null, new Account(obj));
             }
         });
+    },
+
+    /* @desc : Met à jour le status d'administrateur d'un utilisateur.
+     *
+     * @param {name} :
+     * @param {admin} : 
+     * @param {callback} : function(err)
+     */
+    update_admin : function (name, admin, callback) {
+        db.run("UPDATE account SET admin=? WHERE username=?", [admin, name], callback);
     },
 
     /* @desc : Promote or add a user to administration post.
@@ -147,4 +170,8 @@ module.exports = {
             }
         });
     },
+
+    get_all : function (callback) {
+        db.all("SELECT * FROM account", callback);
+    }
 };

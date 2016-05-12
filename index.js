@@ -177,8 +177,33 @@ app.get('/about',  function (req, res) {
     });
 });
 
+app.get('/user/settings',  function (req, res) {
+    if (!req.user) {
+        res.redirect('404');
+    }
+    res.render('settings', {
+        user : req.user,
+    });
+});
+
+/* @desc : Met à jour les valeurs des utilisateurs.
+ */
+app.post('/user/update/:name/:type',  function (req, res) {
+    if ((req.params.name != req.user.name) || (!req.user.admin)) {
+        return res.redirect('404');
+    }
+    console.log('updating');
+    User.update(req.params.name, req.params.type, req.body[req.params.type], function(err) {
+        if (err) {
+            console.log("Erreur suppression profile : " + err);
+        }
+        console.log("Updated : " + req.params.type + " with : " + req.body[req.parmams.type]);
+        res.redirect('back');
+    })
+});
+
 app.get('/user/remove/:name',  function (req, res) {
-    if (req.params.name != req.user.name) {
+    if ((req.params.name != req.user.name) || (!req.user.admin)) {
         return res.redirect(303, '404');
     }
 

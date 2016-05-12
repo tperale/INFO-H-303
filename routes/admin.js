@@ -29,11 +29,16 @@ router.post('/manage', function (req, res) {
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, file) {
         console.log(JSON.stringify(fields));
-        async.map(fields, function (value, callback) {
-            console.log(value);
-            // var admin = (value == 'on') ? 1 : 0;
-            // User.add_admin(admin)
-        })
+        for (var name in fields) {
+            var admin = (fields[name] == 'on') ? 1 : 0;
+            User.update_admin(name, admin, function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.redirect('/404');
+                }
+                return res.redirect('back');
+            });
+        }
     });
 });
 
@@ -42,7 +47,7 @@ router.get('/add', function (req, res) {
         return res.redirect(303, '404');
     }
 
-    res.render('admin', {
+    res.render('admin/admin', {
         user : req.user,
     });
 });
