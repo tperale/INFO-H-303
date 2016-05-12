@@ -189,6 +189,13 @@ si une personne a déjà ajouté un certain label ou non.
 \subsection{Tous les Utilisateurs qui apprécient au moins 3 établissements que
 l'utilisateur \emph{Brenda} apprécie.}
     \lstinputlisting[language=SQL]{../db/1.sql}
+\subsubsection{Algèbre relationnelle}
+\begin{align}
+    \Pi_{c1.username}comments \sigma_{count(c1.username)>=3}
+    \\\bowtie_{'Brenda'=c2.username AND
+    c1.establishment\_id=c2.establishment\_id AND c2.rating>=4 AND
+    c1.rating>=4}
+\end{align}
 
 \subsection{Tous les établissements qu'apprécie au moins un utilisateur qui
 apprécie tous les établissements que \emph{Brenda} apprécie.}
@@ -198,6 +205,11 @@ apprécie tous les établissements que \emph{Brenda} apprécie.}
 commentaire.}
     \lstinputlisting[language=SQL]{../db/3.sql}
 
+\subsubsection{Algèbre relationnelle}
+    \begin{align}
+        \Pi_{c.establishment_id}comments \sigma_{count(c.establishment_id)<=1}\Pi_{c.establishment_id}
+    \end{align}
+
 \subsection{La liste des administrateurs n'ayant pas commenté tous les
 établissements qu'ils ont crées.}
     \lstinputlisting[language=SQL]{../db/4.sql}
@@ -206,29 +218,67 @@ commentaire.}
 classée selon la moyenne des scores attribués.}
     \lstinputlisting[language=SQL]{../db/5.sql}
 
+\subsubsection{Algèbre relationnelle}
+    \begin{align}
+        \Gamma_{AVG(c.rating)}\Pi_{AVG(c.rating), c.establishment_id}comments \sigma_{count(c.establishment_id)>=3}\Pi_{c.establishment_id}
+    \end{align}
+
 \subsection{La liste des labels étant appliqués à au moins 5 établissements,
 classée selon la moyenne des scores des établissements ayant ce label.}
     \lstinputlisting[language=SQL]{../db/6.sql}
 
+\subsubsection{Algèbre relationnelle}
+    \begin{align}
+        \Gamma_{AVG(c.rating)}\Pi_{AVG(c.rating), l.name}label \sigma_{count(DISTINCT l.establishment_id)>=5}\Pi_{l.name}
+        \\\bowtie_{c.establishment_id=l.establishment_id}
+    \end{align}
+
+
+
 \section{Implémentation}
-\section{Language et libraires}
+\subsection{Language et libraires}
 \begin{itemize}
     \item \emph{Express.js} comme frameword web pour le language \emph{node.js}.
     \item \emph{Handlebars.js} comme moteur de template pour \emph{express.js}.
     \item \emph{Bootstrap} et \emph{jQuery} comme framework de frontend.
     \item \emph{SQLite3} comme moteur de base de donnée.
 \end{itemize}
-\section{Script d'insértion de données}
+
+\subsection{Script d'insértion de données}
     \lstinputlisting[language=python]{../init.py}
     \pagebreak
 
-\section{}
+\subsection{Instruction d'installation de l'application}
+À la racine du projet.
+\begin{lstlisting}
+make
+npm install
+node index.js
+\end{lstlisting}
+
+\subsection{}
 
 \section{Apports personnels}
-\subsection{Site adapté aux téléphones mobiles}
-
-\subsection{Gestion des privilèges}
-
+\subsection{Site adapté aux mobiles}
+    Pour que l'application soit adaptée au type de consommation actuelle, elle
+    a été crée dans l'idée de pouvoir aussi bien est facile d'utilisation sur
+    ordinateur que sur mobile.
+\subsection{Utilisateur administrateur}
+    Des comptes administrateur sont à disposition pour pouvoire gèrer les
+    publications, si celle-ci doivent être changer, ou pour faire un travail de
+    modération dans les commentaires ou les labels.
+    Un administrateur a le pouvoir de :
+    \begin{itemize}
+        \item Supprimer un commentaire.
+        \item Supprimer un label.
+        \item Supprimer un établissement.
+        \item Supprimer un utilisateur.
+        \item Ajouter d'autres utilisateur au poste d'adminisatrateur.
+        \item Créer des restaurants.
+        \item Créer des hotels.
+        \item Créer des bars.
+        \item Modifier les données des établissements.
+    \end{itemize}
 \subsection{Localisation des restaurants sur une carte}
     Afin de permettre de pouvoir directement voir l'emplacement des
     établissements sur une l'application intêgre des cartes pour visualiser
