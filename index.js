@@ -243,6 +243,8 @@ app.get('/user/:name',  function (req, res) {
                     callback(null, results);
                 }, 200);
             });
+        }, function(callback) { // Getting the similar users.
+            User.like(req.params.name, callback);
         }
     ], function (err, results) {
         res.render('user', {
@@ -251,6 +253,8 @@ app.get('/user/:name',  function (req, res) {
             comments : results[1],
 
             labels : results[2],
+
+            like : results[3],
 
             user : req.user,
 

@@ -5,7 +5,9 @@
     Admin :
 {{/if}}
     {{profile.name}}
-{{{deleteProfile profile.name user.name}}}
+{{#if user.admin}}
+    <a href=\"/user/remove/" + userName + "\">Delete</a>
+{{/if}}
 </h3>
 
 <hr>
@@ -61,4 +63,12 @@
 </div>
 
 <hr>
+
+{{#if like}}
+<h2>Utilisateurs similaire à {{profile.name}}</h2>
+<hr>
+{{#each like}}
+<li><a href="/user/{{username}}">{{username}}</a></li>
+{{/each}}
+{{/if}}
 

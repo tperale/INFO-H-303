@@ -106,6 +106,23 @@ module.exports = {
         });
     },
 
+    /* @desc : Donne une liste de personne que l'utilisateur entré en
+     *      paramètre a des chances d'aimer.
+     * @param {name} : Uitlisateur pour lequel on veut trouver d'autres utilisateurs.
+     * @param {callback} : function (err, results) pass la liste des utilisateurs qui 
+     *      ont aimé trois établissement que {name} a aimé.
+     */
+    like : function (name, callback) {
+        var cmd = "SELECT DISTINCT c1.username FROM comments AS c1 \
+            INNER JOIN comments AS c2 ON ?= c2.username \
+                AND c1.establishment_id=c2.establishment_id \
+                AND c2.rating>=4 AND c1.rating>=4 \
+            WHERE c1.username!=?\
+            GROUP BY c1.username \
+            HAVING COUNT(c1.username)>=3"
+        db.all(cmd, [name, name], callback);
+    },
+
     /* @desc : Met à jour le status d'administrateur d'un utilisateur.
      *
      * @param {name} :
