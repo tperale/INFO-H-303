@@ -160,6 +160,8 @@ module.exports = {
             return callback(null, array);        
         }
 
+        number = number < array.length ? number : array.length;
+
         var random_id = Random.sample(Random.engines.nativeMath, array, number);
 
         console.log("sample : " + random_id);
