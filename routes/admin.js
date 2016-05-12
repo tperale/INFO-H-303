@@ -76,6 +76,8 @@ router.post('/add/restaurant', function (req, res) {
         fields.takeaway = ((fields.takeaway == "on") ? 1 : 0);
         fields.delivery = ((fields.delivery == "on") ? 1 : 0);
 
+        fields.created_by = req.user.name;
+
         Restaurant.new_restaurant(fields, function (id) {
             res.redirect('back');
         });
@@ -93,6 +95,8 @@ router.post('/add/bar', function (req, res) {
         fields.smokers = ((fields.smokers == "on") ? 1 : 0);
         fields.snacks = ((fields.snacks == "on") ? 1 : 0);
 
+        fields.created_by = req.user.name;
+
         Bar.new_bar(fields, function (id) {
             res.redirect('back');
         });
@@ -106,6 +110,8 @@ router.post('/add/hotel', function (req, res) {
             console.log("Error in form : " + err);
             return res.redirect(303, '/error');
         }
+
+        fields.created_by = req.user.name;
 
         Hotel.new_hotel(fields, function (id) {
             res.redirect('back');
