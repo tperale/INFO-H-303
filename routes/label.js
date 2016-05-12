@@ -54,7 +54,8 @@ router.get('/:name',  function (req, res) {
         }, function (err, results) {
             // Passing the restaurants to the page.
             res.render('label', {
-                labels : labels[0],
+                name : req.params.name,
+                labels : labels.length,
 
                 establishments : results,
 
