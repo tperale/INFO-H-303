@@ -8,4 +8,5 @@ FROM comments AS c1
         ON "Brenda"= c2.username
             AND c1.establishment_id=c2.establishment_id
             AND c2.rating>=4 AND c1.rating>=4
+WHERE c1.username!="Brenda"
 GROUP BY c1.username HAVING COUNT(c1.username)>=3;
