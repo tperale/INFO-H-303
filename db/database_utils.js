@@ -111,6 +111,14 @@ module.exports = {
         });
     },
 
+    discover : function (callback) {
+        var cmd = "SELECT e.* \
+            FROM establishment e, comments c \
+            WHERE e.id=c.establishment_id \
+            GROUP BY c.establishment_id HAVING COUNT(c.establishment_id)<=1"    
+        db.all(cmd, callback);
+    },
+
     update : function (id, column, value, callback) {
         var cmd = "UPDATE establishment SET " + column + "=";
         if (typeof(value) == "number") {

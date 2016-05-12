@@ -79,6 +79,26 @@ router.post('/update/:id/:type', function (req, res) {
     });
 });
 
+/* @desc : Liste les restaurants peut connu sur le site.
+ */
+router.get('/discover',  function (req, res) {
+    db.discover(function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.render('establishments/showoff', {
+            discovers : results,
+
+            user : req.user,
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            }
+        });
+    });
+});
+
 router.get('/restaurants',  function (req, res) {
     db.pick("restaurant", function (err, result) {
         db.pick_random_from(6, result, function (err, result) {
