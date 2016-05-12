@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var helpers_fun = require('../js/handlebars_helpers.js');
+var request = require('request');
 
 var db = require('../db/database_utils.js');
 var User = require('../db/user_db.js');
@@ -168,11 +169,20 @@ router.get('/hotels',  function (req, res) {
 });
 
 router.get('/image/:id', function (req, res) {
+    var api = "http://searx.me/?category_images=on&format=json&q=";
     db.get_establishment_image(req.params.id, function (err, result) {
-        if (result) {
-            res.send(result);
+        if (result.picture) {
+            res.send(result.picture);
         } else {
-            res.redirect(302, 'http://blog.forbestravelguide.com/wp-content/uploads/2013/09/FTG-HeroShot-MXDC-CreditOliviaBoinet.jpg');
+            request(api + result.name.replace(' ', '+') + "+" + result.address_town, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var json =  JSON.parse(body)
+                    res.redirect(302, json['results'][0]['img_src']);
+                } else {
+                    console.log("error");
+                    res.redirect(302, "http://www.hospitalitymagazine.com.au/getmedia/4abeaf84-fa2b-43a1-8e3d-01ab31e8aaeb/My-Kitchen-Rules-chef-Pete-Evans-new-Melbourne-res.aspx");
+                }
+            });
         }
     });
 });

@@ -102,12 +102,12 @@ module.exports = {
     },
         
     get_establishment_image : function (id, callback) {
-        db.get("SELECT picture FROM establishment WHERE id=" + id, function (err, row) {
+        db.get("SELECT * FROM establishment WHERE id=" + id, function (err, row) {
             if (err) {
                 console.log("ERROR GETTING PICTURE : " + err); 
                 callback(err, null);
             }
-            callback(null, row.picture);
+            callback(null, row);
         });
     },
 
