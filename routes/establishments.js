@@ -79,6 +79,26 @@ router.post('/update/:id/:type', function (req, res) {
     });
 });
 
+/* @desc : Classement des établissements en fonction de leur moyenne.
+ */
+router.get('/rankings',  function (req, res) {
+    db.rankings(function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.render('establishments/showoff', {
+            establishments : results,
+
+            user : req.user,
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            }
+        });
+    });
+});
+
 /* @desc : Liste les restaurants peut connu sur le site.
  */
 router.get('/discover',  function (req, res) {

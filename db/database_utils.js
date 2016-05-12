@@ -111,6 +111,15 @@ module.exports = {
         });
     },
 
+    rankings : function (callback) {
+        var cmd = "SELECT e.* \
+            FROM establishment AS e, comments AS c \
+            WHERE e.id=c.establishment_id \
+            GROUP BY c.establishment_id HAVING COUNT(c.establishment_id)>=3 \
+            ORDER BY AVG(c.rating) DESC";
+        db.all(cmd, callback);
+    },
+
     discover : function (callback) {
         var cmd = "SELECT e.* \
             FROM establishment e, comments c \
