@@ -188,6 +188,8 @@ si une personne a déjà ajouté un certain label ou non.
 \section{Requêtes}
 \subsection{Tous les Utilisateurs qui apprécient au moins 3 établissements que
 l'utilisateur \emph{Brenda} apprécie.}
+    Les résultats de cette requête sont visible dans l'application à la page
+    \emph{/user/Brenda}.
     \lstinputlisting[language=SQL]{../db/1.sql}
 \subsubsection{Algèbre relationnelle}
 \begin{align}
@@ -203,6 +205,8 @@ apprécie tous les établissements que \emph{Brenda} apprécie.}
 
 \subsection{Tous les établissements pour lesquels il y a au plus un
 commentaire.}
+    Les résultats de cette requête sont visible dans l'application à la page
+    \emph{/establishments/discover}
     \lstinputlisting[language=SQL]{../db/3.sql}
 
 \subsubsection{Algèbre relationnelle}
@@ -216,6 +220,8 @@ commentaire.}
 
 \subsection{La liste des établissements ayant au minimum trois commentaires,
 classée selon la moyenne des scores attribués.}
+    Les résultats de cette requête sont visible dans l'application à la page
+    \emph{/establishments/ratings}
     \lstinputlisting[language=SQL]{../db/5.sql}
 
 \subsubsection{Algèbre relationnelle}
@@ -225,6 +231,8 @@ classée selon la moyenne des scores attribués.}
 
 \subsection{La liste des labels étant appliqués à au moins 5 établissements,
 classée selon la moyenne des scores des établissements ayant ce label.}
+    Les résultats de cette requête sont visible dans l'application à la page
+    \emph{/establishments/label/\ldots}
     \lstinputlisting[language=SQL]{../db/6.sql}
 
 \subsubsection{Algèbre relationnelle}
