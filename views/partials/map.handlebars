@@ -2,13 +2,17 @@
 
 <div id="mapid">
     <script>
+    var locationMarker = L.AwesomeMarkers.icon({
+        icon: 'user',
+        markerColor: 'red'
+    });
+
     var mymap = L.map('mapid').setView([{{establishment.latitude}}, {{establishment.longitude}}], 13);
-    mymap.locate({ watch : true });
+    mymap.locate();
     mymap.on('locationfound', function (e) {
         var radius = e.accuracy / 2;
 
-        L.marker(e.latlng).addTo(mymap)
-            .bindPopup("Vous êtes ici.").openPopup();
+        L.marker(e.latlng, {icon : locationMarker}).addTo(mymap)
 
         L.circle(e.latlng, radius).addTo(mymap);
     });
