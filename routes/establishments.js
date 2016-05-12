@@ -177,11 +177,11 @@ router.get('/image/:id', function (req, res) {
             request(api + result.name.replace(' ', '+') + "+" + result.address_town, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var json =  JSON.parse(body)
-                    res.redirect(302, json['results'][0]['img_src']);
-                } else {
-                    console.log("error");
-                    res.redirect(302, "http://www.hospitalitymagazine.com.au/getmedia/4abeaf84-fa2b-43a1-8e3d-01ab31e8aaeb/My-Kitchen-Rules-chef-Pete-Evans-new-Melbourne-res.aspx");
+                    if (json['results'].length) {
+                        return res.redirect(302, json['results'][0]['img_src']);
+                    }
                 }
+                return res.redirect(302, "http://www.hospitalitymagazine.com.au/getmedia/4abeaf84-fa2b-43a1-8e3d-01ab31e8aaeb/My-Kitchen-Rules-chef-Pete-Evans-new-Melbourne-res.aspx");
             });
         }
     });
