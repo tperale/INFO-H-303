@@ -43,21 +43,28 @@ router.get('/:name',  function (req, res) {
             console.log(err);
             return res.redirect(303, 'error');
         }
-
-        async.map(labels, function (label, callback) {
-            db.get_establishment(label.establishment_id, function (err, restaurant) {
-                if (err) {
-                    console.log(err);
-                }
-                callback(null, restaurant);
-            });
-        }, function (err, results) {
+        
+        async.parallel([
+            function(callback) {
+                async.map(labels, function (label, map_callback) {
+                    db.get_establishment(label.establishment_id, function (err, restaurant) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        map_callback(null, restaurant);
+                    });
+                }, callback);
+            }, function(callback) {
+                Label.popular(callback);
+            }
+        ], function (err, results) {
             // Passing the restaurants to the page.
             res.render('label', {
                 name : req.params.name,
                 labels : labels.length,
 
-                establishments : results,
+                establishments : results[0],
+                also : results[1],
 
                 user : req.user,
 
@@ -68,6 +75,5 @@ router.get('/:name',  function (req, res) {
         });
     });
 });
-
 
 module.exports = router;

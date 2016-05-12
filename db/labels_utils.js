@@ -112,6 +112,18 @@ module.exports = {
         });            
     },
 
+    /* @desc Renvoie les labels utilisé par les établissements les plus populaire.
+     */
+    popular : function (callback) {
+        var cmd = "SELECT AVG(c.rating), l.name \
+            FROM label AS l \
+            JOIN comments AS c \
+                ON c.establishment_id=l.establishment_id \
+            GROUP BY l.name HAVING COUNT(DISTINCT l.establishment_id)>=5 \
+            ORDER BY AVG(c.rating)";
+        db.all(cmd, callback);
+    },
+
     /* @desc :  
      *
      * @param {establishment_id} :
@@ -138,7 +150,7 @@ module.exports = {
      * @param {query} : Label rechché.
      */
     search_label : function (query, callback) {
-        db.all("SELECT *, COUNT(name) AS number FROM label WHERE name LIKE '%" + query + "%' GROUP BY establishment_id", function (err, rows) {
+        db.all("SELECT *, COUNT(establishment_id) AS number FROM label WHERE name LIKE '%" + query + "%' GROUP BY establishment_id", function (err, rows) {
             if (err) { 
                 return callback(err, null); 
             }
