@@ -1,18 +1,19 @@
--- Tout les établissement qu'apprécie au moins un utilisateurs qui apprécie
--- tout les établissement que Brenda apprécie.
+-- R2 : Tous les établissements qu’apprécie au moins un utilisateur qui 
+-- apprécie tous les établissements que "Brenda" apprécie.
 
-SELECT DISTINCT c.establishment_id
-FROM comments AS c, account AS a
-WHERE c.username=a.username
-    AND c.rating >= 4
-    AND a.username NOT IN (
-        SELECT DISTINCT c1.username
+SELECT DISTINCT e.name
+FROM establishment AS e, comments AS c
+WHERE e.id=c.establishment_id
+    AND c.username IN (
+        SELECT c2.username
         FROM comments AS c1
-            INNER JOIN comments AS c2
-                ON "Brenda"= c2.username
-                    AND c1.establishment_id=c2.establishment_id
-                    AND c2.rating>=4 AND c1.rating>=4
-        WHERE c1.username=c2.username
+        INNER JOIN comments AS c2
+            ON c1.establishment_id=c2.establishment_id
+                AND c1.username!=c2.username
+                AND c2.rating>=4
+        WHERE c1.username="Brenda"
+            AND c1.rating>=4
+        GROUP BY c2.username HAVING 
+            COUNT(c2.username)=COUNT(DISTINCT c1.establishment_id)
     )
 ;
-
