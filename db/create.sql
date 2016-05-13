@@ -18,15 +18,14 @@ CREATE TABLE IF NOT EXISTS establishment (
 
     phone_number INTEGER(13) NOT NULL,
 
-    website TEXT
-        CHECK (website LIKE '%.%.%'),
+    website TEXT,
+        -- CHECK (website LIKE '%.%.%'),
 
     picture BLOB,
 
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     created_by TEXT,
-
     FOREIGN KEY (created_by) REFERENCES account (username)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
@@ -48,8 +47,7 @@ CREATE TABLE IF NOT EXISTS restaurant (
 
     delivery BOOLEAN NOT NULL,
 
-    timetable INTEGER(7)
-        CHECK(0<=timetable AND timetable<=9)
+    timetable TEXT DEFAULT "00000000000000"
 );
 
 CREATE TABLE IF NOT EXISTS bar (
@@ -111,7 +109,7 @@ CREATE TABLE IF NOT EXISTS comments (
 
     picture_attached BLOB,
     
-    UNIQUE(username, timestamp)
+    UNIQUE(username, timestamp, establishment_id)
 );
 
 CREATE TABLE IF NOT EXISTS comment_rating (
