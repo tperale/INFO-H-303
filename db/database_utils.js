@@ -68,6 +68,40 @@ var get_establishment = function (id, callback) {
 };
 
 module.exports = {
+    magik2 : function (callback) {
+        var cmd = "SELECT DISTINCT * \
+            FROM establishment AS e, comments AS c \
+            WHERE e.id=c.establishment_id \
+                AND c.username IN ( \
+                    SELECT c2.username \
+                    FROM comments AS c1 \
+                    INNER JOIN comments AS c2 \
+                        ON c1.establishment_id=c2.establishment_id \
+                            AND c1.username!=c2.username \
+                            AND c2.rating>=4 \
+                    WHERE c1.username=\"Brenda\" \
+                        AND c1.rating>=4 \
+                    GROUP BY c2.username HAVING \
+                    COUNT(c2.username)=COUNT(DISTINCT c1.establishment_id))";
+        db.all(cmd, callback);
+    },
+
+    magik4 : function (callback) {
+        var cmd = "SELECT * \
+            FROM account AS a \
+            WHERE a.admin=1 \
+                AND a.username NOT IN ( \
+                    SELECT e.created_by \
+                    FROM establishment AS e \
+                        INNER JOIN comments AS c \
+                            ON e.id = c.establishment_id \
+                            AND e.created_by != c.username \
+                        GROUP BY c.username HAVING COUNT(c.establishment_id)>0)";
+        db.all(cmd, callback);
+    },
+
+
+
     remove : function (id, callback) {
         cmd = "DELETE FROM establishment WHERE id=" + id;
 

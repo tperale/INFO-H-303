@@ -141,9 +141,7 @@ app.post('/search', function (req, res){
             database_utils.rankings(function (err, results) {
                 callback(err, results) 
             });
-        }
-
-        ], function(err, results) {
+        }], function(err, results) {
             res.render('establishments/showoff', {
                 establishments : results[0],
                 labels : results[1],
@@ -195,16 +193,15 @@ app.get('/user/settings',  function (req, res) {
 
 /* @desc : Met à jour les valeurs des utilisateurs.
  */
-app.post('/user/update/:name/:type',  function (req, res) {
+app.post('/user/update/:name/:updatetype',  function (req, res) {
     if ((req.params.name != req.user.name) || (!req.user.admin)) {
         return res.redirect('404');
     }
-    console.log('updating');
-    User.update(req.params.name, req.params.type, req.body[req.params.type], function(err) {
+    console.log('updating + ' + req.params.updatetype + ", " + req.body[req.params.updatetype]);
+    User.update(req.params.name, req.params.updatetype, req.body[req.params.updatetype], function(err) {
         if (err) {
-            console.log("Erreur suppression profile : " + err);
+            return console.log("Erreur mise à jour profile : " + err);
         }
-        console.log("Updated : " + req.params.type + " with : " + req.body[req.parmams.type]);
         res.redirect('back');
     })
 });
@@ -366,6 +363,39 @@ app.post('/comment', function (req, res) {
         }
     });
 });
+
+/* @desc Requète sql que je savais pas où caser pour l'évaluation.
+ */
+app.get('/magic/2', function (req, res) {
+    database_utils.magik2(function (err, results) {
+        res.render('establishments/showoff', {
+            establishments : results,
+        
+            user : req.user,
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            },
+        });
+    });
+});
+
+app.get('/magic/4', function (req, res) {
+    database_utils.magik4(function (err, results) {
+        res.render('establishments/showoff', {
+            users : results,
+        
+            user : req.user,
+
+            helpers : {
+                thumbnailing : helpers_fun.thumbnailing
+            },
+        });
+    });
+});
+
+
+
 /* ---------------------------------------------
  *    login/signup functions.
  * ---------------------------------------------
