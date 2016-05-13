@@ -149,7 +149,7 @@ module.exports = {
         return result;
     },
 
-    timetable : function (timetable) {
+    timetable : function (timetable, id, admin) {
         var result = "<table class=\"table\">"; 
         var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
         console.log("With timetable : " + timetable);
@@ -164,6 +164,9 @@ module.exports = {
                 result += "Fermé";
             } else {
                 result += "Ouvert";
+            }
+            if (admin) {
+                result += " <a href=\"/establishments/restaurant/update/" + id + "/timetable/" +  timetable + "/" + i + "\">Toggle</a>"
             }
             result += "</td>";
         }
