@@ -50,6 +50,17 @@ module.exports = {
         });
     },
 
+    update : function (id, column, value, callback) {
+        var cmd = "UPDATE bar SET " + column + "=";
+        if (typeof(value) == "number") {
+            cmd += String(value);
+        } else {
+            cmd += "'" + String(value) + "'";
+        }
+        cmd += " WHERE id=" + id;
+        db.run(cmd, callback);
+    },
+
     get_bar : function (id, callback) {
         var cmd = "SELECT e.*, b.* from establishment e INNER JOIN bar b on e.id=b.id WHERE e.id=" + id;
         db.get(cmd, function(err, row) {

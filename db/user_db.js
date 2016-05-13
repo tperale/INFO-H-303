@@ -60,7 +60,7 @@ module.exports = {
     },
 
     update : function (username, column, value, callback) {
-        var cmd = "UPDATE account SET ?=? WHERE username=?";
+        var cmd = "UPDATE account SET " + column +  "=? WHERE username=?";
         // var cmd = "UPDATE account SET " + column + "=";
         // if (typeof(value) == "number") {
         //     cmd += String(value);
@@ -68,11 +68,8 @@ module.exports = {
         //     cmd += "'" + String(value) + "'";
         // }
         // cmd += " WHERE id=" + id;
-        db.run(cmd, [column, value, username], callback);
+        db.run(cmd, [value, username], callback);
     },
-
-
-
 
     remove : function (name, callback) {
         db.run("DELETE FROM account WHERE username='" + name + "'", callback);

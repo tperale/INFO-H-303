@@ -50,6 +50,12 @@ module.exports = {
         });
     },
 
+    update : function (id, column, value, callback) {
+        console.log("up");
+        var cmd = "UPDATE hotel SET " + column + "=? WHERE id=?";
+        db.run(cmd, [value, id], callback);
+    },
+
     get_hotel : function (id, callback) {
         var cmd = "SELECT e.*, h.* from establishment e INNER JOIN hotel h on e.id=h.id WHERE e.id=" + id;
         db.get(cmd, function(err, row) {
