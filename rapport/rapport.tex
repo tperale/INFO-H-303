@@ -62,7 +62,7 @@
 
 \section{Diagramme entité association}
 \subsection{Diagramme}
-\begin{figure}[hbt]
+\begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{bdd.png}
     \caption{Diagramme entité association}
@@ -241,7 +241,7 @@ commentaire.}
 
 \subsubsection{Algèbre relationnelle}
 \begin{align}
-    \Pi_{a.username}\ account \\
+    \Pi_{a.username} account \\
         \sigma_{a.admin\ AND \\
         \nexists_{(\Pi_{e.created\_by}\ establishment) \\
         \bowtie_{e.id=c.establishment\_id \ AND \ e.created\_by!=c.username}} \\
@@ -357,7 +357,7 @@ voir. Dans cette page, plusieurs chose sont déjà possible :
     \item Une carte des établissements qui sont sur le site.
 \end{itemize}
 
-\begin{figure}[hbt]
+\begin{figure}[h]
   \centering
   \includegraphics[scale=0.2]{./images/main.png}
   \caption{Page principale.}
@@ -371,14 +371,14 @@ Chaques commentaire qu'un utilisateur laisse peut être mis en avant par un
 système de vote individuel au commentaire, de cette façon les commentaires qui
 sont malhonnêtes selon les utilisateurs sont visibles.
 
-\begin{figure}[hbt]
+\begin{figure}[h]
   \centering
   \includegraphics[scale=0.2]{./images/establishment.png}
   \caption{Page principale.}
 \end{figure}
 
 \subsection{Utilisateur}
-\begin{figure}[hbt]
+\begin{figure}[h]
   \centering
   \includegraphics[scale=0.2]{./images/user.png}
   \caption{Page utilisateur.}
@@ -390,7 +390,7 @@ sont malhonnêtes selon les utilisateurs sont visibles.
     a été crée dans l'idée de pouvoir aussi bien est facile d'utilisation sur
     ordinateur que sur mobile.
 
-    \begin{figure}[hbt]
+    \begin{figure}[h]
         \centering
         \includegraphics[scale=0.2]{./images/responsive.png}
         \caption{Site responsive.}
@@ -420,7 +420,7 @@ sont malhonnêtes selon les utilisateurs sont visibles.
     En plus de montrer l'emplacement sur une carte celles-ci montre aussi un
     rapide aperçu des caractéristiques de l'établissement.
 
-    \begin{figure}[hbt]
+    \begin{figure}[h]
         \centering
         \includegraphics[scale=0.4]{./images/card.png}
         \caption{Établissement indiqué sur une carte.}
@@ -433,7 +433,7 @@ sont malhonnêtes selon les utilisateurs sont visibles.
     Cette fonctionnalitée est d'autant plus la bienvenue que l'application est
     adaptée aux téléphones mobiles.
 
-    \begin{figure}[hbt]
+    \begin{figure}[h]
         \centering
         \includegraphics[scale=0.4]{./images/geolocalisation.png}
         \caption{Un marqueur indique l'endroit où l'on se trouve.}
@@ -452,7 +452,7 @@ sont malhonnêtes selon les utilisateurs sont visibles.
     comfortable à l'aide du module enhance.js. En effet celui-ci permet de voir
     une photo \emph{en grand}, sans devoir changer de page.
 
-    \begin{figure}[hbt]
+    \begin{figure}[h]
         \centering
         \includegraphics[scale=0.3]{./images/picture.png}
         \caption{Ici un commentaire accompagné d'une photo.}
@@ -465,7 +465,7 @@ sont malhonnêtes selon les utilisateurs sont visibles.
     établissements qui possède le label de son choix, comme par exemple
     \emph{Fumeur}.
 
-    \begin{figure}[hbt]
+    \begin{figure}[h]
         \centering
         \includegraphics[scale=0.3]{./images/label.png}
         \caption{Page regroupant les établissements sous le label "Bar à vin".}
@@ -478,11 +478,25 @@ sont malhonnêtes selon les utilisateurs sont visibles.
     que chaque utilisateur inscript aie le droit de juger des commentaires
     qui selon lui ne sont pas raisonnable ou inversément.
 
-    \begin{figure}[hbt]
+    \begin{figure}[h]
         \centering
         \includegraphics[scale=0.3]{./images/picture.png}
         \caption{Des votes en dessous de chaques commentaire.}
     \end{figure}
+
+\subsection{Image des restaurants à sont récupérées d'un moteur de recherche}
+    Les images qui représente les restaurants sont récuperées du moteur de
+    recherche libre \emph{Searx}. C'est implémenté pour donner plus de
+    diversitée dans le site. L'application aurait pu simplement affiché une
+    image par défaut mais cette solution est plus marrante bien que certains
+    résultats ne soient pas toujours cohérents.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[scale=0.3]{./images/sear(neocomplete_start_auto_complete)x.png}
+        \caption{Image tirée d'un moteur de recherche.}
+    \end{figure}
+
 
 
 \end{document}
