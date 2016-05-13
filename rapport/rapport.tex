@@ -11,13 +11,9 @@
 \linespread{1.1}
 
 \usepackage{xcolor}
-\usepackage{inconsolata}
-
-\begin{document}
 
 \lstset{
     pad\mathcal{R}o
-    basicstyle=\ttfamily\small,
     numberstyle=\footnotesize,
     numbers=left,
     backgroundcolor=\color{gray!10},
@@ -34,6 +30,8 @@
     inputencoding=utf8,
     literate={à}{{\`a}}1 {è}{{\`e}}1 {é}{{\'e}}1,
 }
+
+\begin{document}
 
 \begin{titlepage}
 \begin{center}
@@ -215,6 +213,16 @@ l'utilisateur \emph{Brenda} apprécie.}
 apprécie tous les établissements que \emph{Brenda} apprécie.}
     \lstinputlisting[language=SQL]{../db/2.sql}
 
+\subsubsection{Algèbre relationnelle}
+    \begin{align}
+        \Pi_{e.name}establishment, comments \sigma(e.id AND c.username \\
+        \exists(\Pi_{c2.username}comments \\
+        \bowtie_{c1.establishment\_id=c2.establishment\_id AND c1.username!=c2.username} \\
+        \sigma_{c1.username="Brenda" AND c2.rating>=4}
+        \gamma_{c2.username, COUNT(c2.username)=COUNT(c1.establishment\_id)}
+        ))
+    \end{align}
+
 \subsection{Tous les établissements pour lesquels il y a au plus un
 commentaire.}
     Les résultats de cette requête sont visible dans l'application à la page
@@ -223,7 +231,8 @@ commentaire.}
 
 \subsubsection{Algèbre relationnelle}
     \begin{align}
-        \Pi_{c.establishment_id}comments \sigma_{count(c.establishment_id)<=1}\Pi_{c.establishment_id}
+        \Pi_{c.establishment_id}comments
+        \gamma_{c.establishment_id, count(c.establishment_id)<=1}
     \end{align}
 
 \subsubsection{Calcul relationnel}
@@ -242,10 +251,11 @@ commentaire.}
 \subsubsection{Algèbre relationnelle}
 \begin{align}
     \Pi_{a.username} account \\
-        \sigma_{a.admin\ AND \\
+    \sigma_{a.admin=1\ AND \\
         \nexists_{(\Pi_{e.created\_by}\ establishment) \\
         \bowtie_{e.id=c.establishment\_id \ AND \ e.created\_by!=c.username}} \\
-        \Pi_{c.establishment\_id}}
+        \gamma_{c.username, COUNT(c.establishment\_id)>0}
+    }
 \end{align}
 
 \subsubsection{Calcul relationnel}
@@ -493,7 +503,7 @@ sont malhonnêtes selon les utilisateurs sont visibles.
 
     \begin{figure}[h]
         \centering
-        \includegraphics[scale=0.3]{./images/sear(neocomplete_start_auto_complete)x.png}
+        \includegraphics[scale=0.3]{./images/searx.png}
         \caption{Image tirée d'un moteur de recherche.}
     \end{figure}
 
