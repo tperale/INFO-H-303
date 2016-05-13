@@ -13,11 +13,3 @@ WHERE a.admin=1
             GROUP BY c.username HAVING COUNT(c.establishment_id)>0
         )
 ; 
-
--- SELECT e.created_by
--- FROM establishment AS e
---     INNER JOIN comments AS c
---         ON e.id = c.establishment_id
---             AND e.created_by != c.username
---     GROUP BY c.username HAVING COUNT(c.establishment_id)=0
--- ;
