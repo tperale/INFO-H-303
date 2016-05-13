@@ -32,37 +32,296 @@
 
         <div class="well">
         {{#if establishment.restaurant}}
+            {{{timetable establishment.timetable}}}
             {{#if establishment.takeaway}}
-                <span class="glyphicon glyphicon-shopping-cart"></span> Possibilité de prendre à emporter. <br>
+                <span class="glyphicon glyphicon-shopping-cart"></span> Possibilité de prendre à emporter.
             {{else}}
-                <span class="glyphicon glyphicon-shopping-cart"></span> Impossible de prendre à emporter.<br>
+                <span class="glyphicon glyphicon-shopping-cart"></span> Impossible de prendre à emporter.
             {{/if}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updateTakeAway">Update</a>
+
+                <div class="modal fade" id="updateTakeAway" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updateTakeAway">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour la nourriture à emporter.</h4>
+                            </div>
+                            <form action="/establishments/restaurant/update/{{establishment.id}}/takeaway" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        {{#if establishment.takeaway}}
+                                            <input type="checkbox" name="takeaway" checked>
+                                        {{else}}
+                                            <input type="checkbox" name="takeaway">
+                                        {{/if}}
+                                        <script>
+                                            $("[name='takeaway']").bootstrapSwitch();
+                                        </script>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
 
             {{#if establishment.delivery}}
-                <span class="glyphicon glyphicon-plane"></span> Livraison à domicile.<br>
+                <span class="glyphicon glyphicon-plane"></span> Livraison à domicile.
             {{else}}
-                <span class="glyphicon glyphicon-plane"></span> Aucune livraison à domicile.<br>
+                <span class="glyphicon glyphicon-plane"></span> Aucune livraison à domicile.
             {{/if}}
-            <span class="glyphicon glyphicon-euro"></span> Prix moyen : {{establishment.price}}<br>
-            <span class="glyphicon glyphicon-info-sign"></span> Nombre de places : {{establishment.price}}<br>
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updateDelivery">Update</a>
+
+                <div class="modal fade" id="updateDelivery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updateDelivery">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour la livraison.</h4>
+                            </div>
+                            <form action="/establishments/restaurant/update/{{establishment.id}}/delivery" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        {{#if establishment.delivery}}
+                                            <input type="checkbox" name="delivery" checked>
+                                        {{else}}
+                                            <input type="checkbox" name="delivery">
+                                        {{/if}}
+                                        <script>
+                                            $("[name='delivery']").bootstrapSwitch();
+                                        </script>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
+            <span class="glyphicon glyphicon-euro"></span> Prix moyen : {{establishment.price}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updatePrice">Update</a>
+
+                <div class="modal fade" id="updatePrice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updatePrice">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour le prix moyen.</h4>
+                            </div>
+                            <form action="/establishments/restaurant/update/{{establishment.id}}/price" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="price" name="price" placeholder="Prix moyen.">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
+            <span class="glyphicon glyphicon-info-sign"></span> Nombre de places : {{establishment.seat_number}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updateSeat">Update</a>
+
+                <div class="modal fade" id="updateSeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updateSeat">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour le nombre de place.</h4>
+                            </div>
+                            <form action="/establishments/restaurant/update/{{establishment.id}}/seat_number" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="seat_number" name="seat_number" placeholder="Nombre de place.">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
+
         {{/if}}
 
         {{#if establishment.bar}}
             {{#if establishment.smokers}}
-                <span class="glyphicon glyphicon-leaf"></span> Fumeur authorisé.<br>
+                <span class="glyphicon glyphicon-leaf"></span> Fumeur authorisé.
             {{else}}
-                <span class="glyphicon glyphicon-leaf"></span> Non fumeur.<br>
+                <span class="glyphicon glyphicon-leaf"></span> Non fumeur.
             {{/if}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updateSmokers">Update</a>
+
+                <div class="modal fade" id="updateSmokers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updateSmokers">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour l'authorisation des fumeurs.</h4>
+                            </div>
+                            <form action="/establishments/bar/update/{{establishment.id}}/smokers" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        {{#if establishment.smokers}}
+                                            <input type="checkbox" name="smokers" checked>
+                                        {{else}}
+                                            <input type="checkbox" name="smokers">
+                                        {{/if}}
+                                        <script>
+                                            $("[name='smokers']").bootstrapSwitch();
+                                        </script>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
             {{#if establishment.snacks}}
-                <span class="glyphicon glyphicon-piggy-bank"></span> Snacks sur place.<br>
+                <span class="glyphicon glyphicon-piggy-bank"></span> Snacks sur place.
             {{else}}
             {{/if}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updateSnacks">Update</a>
+
+                <div class="modal fade" id="updateSnacks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updateSnacks">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour la vente de snacks.</h4>
+                            </div>
+                            <form action="/establishments/bar/update/{{establishment.id}}/snacks" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        {{#if establishment.snacks}}
+                                            <input type="checkbox" name="snacks" checked>
+                                        {{else}}
+                                            <input type="checkbox" name="snacks">
+                                        {{/if}}
+                                        <script>
+                                            $("[name='snacks']").bootstrapSwitch();
+                                        </script>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
         {{/if}}
 
         {{#if establishment.hotel}}
-            <span class="glyphicon glyphicon-bed"></span> Nombre de chambre : {{establishment.room_number}} <br>
-            <span class="glyphicon glyphicon-euro"></span> Prix moyen : {{establishment.price}}<br>
-            Nombre d'étoile : {{{stars establishment.stars}}} <br>
+            <span class="glyphicon glyphicon-bed"></span> Nombre de chambre : {{establishment.room_number}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updateRoom">Update</a>
+
+                <div class="modal fade" id="updateRoom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updateRoom">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour le nombre de chambres.</h4>
+                            </div>
+                            <form action="/establishments/hotel/update/{{establishment.id}}/room_number" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="room_number" name="room_number" placeholder="Nombre de chambre.">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
+            <span class="glyphicon glyphicon-euro"></span> Prix moyen : {{establishment.price}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updatePriceH">Update</a>
+
+                <div class="modal fade" id="updatePriceH" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updatePriceH">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour le prix moyen.</h4>
+                            </div>
+                            <form action="/establishments/hotel/update/{{establishment.id}}/price" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="price" name="price" placeholder="Prix moyen.">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
+            Nombre d'étoile : {{{stars establishment.stars}}}
+            {{#if user.admin}}
+                <a data-toggle="modal" data-target="#updateStars">Update</a>
+
+                <div class="modal fade" id="updateStars" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document" aria-labelledby="updateStars">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">Mettre à jour le nombre d'étoiles.</h4>
+                            </div>
+                            <form action="/establishments/hotel/update/{{establishment.id}}/stars" method="post">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="text" id="stars" name="stars" class="rating" data-size="xs">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <br>
+
+
         {{/if}}
         </div>
 
