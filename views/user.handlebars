@@ -14,6 +14,32 @@
 
 <div class="well">
     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>{{profile.email}}<br>
+    {{#if user.admin}}
+        <a data-toggle="modal" data-target="#updateEmail">Update</a>
+
+        <div class="modal fade" id="updateEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document" aria-labelledby="updateEmail">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Mettre à jour l'adresse mail.</h4>
+                    </div>
+                    <form action="/user/update/{{establishment.id}}/email" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="form-inline">
+                                    <input type="email" class="form-control" id="userEmailInput" name="email" placeholder="Adresse mail.">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success pull-right" value="Mettre à jour"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {{/if}}
+
     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Crée le {{profile.creation_date}} <br>
 </div>
 
