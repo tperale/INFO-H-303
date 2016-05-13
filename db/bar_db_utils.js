@@ -51,14 +51,8 @@ module.exports = {
     },
 
     update : function (id, column, value, callback) {
-        var cmd = "UPDATE bar SET " + column + "=";
-        if (typeof(value) == "number") {
-            cmd += String(value);
-        } else {
-            cmd += "'" + String(value) + "'";
-        }
-        cmd += " WHERE id=" + id;
-        db.run(cmd, callback);
+        var cmd = "UPDATE bar SET " + column + "=? WHERE id=?";
+        db.run(cmd, [value, id], callback);
     },
 
     get_bar : function (id, callback) {

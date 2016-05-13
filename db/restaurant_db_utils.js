@@ -51,6 +51,11 @@ module.exports = {
         });
     },
 
+    update : function (id, column, value, callback) {
+        var cmd = "UPDATE restaurant SET " + column + "=? WHERE id=?";
+        db.run(cmd, [value, id], callback);
+    },
+
     get_restaurant : function (id, callback) {
         var cmd = "SELECT e.*, r.* from establishment e INNER JOIN restaurant r on e.id=r.id WHERE e.id=" + id;
         db.get(cmd, function(err, row) {

@@ -8,6 +8,9 @@ var db = require('../db/database_utils.js');
 var User = require('../db/user_db.js');
 var Label = require('../db/labels_utils.js');
 var Comments = require('../db/comment_utils.js');
+var Bar = require('../db/bar_db_utils.js');
+var Restaurant = require('../db/restaurant_db_utils.js');
+var Hotel = require('../db/hotel_db_utils.js');
 
 var async = require('async');
 
@@ -54,6 +57,10 @@ router.get('/', function (req, res) {
 });
 
 router.post('/update/:id/address', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect('/404');
+    }
+
     async.parallel([
         function (callback) {
             db.update(req.params.id, 'address_street', req.body['address_street'], function (err) {
@@ -72,6 +79,10 @@ router.post('/update/:id/address', function (req, res) {
 });
 
 router.post('/update/:id/:type', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect('/404');
+    }
+
     db.update(req.params.id, req.params.type, req.body[req.params.type], function (err) {
         if (err) {
             console.log(err);
@@ -187,6 +198,21 @@ router.get('/image/:id', function (req, res) {
     });
 });
 
+router.post('/bar/update/:id/:type', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect('/404');
+    }
+
+    var value = req.body[req.params.type] == 'on' ? 1 : 0;
+    Bar.update(req.params.id, req.params.type, value, function(err) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.redirect('back');
+    });
+});
+
 router.get('/bar/:id',  function (req, res) {
     async.parallel([
         function(callback) { // Getting the "bar" establishment.
@@ -232,6 +258,21 @@ router.get('/bar/:id',  function (req, res) {
         });
     });
 
+});
+
+router.post('/hotel/update/:id/:type', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect('/404');
+    }
+
+    var value = req.body[req.params.type];
+    Hotel.update(req.params.id, req.params.type, value, function(err) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.redirect('back');
+    });
 });
 
 router.get('/hotel/:id',  function (req, res) {
@@ -284,6 +325,72 @@ router.get('/hotel/:id',  function (req, res) {
     });
 });
 
+router.get('/restaurant/update/:id/timetable/:timetable/:zone', function (req, res) {
+    var table = req.params.timetable;
+    if (table[req.params.zone] == "1") {
+        table = req.params.timetable.slice(0, req.params.zone);
+        table += "0";
+        table += req.params.timetable.slice((req.params.zone + 1));
+    } else {
+        table = req.params.timetable.slice(0, req.params.zone);
+        table += "1";
+        table += req.params.timetable.slice((req.params.zone + 1));
+    }
+
+    Restaurant.update(req.params.id, 'timetable', table, function(err) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.redirect('back');
+    });
+});
+
+router.post('/restaurant/update/:id/takeaway', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect('/404');
+    }
+
+    var value = req.body[req.params.type] == 'on' ? 1 : 0;
+    Restaurant.update(req.params.id, 'takeaway', value, function(err) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.redirect('back');
+    });
+});
+
+router.post('/restaurant/update/:id/delivery', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect('/404');
+    }
+
+    var value = req.body[req.params.type] == 'on' ? 1 : 0;
+    Restaurant.update(req.params.id, 'delivery', value, function(err) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.redirect('back');
+    });
+});
+
+router.post('/restaurant/update/:id/:type', function (req, res) {
+    if (!req.user || !req.user.admin) {
+        return res.redirect('/404');
+    }
+
+    var value = req.body[req.params.type];
+    Restaurant.update(req.params.id, req.params.type, value, function(err) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/404');
+        }
+        return res.redirect('back');
+    });
+});
+
 router.get('/restaurant/:id',  function (req, res) {
     async.parallel([
         function(callback) { // Getting the "bar" establishment.
@@ -328,7 +435,8 @@ router.get('/restaurant/:id',  function (req, res) {
             helpers : {
                 icon : helpers_fun.icon,
                 stars : helpers_fun.stars_maker,
-                average : helpers_fun.average
+                average : helpers_fun.average,
+                timetable : helpers_fun.timetable,
             }
         });
     });

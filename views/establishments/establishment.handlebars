@@ -32,7 +32,7 @@
 
         <div class="well">
         {{#if establishment.restaurant}}
-            {{{timetable establishment.timetable}}}
+            {{{timetable establishment.timetable establishment.id user.admin}}}
             {{#if establishment.takeaway}}
                 <span class="glyphicon glyphicon-shopping-cart"></span> Possibilité de prendre à emporter.
             {{else}}
