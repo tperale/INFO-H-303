@@ -149,6 +149,30 @@ module.exports = {
         return result;
     },
 
+    timetable : function (timetable) {
+        var result = "<table class=\"table\">"; 
+        var days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+        console.log("With timetable : " + timetable);
+        for (var i = 0; i < timetable.length; ++i) {
+            if ((i % 2) == 0) {
+                // Matin
+                result += "</tr><tr><td>" + days[Math.floor(i/2)] + "</td>";
+            }
+
+            result += "<td>";
+            if (timetable[i] == "1") {
+                result += "Fermé";
+            } else {
+                result += "Ouvert";
+            }
+            result += "</td>";
+        }
+
+
+        result += "</tr></table>";
+        return result;
+    },
+
     thumbnailing : function (establishments) {
         var result = "";  
 
