@@ -172,14 +172,34 @@ def parse_restaurant(s, conn):
 
         _id = db.lastrowid
 
+        c = info.find('closed')
+        closed = [0 for i in range(14)]
+        if c:
+            for i in c.find_all('on'):
+                day = int(i['day'])
+                print("Day is %i" % day)
+                if i.get('hour'):
+                    if i['hour'] == 'am':
+                        closed[day * 2] = 1
+                    elif i['hour'] == 'pm':
+                        closed[(day * 2) + 1] = 1
+                else:
+                    closed[day * 2] = 1
+                    closed[(day * 2) + 1] = 1
+
+        timetable = ""
+        for i in closed:
+            timetable = timetable + str(i)
+
+        print("-------------> TIMET " + timetable)
+
         takeaway = bool(info.find('takeaway'))
         delivery = bool(info.find('delivery'))
         price = int(info.find('pricerange').text)
         seat_number = int(info.find('banquet')['capacity'])
 
-        cmd = "INSERT INTO restaurant (id,takeaway,delivery,price,seat_number) VALUES (%i,%i,%i,%i,%i)" % (_id,takeaway,delivery,price,seat_number)
         db = con.cursor()
-        db.execute(cmd)
+        db.execute("INSERT INTO restaurant (id,timetable,takeaway,delivery,price,seat_number) VALUES (?,?,?,?,?,?)", [_id,timetable,takeaway,delivery,price,seat_number])
         con.commit()
         db.close()
 
