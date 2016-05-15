@@ -99,17 +99,8 @@ module.exports = {
      * @param {name} : Nom d'utilisateur qu'on doit rechercher.
      */
     get_all : function (name, callback) {
-         db.all("SELECT * FROM label WHERE username='" + name + "'", function (err, rows) {
-            if (err) {
-                callback(err, null); 
-            } else {
-                async.map(rows, function (values, callback) {
-                    setTimeout(function() { 
-                        callback(null, values);
-                    }, 200); 
-                }, callback);
-            }
-        });            
+        var cmd = "SELECT l.*, e.name AS establishment_name FROM label AS l, establishment AS e WHERE username='" + name + "' AND e.id=l.establishment_id";
+         db.all(cmd, callback);
     },
 
     /* @desc Renvoie les labels utilisé par les établissements les plus populaire.
