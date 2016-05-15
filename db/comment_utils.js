@@ -133,17 +133,7 @@ module.exports = {
      * @param {callback} : function (err, results) {}
      */
     get_all : function (name, callback) {
-         db.all("SELECT * FROM comments WHERE username='" + name + "' ORDER BY timestamp", function (err, rows) {
-            if (err) {
-                callback(err, null); 
-            } else {
-                async.map(rows, function (values, callback) {
-                    setTimeout(function() { 
-                        callback(null, values);
-                    }, 200); 
-                }, callback);
-            }
-        });            
+         db.all("SELECT c.*, e.name AS establishment_name FROM comments AS c, establishment AS e WHERE username='" + name + "' AND c.establishment_id=e.id ORDER BY timestamp", callback);
     },
 
     get_average : function (establishment_id, callback) {

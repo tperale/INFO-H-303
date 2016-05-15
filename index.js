@@ -244,7 +244,6 @@ app.get('/user/:name',  function (req, res) {
                     console.log("Error getting comments : " + err);
                 }
                 setTimeout(function() {
-                    console.log("Labels : " + JSON.stringify(results));
                     callback(null, results);
                 }, 200);
             });
