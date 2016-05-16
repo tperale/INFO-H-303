@@ -413,19 +413,19 @@ app.get('/signup', function (req, res) {
 
 app.post('/signup', function (req, res) {
     if (req.body.password != req.body.password_verif) {
-        res.render('signup', {
+        return res.render('signup', {
             password_error : true,
 
             user : req.user,
         });
-        return; 
     }
 
     User.add_user({ username : req.body.username, email : req.body.email, password : req.body.password }, function (err, user) {
-        passport.authenticate('local', { 
+        (passport.authenticate('local', { 
             successRedirect: '/',
             failureRedirect: '/signup',
-            failureFlash: true})
+            failureFlash: true
+        }))(req, res);
     });
 });
 
